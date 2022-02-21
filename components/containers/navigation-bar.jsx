@@ -4,7 +4,14 @@ import { SearchBox, Logo, NavigationButton, AuthenticationMenu } from "../ui";
 
 export function NavigationBar() {
   return (
-    <HStack maxHeight="60px" justifyContent="space-between" px={5}>
+    <HStack
+      maxHeight="60px"
+      justifyContent="space-between"
+      px={5}
+      position="fixed"
+      w="100%"
+      backgroundColor="white"
+    >
       <div>
         <HStack>
           <Logo />

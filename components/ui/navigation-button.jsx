@@ -13,7 +13,6 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 
 export function NavigationButton({ label, smallMenuList }) {
-  console.log("aaaaa", smallMenuList);
   return (
     <Menu>
       <MenuButton
@@ -25,7 +24,7 @@ export function NavigationButton({ label, smallMenuList }) {
       </MenuButton>
       <MenuList>
         {smallMenuList.map(({ label, href }) => (
-          <MenuItem>
+          <MenuItem key={label}>
             <Link href={href}>
               <a>{label}</a>
             </Link>
