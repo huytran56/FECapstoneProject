@@ -103,3 +103,41 @@ export const flashSales = [
     label: "GIAY",
   },
 ];
+
+export const productCategory = [
+  {
+    img: "https://images.unsplash.com/photo-1562157705-52df57a5883b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8d2F0Y2h8ZW58MHwyfDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    label: "Watch",
+    href: "/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1601925240970-98447486fcdb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGtpZHN8ZW58MHwyfDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    label: "Kids",
+    href: "/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1485727749690-d091e8284ef3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnQlMjBjbG90aGVzfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+    label: "Sport",
+    href: "/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1508296695146-257a814070b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VuJTIwZ2xhc3N8ZW58MHwyfDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    label: "Sunglass",
+    href: "/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1591561954555-607968c989ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmFnc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60",
+    label: "Sneakers",
+    href: "/",
+  },
+  {
+    img: "https://images.unsplash.com/flagged/photo-1556151994-b611e5ab3675?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHdvbWFufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+    label: "Woman",
+    href: "/",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1593032457866-e5557a37f5f8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fG1hbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=800&q=60",
+    label: "Man",
+    href: "/",
+  },
+];

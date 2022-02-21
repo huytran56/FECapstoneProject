@@ -1,5 +1,5 @@
 import { VStack, Text, SimpleGrid, Box } from "@chakra-ui/react";
-import { flashSales } from "../../util/constant";
+import { flashSales } from "../../util";
 import { CardProduct } from "../ui";
 
 export function ContainerBoxShadow() {

@@ -4,3 +4,4 @@ export * from "./navigation-button";
 export * from "./search-box";
 export * from "./textfield";
 export * from "./card-product";
+export * from "./card-category";

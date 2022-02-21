@@ -1,5 +1,5 @@
 import { HStack, Image, VStack, Grid, GridItem } from "@chakra-ui/react";
-import { bannerAdvertisers } from "../../util/constant";
+import { bannerAdvertisers } from "../../util";
 import Link from "next/link";
 
 export function BannerAdvertiser() {

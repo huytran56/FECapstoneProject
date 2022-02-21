@@ -23,6 +23,7 @@ export function CardProduct({ img, label, description, oldPrice, newPrice }) {
             md: "100px",
             xl: "200px",
           }}
+          borderRadius="8px"
           transition="all 0.5s ease"
           _hover={{ transform: "scale(1.05)" }}
         />
