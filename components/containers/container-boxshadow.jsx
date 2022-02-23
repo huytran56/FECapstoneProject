@@ -8,7 +8,7 @@ export function ContainerBoxShadow() {
       boxShadow="rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px"
       my={8}
       borderRadius="base"
-      mx={5}
+      mx="auto"
       fontWeight="semibold"
       alignItems="flex-start"
       px="15px"

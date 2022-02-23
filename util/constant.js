@@ -141,3 +141,62 @@ export const productCategory = [
     href: "/",
   },
 ];
+
+export const footerInformation = [
+  {
+    title: "Social",
+    infor: [
+      {
+        title: "Instagram",
+        href: "/",
+      },
+      { title: "Twitter", href: "/" },
+      { title: "Facebook", href: "/" },
+      { title: "Youtube", href: "/" },
+    ],
+  },
+  {
+    title: "Contact",
+    infor: [
+      { title: "Contact Us", href: "/" },
+      { title: "yourexample@email.com", href: "/" },
+      { title: "example@email.com", href: "/" },
+      { title: "Call us: +1 254 568-5479", href: "/" },
+    ],
+  },
+  {
+    title: "About",
+    infor: [
+      { title: "Support Center", href: "/" },
+      { title: "Customer Support", href: "/" },
+      { title: "About Us", href: "/" },
+      { title: "Copyright", href: "/" },
+    ],
+  },
+  {
+    title: "Customer Care",
+    infor: [
+      { title: "FAQ & Helps", href: "/" },
+      { title: "Shipping & Delivery", href: "/" },
+      { title: "Return & Exchanges", href: "/" },
+    ],
+  },
+  {
+    title: "Our Information",
+    infor: [
+      { title: "Privacy policy update", href: "/" },
+      { title: "Terms & conditions", href: "/" },
+      { title: "Return Policy", href: "/" },
+      { title: "Site Map", href: "/" },
+    ],
+  },
+  {
+    title: "Top Categories",
+    infor: [
+      { title: "Men's Wear", href: "/" },
+      { title: "Men's Wear", href: "/" },
+      { title: "Kid's Wear", href: "/" },
+      { title: "Sports Wear", href: "/" },
+    ],
+  },
+];

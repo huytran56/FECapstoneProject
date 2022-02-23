@@ -1,5 +1,3 @@
-
-
 export function EmptyLayout({ children }) {
   return (
     <>
