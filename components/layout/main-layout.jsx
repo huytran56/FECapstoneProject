@@ -1,13 +1,21 @@
 import { NavigationBar } from "../containers";
-import { Container } from "@chakra-ui/react";
+import { Container, Stack, Box, Center } from "@chakra-ui/react";
+import { Footer } from "../containers";
 
 export function MainLayout({ children }) {
   return (
     <>
-      <NavigationBar />
-      <Container maxWidth={{ lg: "3718px" }}>
-        <main>{children}</main>
-      </Container>
+      <Center>
+        <Container maxWidth={{ lg: "3718px" }}>
+          <Stack minHeight="100vh">
+            <NavigationBar />
+            <Box as="main" flexGrow={1}>
+              {children}
+            </Box>
+            <Footer />
+          </Stack>
+        </Container>
+      </Center>
     </>
   );
 }

@@ -5,3 +5,6 @@ export * from "./search-box";
 export * from "./textfield";
 export * from "./card-product";
 export * from "./card-category";
+export * from "./footer-column";
+export * from "./copyright";
+export * from "./logo-copyright";
