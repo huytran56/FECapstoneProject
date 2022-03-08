@@ -15,8 +15,6 @@ export function CardProduct({ img, label, description, oldPrice, newPrice }) {
           alt={description}
           minWidth="100px"
           maxWidth="300px"
-          minWidth="100px"
-          maxWidth="300px"
           width="80%"
           height={{
             base: "50px",

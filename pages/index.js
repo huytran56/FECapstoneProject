@@ -14,8 +14,8 @@ export default function Home() {
       <BannerAdvertiser />
       <ContainerBoxShadow />
       <Carousel gap={10} header="Category">
-        {productCategory.map((p) => (
-          <CardCategory {...p} />
+        {productCategory.map((p,index) => (
+          <CardCategory {...p} key={index}/>
         ))}
       </Carousel>
     </>

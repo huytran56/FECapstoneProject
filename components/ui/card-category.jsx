@@ -4,7 +4,7 @@ import Link from "next/link";
 export function CardCategory({ img, label, href }) {
   return (
     <VStack mx="auto">
-      <Link href={href}>
+      <Link passHref={href} href={href}>
         <Image
           src={img}
           w={{
@@ -16,6 +16,7 @@ export function CardCategory({ img, label, href }) {
           borderRadius="8px"
           boxShadow="rgba(0, 0, 0, 0.05) 0px 1px 2px 0px"
           _hover={{ transform: "scale(1.15)", transform: "rotate(2deg)" }}
+          alt={label}
         />
       </Link>
       <Text>{label}</Text>
