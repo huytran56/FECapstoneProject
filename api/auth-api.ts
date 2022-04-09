@@ -1,4 +1,4 @@
-import { IAccount, ICategory } from "@models/index";
+import { IAccount, ICategory, IEditVoucher, IVoucher } from "@models/index";
 import axiosClient from "./axios-client";
 
 interface ILoginPayLoad {
@@ -185,5 +185,82 @@ export const handleUserInfomation = async (): Promise<IUserInformationRes> => {
     return res.data;
   } catch (error) {
     return error!;
+  }
+};
+export const handleGetVoucher = async (): Promise<[IVoucher]> => {
+  try {
+    const url = "/voucher/";
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleCreateVoucher = async ({
+  id,
+  code,
+  name,
+  description,
+  type,
+  minSpend,
+  maxDiscount,
+  discountAmount,
+  active,
+}: IVoucher): Promise<boolean> => {
+  try {
+    console.log({
+      id,
+      code,
+      name,
+      description,
+      type,
+      minSpend,
+      maxDiscount,
+      discountAmount,
+      active,
+    });
+    const url = `/voucher/create`;
+    const res = await axiosClient.post(url, {
+      id,
+      code,
+      name,
+      description,
+      type,
+      minSpend,
+      maxDiscount,
+      discountAmount,
+      active,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleEditVoucher = async ({
+  id,
+  active,
+  code,
+  description,
+  discountAmount,
+  maxDiscount,
+  minSpend,
+  name,
+  type,
+}: IEditVoucher) => {
+  try {
+    const url = `/voucher/update/${id}`;
+    const res = await axiosClient.put(url, {
+      active,
+      code,
+      description,
+      discountAmount,
+      maxDiscount,
+      minSpend,
+      name,
+      type,
+    });
+    return res.data;
+  } catch (error) {
+    return console.log(error);
   }
 };

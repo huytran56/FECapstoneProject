@@ -1,11 +1,14 @@
 import {
   handleCreateCategory,
   handleCreateStaffAccount,
+  handleCreateVoucher,
   handleDeleteAccount,
   handleDeleteCategory,
   handleEditRoleAccount,
+  handleEditVoucher,
   handleGetAccount,
   handleGetCategory,
+  handleGetVoucher,
   handlerUpdateCategory,
   handleUserInfomation,
   ICreateStaffRes,
@@ -13,7 +16,7 @@ import {
   IDeleteAccountRes,
   IUserInformationRes,
 } from "@api/auth-api";
-import { IAccount, ICategory } from "@models/admin";
+import { IAccount, ICategory, IVoucher } from "@models/admin";
 import { put, takeLatest, call } from "@redux-saga/core/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IAdminPayLoad } from "@store/index";
@@ -135,6 +138,45 @@ function* getUserInfo(action: PayloadAction<IAdminPayLoad>) {
     console.log(error);
   }
 }
+function* getVoucherList(action: PayloadAction<IAdminPayLoad>) {
+  try {
+    const voucherList: IVoucher[] = yield call(handleGetVoucher);
+    yield put(adminAction.setVoucherList({ voucherList }));
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* createVoucher(action: PayloadAction<IAdminPayLoad>) {
+  console.log(action.payload.createVoucherPayLoad);
+  try {
+    const res: boolean = yield call(
+      handleCreateVoucher,
+      action.payload.createVoucherPayLoad
+    );
+    if (res) {
+      const voucherList: IVoucher[] = yield call(handleGetVoucher);
+      yield put(adminAction.setVoucherList({ voucherList }));
+      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* editVoucher(action: PayloadAction<IAdminPayLoad>) {
+  console.log(action.payload.editVoucherPayLoad);
+  try {
+    const editVoucher: boolean = yield call(
+      handleEditVoucher,
+      action.payload.editVoucherPayLoad
+    );
+    const voucherList: IVoucher[] = yield call(handleGetVoucher);
+    console.log(voucherList);
+    yield put(adminAction.setVoucherList({ voucherList }));
+    yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export function* adminSaga() {
   yield takeLatest(adminAction.preSetAccountList, getAccountList);
@@ -146,4 +188,7 @@ export function* adminSaga() {
   yield takeLatest(adminAction.preUpdateCategory, updateCategory);
   yield takeLatest(adminAction.setDeleteCategory, deleteCategory);
   yield takeLatest(adminAction.preSetUserInfo, getUserInfo);
+  yield takeLatest(adminAction.preSetVoucherList, getVoucherList);
+  yield takeLatest(adminAction.preSetCreateVoucherList, createVoucher);
+  yield takeLatest(adminAction.preEditVoucher, editVoucher);
 }

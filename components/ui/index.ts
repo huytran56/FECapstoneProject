@@ -16,3 +16,4 @@ export * from "./add-staff";
 export * from "./edit-account";
 export * from "./admin-category";
 export * from "./edit-category";
+export * from "./admin-voucher"

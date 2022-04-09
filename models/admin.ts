@@ -16,3 +16,26 @@ export interface ICategory {
   category_name: string;
   is_deleted: boolean;
 }
+
+export interface IVoucher {
+  id: number;
+  code: string;
+  name: string;
+  description: string;
+  type: string;
+  minSpend: number;
+  maxDiscount: number;
+  discountAmount: number;
+  active: boolean;
+}
+export interface IEditVoucher {
+  id: number;
+  active: boolean;
+  code: string;
+  description: string;
+  discountAmount: number;
+  maxDiscount: number;
+  minSpend: number;
+  name: string;
+  type: string;
+}

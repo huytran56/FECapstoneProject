@@ -1,5 +1,5 @@
 import SidebarWithHeader from "@components/ui/sidebar";
-import { AdminAccount } from "@components/ui/index";
+import { AdminAccount, AdminVoucher } from "@components/ui/index";
 import { useAppSelector } from "@app/hook";
 import { selectNumberIndex } from "@store/admin";
 import { AdminCategory } from "@components/ui";
@@ -12,6 +12,8 @@ export const DashBoard = () => {
         <AdminAccount />
       ) : pageIndexSelector === 5 ? (
         <AdminCategory />
+      ) : pageIndexSelector === 6 ? (
+        <AdminVoucher />
       ) : null}
     </SidebarWithHeader>
   );
