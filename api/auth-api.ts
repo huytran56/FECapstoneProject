@@ -17,6 +17,7 @@ export interface ICreateAccountPayLoad {
   username: string;
 }
 export interface IUserInformationRes {
+  id?: string;
   username: string;
   email: string;
   first_name: string;
@@ -24,7 +25,7 @@ export interface IUserInformationRes {
   phone_number: string;
   gender_id: number;
   birthday: string;
-  roles: null;
+  roles?: null;
 }
 export interface ICategoryPayLoad {
   category_name: string;
@@ -50,6 +51,13 @@ interface ILoginRes {
   messege: string;
   token: object;
 }
+
+export interface IChangePasswordPayload {
+  newPassword: string;
+  oldPassword: string;
+  repeatNewPassword: string;
+}
+
 export const handleSignIn = async ({
   password,
   usernameOrEmail,
@@ -185,5 +193,47 @@ export const handleUserInfomation = async (): Promise<IUserInformationRes> => {
     return res.data;
   } catch (error) {
     return error!;
+  }
+};
+
+export const handlerUpdateUserInformation = async ({
+  username,
+  email,
+  first_name,
+  last_name,
+  phone_number,
+  gender_id,
+  birthday,
+}: IUserInformationRes): Promise<boolean> => {
+  try {
+    const url = `/user/profile/updateInfo`;
+    const res = await axiosClient.post(url, {
+      first_name,
+      last_name,
+      phone_number,
+      gender_id,
+      birthday,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const handlerChangePassword = async ({
+  newPassword,
+  oldPassword,
+  repeatNewPassword,
+}: IChangePasswordPayload): Promise<boolean> => {
+  try {
+    const url = `/user/changePassword`;
+    const res = await axiosClient.post(url, {
+      newPassword,
+      oldPassword,
+      repeatNewPassword,
+    });
+    return true;
+  } catch (error) {
+    return false;
   }
 };

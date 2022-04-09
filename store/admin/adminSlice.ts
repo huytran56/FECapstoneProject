@@ -7,6 +7,7 @@ import {
   IDeleteAccount,
   IEditRoleAccount,
   IUserInformationRes,
+  IChangePasswordPayload,
 } from "@api/index";
 
 interface IInitialState {
@@ -18,6 +19,8 @@ interface IInitialState {
   pageIndex: number;
   categoryList: ICategory[];
   userInfo: IUserInformationRes;
+  adminEditInformation: IUserInformationRes;
+  isChangePasswordSuccess: boolean;
 }
 export interface IAdminPayLoad {
   accountList?: IAccount[];
@@ -33,6 +36,10 @@ export interface IAdminPayLoad {
   createCategoryPayload?: ICategoryPayLoad;
   userInfo?: IUserInformationRes;
   deleteCategoryPayLoad?: ICategory;
+  preUpdateAdminProfilePayload?: IUserInformationRes;
+  adminEditInformation?: IUserInformationRes;
+  changePasswordPayload?: IChangePasswordPayload;
+  isChangePasswordSuccess?: boolean;
 }
 
 const initialState: IInitialState = {
@@ -44,6 +51,8 @@ const initialState: IInitialState = {
   categoryList: [],
   currentEditCategory: null,
   userInfo: null,
+  adminEditInformation: null,
+  isChangePasswordSuccess: true,
 };
 
 const adminSlice = createSlice({
@@ -83,6 +92,14 @@ const adminSlice = createSlice({
     setUserInfo(state, action: PayloadAction<IAdminPayLoad>) {
       state.userInfo = action.payload.userInfo;
     },
+    preUpdateAdminProfile(state, action: PayloadAction<IAdminPayLoad>) {},
+    setEditAdminInformation(state, action: PayloadAction<IAdminPayLoad>) {
+      state.adminEditInformation = action.payload.adminEditInformation;
+    },
+    preUpdatePassword(state, action: PayloadAction<IAdminPayLoad>) {},
+    setIsChangePasswordSuccess(state, action: PayloadAction<IAdminPayLoad>) {
+      state.isChangePasswordSuccess = action.payload.isChangePasswordSuccess;
+    },
   },
 });
 
@@ -98,4 +115,8 @@ export const selectCategoryList = (state: RootState) =>
 export const selectUserInfo = (state: RootState) => state.admin.userInfo;
 export const selectCurrentEditCategory = (state: RootState) =>
   state.admin.currentEditCategory;
+export const selectAdminEditInformation = (state: RootState) =>
+  state.admin.adminEditInformation;
+export const selectIsChangePasswordSuccess = (state: RootState) =>
+  state.admin.isChangePasswordSuccess;
 export const adminReducer = adminSlice.reducer;

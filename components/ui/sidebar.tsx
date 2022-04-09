@@ -127,11 +127,8 @@ interface MobileProps extends FlexProps {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(adminAction.preSetUserInfo({}));
-  }, []);
   const userInfoSelector = useAppSelector(selectUserInfo);
-  console.log(userInfoSelector);
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}

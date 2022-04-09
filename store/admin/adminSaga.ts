@@ -6,7 +6,9 @@ import {
   handleEditRoleAccount,
   handleGetAccount,
   handleGetCategory,
+  handlerChangePassword,
   handlerUpdateCategory,
+  handlerUpdateUserInformation,
   handleUserInfomation,
   ICreateStaffRes,
   IDeleteAccount,
@@ -136,6 +138,44 @@ function* getUserInfo(action: PayloadAction<IAdminPayLoad>) {
   }
 }
 
+function* updateAdminProfile(action: PayloadAction<IAdminPayLoad>) {
+  try {
+    const res = yield call(
+      handlerUpdateUserInformation,
+      action.payload.preUpdateAdminProfilePayload
+    );
+    if (res) {
+      const userInfo: IUserInformationRes = yield call(handleUserInfomation);
+
+      yield put(adminAction.setUserInfo({ userInfo }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* updatePassword(action: PayloadAction<IAdminPayLoad>) {
+  try {
+    const res = yield call(
+      handlerChangePassword,
+      action.payload.changePasswordPayload
+    );
+    console.log({ res });
+
+    if (res) {
+      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    } else {
+      yield put(
+        adminAction.setIsChangePasswordSuccess({
+          isChangePasswordSuccess: false,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* adminSaga() {
   yield takeLatest(adminAction.preSetAccountList, getAccountList);
   yield takeLatest(adminAction.addNewStaff, createStaff);
@@ -146,4 +186,6 @@ export function* adminSaga() {
   yield takeLatest(adminAction.preUpdateCategory, updateCategory);
   yield takeLatest(adminAction.setDeleteCategory, deleteCategory);
   yield takeLatest(adminAction.preSetUserInfo, getUserInfo);
+  yield takeLatest(adminAction.preUpdateAdminProfile, updateAdminProfile);
+  yield takeLatest(adminAction.preUpdatePassword, updatePassword);
 }
