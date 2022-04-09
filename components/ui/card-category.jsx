@@ -4,7 +4,7 @@ import Link from "next/link";
 export function CardCategory({ img, label, href }) {
   return (
     <VStack mx="auto">
-      <Link passHref={href} href={href}>
+      <Link passHref={true} href={href}>
         <Image
           src={img}
           w={{

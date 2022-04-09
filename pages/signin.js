@@ -1,5 +1,5 @@
 import { SignIn } from "../components/containers";
-import { AuthenticateLayout } from "../components/layout";
+import { EmptyLayout } from "../components/layout";
 
 export default function SignInForm() {
   return (
@@ -8,4 +8,4 @@ export default function SignInForm() {
     </>
   );
 }
-SignInForm.Layout = AuthenticateLayout;
+SignInForm.Layout = EmptyLayout;

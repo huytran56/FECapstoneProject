@@ -4,3 +4,4 @@ export * from "./signup-form";
 export * from "./banner-advertiser";
 export * from "./container-boxshadow";
 export * from "./footer";
+export * from "./dashboard"

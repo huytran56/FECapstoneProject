@@ -14,7 +14,7 @@ export function BannerAdvertiser() {
         >
           {banner.map(({ img, href, alt, col }) => (
             <GridItem colSpan={col} rowSpan={1} key={img} maxHeight="300px">
-              <Link passHref={href} href={href}>
+              <Link passHref={true} href={href}>
                 <Image src={img} alt={alt} w="100%" h="100%" />
               </Link>
             </GridItem>

@@ -2,40 +2,57 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "../ui";
 import * as Yup from "yup";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { handleSignIn, handleTest, handleGetAccount } from "@api/index";
 import {
   Button,
-  ButtonGroup,
+  Checkbox,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Link,
+  Stack,
+  Image,
   VStack,
   Text,
-  Box,
-  HStack,
-  Stack,
-  Link,
 } from "@chakra-ui/react";
 
 export const SignIn = () => {
   // let navigate = useNavigate()
-
+  const [isSuccess, setIsSuccess] = useState(false);
+  const router = useRouter();
   const validate = Yup.object({
-    email: Yup.string().email("Email is invalid").required("Required"),
+    usernameOrEmail: Yup.string()
+      .email("Email không đúng")
+      .required("Không được bỏ trống"),
     password: Yup.string()
-      .min(6, "Must be at least 6 characters")
-      .required("Required"),
+      .min(6, "Cần ít nhất 6 kí tự")
+      .required("Không được bỏ trống"),
   });
 
   const handleOnClickLogin = async (value) => {
-    const { email, password } = value;
-    const res = await signin(email, password);
-    console.log(res.data.roles);
-    if (res.data.roles == "ROLE_ADMIN") {
-      return navigate("/admin");
+    const { password, usernameOrEmail } = value;
+    const res = await handleSignIn({ password, usernameOrEmail });
+    console.log(res);
+    if (!res.success) {
+      console.log("Fail");
+    } else {
+      router.replace("/dashboard");
     }
+  };
+  const handleTestClick = async (value) => {
+    const res = await handleGetAccount();
+    console.log(res);
   };
 
   return (
     <Formik
       initialValues={{
-        email: "",
+        usernameOrEmail: "",
         password: "",
       }}
       validationSchema={validate}
@@ -43,51 +60,60 @@ export const SignIn = () => {
     >
       {(formik) => (
         <Form>
-          <VStack
-            alignItems="start"
-            w="30%"
-            position="absolute"
-            left="50%"
-            top="50%"
-            transform="translate(-50%, -50%)"
-            backgroundColor="white"
-            boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
-            borderRadius="8px"
-            px="30px"
-            py="10px"
-          >
-            <Text as="h1" fontWeight="bold" fontSize="30px" mx="auto">
-              Login
-            </Text>
-            <TextField label="Email" name="email" type="email" />
-            <TextField label="Password" name="password" type="password" />
-            <HStack fontSize="13" fontFamily="body" width="100%">
-              <Link ml="auto">Forgot Password</Link>
-            </HStack>
-            <VStack alignItems="center" height="100" width="100%">
-              <Button
-                type="submit"
-                width="100%"
-                backgroundColor="#8EC5FC"
-                backgroundImage="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
-              >
-                Login
-              </Button>
-            </VStack>
-            <VStack width="100%">
-              <Text textAlign="center" fontSize="10" fontFamily="body">
-                Or
-              </Text>
-              <Link
-                href="/signup"
-                textAlign="center"
-                fontSize="13"
-                fontFamily="body"
-              >
-                Signup
-              </Link>
-            </VStack>
-          </VStack>
+          <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
+            <Flex p={8} flex={1} align={"center"} justify={"center"}>
+              <Stack spacing={4} w={"full"} maxW={"md"}>
+                <Heading fontSize={"3xl"}>Đăng nhập vào tài khoản</Heading>
+                <FormControl id="email">
+                  <FormLabel>Email</FormLabel>
+                  <TextField
+                    // label="Email"
+                    name="usernameOrEmail"
+                    type="email"
+                  />
+                </FormControl>
+                <FormControl id="password">
+                  <FormLabel>Mật khẩu</FormLabel>
+                  <TextField name="password" type="password" />
+                </FormControl>
+                <Stack spacing={6}>
+                  <Stack
+                    direction={{ base: "column", sm: "row" }}
+                    align={"start"}
+                    justify={"space-between"}
+                  >
+                    <Checkbox>Remember me</Checkbox>
+                    <Link color={"blue.500"}>Quên mật khẩu?</Link>
+                  </Stack>
+                  <Button colorScheme={"blue"} variant={"solid"} type="submit">
+                    Đăng nhập
+                  </Button>
+                </Stack>
+                <VStack width="100%">
+                  <Text textAlign="center" fontSize="10" fontFamily="body">
+                    Hoặc
+                  </Text>
+                  <Link
+                    href="/signup"
+                    textAlign="center"
+                    fontSize="13"
+                    fontFamily="body"
+                  >
+                    Đăng kí
+                  </Link>
+                </VStack>
+              </Stack>
+            </Flex>
+            <Flex flex={1}>
+              <Image
+                alt={"Login Image"}
+                objectFit={"cover"}
+                src={
+                  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
+                }
+              />
+            </Flex>
+          </Stack>
         </Form>
       )}
     </Formik>
