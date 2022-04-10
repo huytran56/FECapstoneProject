@@ -1,31 +1,23 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  VStack,
-  Button,
-  Stack,
-  Divider,
-  FormControl,
-} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "@app/index";
 import {
+  Button,
+  Divider,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
+import { ModalGeneral } from "@components/ui/index";
+import {
   adminAction,
-  selectAccountList,
-  selectCurrentEditAccount,
   selectIsAddNewState,
-  selectUserInfo,
   selectVoucherList,
 } from "@store/admin";
 import React, { useEffect } from "react";
-import { ModalGeneral } from "@components/ui/index";
-import { AddStaff } from "@components/ui/index";
-import { EditAccount } from "./edit-account";
 import { AddVoucher } from "./add-voucher";
 import { EditVoucher } from "./edit-voucher";
 
@@ -33,7 +25,7 @@ export function AdminVoucher() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(adminAction.preSetVoucherList({}));
-  }, []);
+  }, [dispatch]);
   const voucherListSeclector = useAppSelector(selectVoucherList);
   console.log(voucherListSeclector);
   const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
@@ -94,7 +86,7 @@ export function AdminVoucher() {
         <Tbody>
           {voucherListSeclector
             ? voucherListSeclector.map((voucher, index) => (
-                <Tr>
+                <Tr key={index}>
                   <Td>{voucher.id}</Td>
                   <Td>{voucher.code}</Td>
                   <Td>{voucher.name}</Td>

@@ -17,7 +17,7 @@ const NavItem = ({ icon, numberIndex, children, ...rest }: NavItemProps) => {
 
   useEffect(() => {
     setIsActive(numberIndex === pageIndexSelector);
-  }, [pageIndexSelector]);
+  }, [pageIndexSelector, numberIndex]);
   return (
     <Flex
       align="center"

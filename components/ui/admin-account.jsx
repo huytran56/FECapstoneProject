@@ -1,40 +1,32 @@
-   
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  VStack,
-  Button,
-  Stack,
-  Divider,
-  FormControl,
-} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "@app/index";
+import {
+  Button,
+  Divider,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
+import { AddStaff, ModalGeneral } from "@components/ui/index";
 import {
   adminAction,
   selectAccountList,
-  selectCurrentEditAccount,
   selectIsAddNewState,
-  selectUserInfo,
 } from "@store/admin";
 import { useEffect } from "react";
-import { ModalGeneral } from "@components/ui/index";
-import { AddStaff } from "@components/ui/index";
 import { EditAccount } from "./edit-account";
 
 export function AdminAccount() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(adminAction.preSetAccountList());
-  }, []);
+  }, [dispatch]);
   const accountListSeclector = useAppSelector(selectAccountList);
   const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
-  
 
   const handleOnClickEditButton = (account) => {
     dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
@@ -86,7 +78,7 @@ export function AdminAccount() {
         <Tbody>
           {accountListSeclector
             ? accountListSeclector.map((account, index) => (
-                <Tr>
+                <Tr key={index}>
                   <Td>{index + 1}</Td>
                   <Td>{account.username}</Td>
                   <Td>{account.first_name}</Td>

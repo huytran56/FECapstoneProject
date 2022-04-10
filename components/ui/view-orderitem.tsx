@@ -1,31 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@app/hook";
-import {
-  FormControl,
-  Stack,
-  FormLabel,
-  Input,
-  HStack,
-  VStack,
-  Box,
-  Select,
-  Text,
-  Button,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  OrderedList,
-} from "@chakra-ui/react";
-import {
-  adminAction,
-  selectCurrentEditAccount,
-  selectCurrentOrderItem,
-} from "@store/admin";
-import { Field, Form, Formik } from "formik";
+import { Stack, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { selectCurrentOrderItem } from "@store/admin";
 import React from "react";
-import { TextField } from ".";
 
 export function ViewOrder() {
   const dispatch = useAppDispatch();
@@ -46,7 +22,7 @@ export function ViewOrder() {
         </Thead>
         <Tbody>
           {currentOrderItem.map((orderItem, index) => (
-            <Tr>
+            <Tr key={index}>
               <Td>{orderItem.orderId}</Td>
               <Td>{orderItem.price}</Td>
               <Td>{orderItem.productSKUId}</Td>

@@ -7,6 +7,6 @@ export default function DashBoardPage() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(adminAction.preSetUserInfo({}));
-  }, []);
+  }, [dispatch]);
   return <DashBoard />;
 }

@@ -53,7 +53,7 @@ export function EditAdmin() {
           adminEditInformation: userInfoSelector,
         })
       );
-  }, [userInfoSelector]);
+  }, [userInfoSelector, dispatch]);
 
   const onClickChangePassword = () => {
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));

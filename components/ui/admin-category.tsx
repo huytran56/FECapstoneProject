@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "@app/hook";
 import {
   Button,
   Divider,
-  HStack,
   Stack,
   Table,
   Tbody,
@@ -21,7 +20,6 @@ import {
 import React, { useEffect } from "react";
 import { ModalGeneral } from ".";
 import { AddCategory } from "./add-category";
-import { AddStaff } from "./add-staff";
 import { EditCategory } from "./edit-category";
 
 export function AdminCategory() {
@@ -31,7 +29,7 @@ export function AdminCategory() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(adminAction.preSetCategoryList({}));
-  }, []);
+  }, [dispatch]);
 
   const handleOnClickEditButton = (category) => {
     dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
@@ -74,7 +72,7 @@ export function AdminCategory() {
         </Thead>
         <Tbody>
           {categoryListSelector.map((c, index) => (
-            <Tr>
+            <Tr key={index}>
               <Td>{index + 1}</Td>
               <Td>{c.category_name}</Td>
               <Td>{c.is_deleted ? "true" : "false"}</Td>

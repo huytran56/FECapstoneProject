@@ -1,49 +1,32 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  VStack,
-  Button,
-  Stack,
-  Divider,
-  FormControl,
-  Text,
-  Box,
-  HStack,
-  Input,
-  Image,
-} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "@app/index";
 import {
+  Button,
+  Divider,
+  HStack,
+  Image,
+  Input,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
+import { AddProduct, ModalGeneral, ProductDetail } from "@components/ui/index";
+import {
   adminAction,
-  selectAccountList,
-  selectCurrentEditAccount,
   selectCurrentProduct,
   selectIsAddNewState,
   selectIsSearchKeyword,
   selectOpenModalProduct,
-  selectOrderList,
   selectPaginationIndex,
   selectProductList,
   selectSearchKeyWord,
-  selectUserInfo,
-  selectVoucherList,
 } from "@store/admin";
 import React, { useEffect } from "react";
-import { AddProduct, ModalGeneral, ProductDetail } from "@components/ui/index";
-import { AddStaff } from "@components/ui/index";
-import { EditAccount } from "./edit-account";
-import { AddVoucher } from "./add-voucher";
-import { EditVoucher } from "./edit-voucher";
-import { ViewOrder } from "./view-orderitem";
 import { ChangeStatus } from "./change-status-order";
-import { isFulfilled } from "@reduxjs/toolkit";
-import { handleSearchProduct } from "@api/auth-api";
 
 export function AdminProduct() {
   const dispatch = useAppDispatch();
@@ -60,7 +43,7 @@ export function AdminProduct() {
         paginationIndex: paginationIndexSelector,
       })
     );
-  }, [paginationIndexSelector]);
+  }, [paginationIndexSelector, dispatch]);
   const handleOnClickEditButton = (voucher) => {
     // dispatch(adminAction.setOpenModalProduct({ openModalProduct: 3 }));
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));

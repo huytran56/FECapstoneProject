@@ -1,43 +1,31 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  VStack,
-  Button,
-  Stack,
-  Divider,
-  FormControl,
-  Text,
-} from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "@app/index";
 import {
+  Button,
+  Divider,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from "@chakra-ui/react";
+import { ModalGeneral } from "@components/ui/index";
+import {
   adminAction,
-  selectAccountList,
-  selectCurrentEditAccount,
   selectIsAddNewState,
   selectOrderList,
-  selectUserInfo,
-  selectVoucherList,
 } from "@store/admin";
 import React, { useEffect } from "react";
-import { ModalGeneral } from "@components/ui/index";
-import { AddStaff } from "@components/ui/index";
-import { EditAccount } from "./edit-account";
-import { AddVoucher } from "./add-voucher";
-import { EditVoucher } from "./edit-voucher";
-import { ViewOrder } from "./view-orderitem";
 import { ChangeStatus } from "./change-status-order";
+import { ViewOrder } from "./view-orderitem";
 
 export function AdminOrder() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(adminAction.preSetOrderList({}));
-  }, []);
+  }, [dispatch]);
   const orderListSeclector = useAppSelector(selectOrderList);
   const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
 

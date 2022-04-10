@@ -55,7 +55,7 @@ export function ChangePasswordForm() {
         isClosable: true,
       });
     }
-  }, [isChangePasswordSuccessSelector]);
+  }, [isChangePasswordSuccessSelector, toast]);
 
   return (
     <Formik
