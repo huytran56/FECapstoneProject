@@ -1,4 +1,12 @@
-import { IAccount, ICategory, IEditVoucher, IVoucher } from "@models/index";
+import {
+  IAccount,
+  ICategory,
+  IChangeStatus,
+  IEditVoucher,
+  IOrder,
+  IProduct,
+  IVoucher,
+} from "@models/index";
 import axiosClient from "./axios-client";
 
 interface ILoginPayLoad {
@@ -17,6 +25,7 @@ export interface ICreateAccountPayLoad {
   username: string;
 }
 export interface IUserInformationRes {
+  id?: string;
   username: string;
   email: string;
   first_name: string;
@@ -24,7 +33,12 @@ export interface IUserInformationRes {
   phone_number: string;
   gender_id: number;
   birthday: string;
-  roles: null;
+  roles?: null;
+}
+export interface IChangePasswordPayload {
+  newPassword: string;
+  oldPassword: string;
+  repeatNewPassword: string;
 }
 export interface ICategoryPayLoad {
   category_name: string;
@@ -48,7 +62,6 @@ export interface IDeleteAccount {
 interface ILoginRes {
   success: boolean;
   messege: string;
-  token: object;
 }
 export const handleSignIn = async ({
   password,
@@ -57,9 +70,19 @@ export const handleSignIn = async ({
   try {
     const url = "/auth/signin";
     const res = await axiosClient.post(url, { password, usernameOrEmail });
-    return { success: true, messege: "Login success", token: res };
+    return { success: true, messege: "Login success" };
   } catch (error) {
-    return { success: false, messege: "Login fail", token: undefined };
+    return { success: false, messege: "Login fail" };
+  }
+};
+
+export const handleSignOut = async (): Promise<boolean> => {
+  try {
+    const url = "/auth/signout";
+    const res = await axiosClient.post(url);
+    return true;
+  } catch (error) {
+    return false;
   }
 };
 
@@ -262,5 +285,122 @@ export const handleEditVoucher = async ({
     return res.data;
   } catch (error) {
     return console.log(error);
+  }
+};
+export const handleDeleteVoucher = async ({ id }: IVoucher) => {
+  try {
+    const url = `/voucher/delete/${id}`;
+    const res = await axiosClient.delete(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleChangeActivate = async ({ id }: IVoucher) => {
+  try {
+    const url = `/voucher/activation/${id}`;
+    const res = await axiosClient.put(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleGetOrder = async (): Promise<[IOrder]> => {
+  try {
+    const url = "/admin/order/";
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleChangeStatus = async ({
+  id,
+  orderStatus,
+  paymentStatus,
+}: IChangeStatus) => {
+  try {
+    console.log(id, orderStatus, paymentStatus);
+    const url = `/admin/order/change_status/${id}`;
+    const res = await axiosClient.put(url, null, {
+      params: { orderStatus, paymentStatus },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handlerUpdateUserInformation = async ({
+  username,
+  email,
+  first_name,
+  last_name,
+  phone_number,
+  gender_id,
+  birthday,
+}: IUserInformationRes): Promise<boolean> => {
+  try {
+    const url = `/user/profile/updateInfo`;
+    const res = await axiosClient.post(url, {
+      first_name,
+      last_name,
+      phone_number,
+      gender_id,
+      birthday,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const handlerChangePassword = async ({
+  newPassword,
+  oldPassword,
+  repeatNewPassword,
+}: IChangePasswordPayload): Promise<boolean> => {
+  try {
+    const url = `/user/changePassword`;
+    const res = await axiosClient.post(url, {
+      newPassword,
+      oldPassword,
+      repeatNewPassword,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleGetProduct = async (fromIndex): Promise<[IProduct]> => {
+  try {
+    const url = `/product/web/listAllProductIncludeImage/${fromIndex}`;
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleSearchProduct = async ({
+  keyword,
+}: {
+  keyword: string;
+}): Promise<[IProduct]> => {
+  try {
+    const url = `/product/search`;
+    const res = await axiosClient.get(url, { params: { keyword } });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleDeleteProduct = async ({ product_id }: IProduct) => {
+  try {
+    const id = product_id;
+    console.log(id);
+    const url = `/product/admin/deleteProductById/${id}`;
+    const res = await axiosClient.delete(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };

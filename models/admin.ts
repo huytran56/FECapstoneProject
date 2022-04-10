@@ -39,3 +39,56 @@ export interface IEditVoucher {
   name: string;
   type: string;
 }
+export interface IOrder {
+  id: number;
+  orderStatus: string;
+  username: string;
+  paymentStatus: string;
+  payment: number;
+  orderItemDtos: IOrderItemDtos[];
+  subTotal: number;
+  voucherCode: string;
+  deliveryFeeTotal: number;
+  paymentTotal: number;
+  orderDate: string;
+  paymentDate: string;
+  addressId: number;
+}
+export interface IOrderItemDtos {
+  orderId: number;
+  productSKUId: number;
+  quantity: number;
+  price: number;
+}
+export interface IChangeStatus {
+  id: number;
+  orderStatus: string;
+  paymentStatus: string;
+}
+export interface IProduct {
+  product_id: string;
+  product_status_id: string;
+  product_name: string;
+  search_word: string;
+  price: number;
+  imageUrl: string;
+}
+
+export interface IProductDetail {
+    product_id: string;
+    product_status_id: string;
+    product_name: string;
+    description_list: string,
+    description_details: string,
+    price: number;
+    imageUrl: string;
+}
+export interface ICreateProduct {
+    fileImage: string[],
+    product_id: string,
+    product_status_id: string,
+    product_name: string,
+    description_list: string,
+    description_details: string,
+    search_word: string
+}

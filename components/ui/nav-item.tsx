@@ -33,7 +33,15 @@ const NavItem = ({ icon, numberIndex, children, ...rest }: NavItemProps) => {
       {...rest}
       backgroundColor={isActive ? "cyan.400" : ""}
       color={isActive ? "white" : "black"}
-      onClick={() => dispatch(adminAction.setPageIndex({pageIndex: numberIndex}))}
+      onClick={() => {
+        if (numberIndex === 3) {
+          dispatch(
+            adminAction.setSearchingKeyWord({ isSearchingProduct: true })
+          );
+          dispatch(adminAction.setPaginationIndex({ paginationIndex: 0 }));
+        }
+        dispatch(adminAction.setPageIndex({ pageIndex: numberIndex }));
+      }}
     >
       {icon && (
         <Icon

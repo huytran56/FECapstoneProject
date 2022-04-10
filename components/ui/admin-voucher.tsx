@@ -50,10 +50,17 @@ export function AdminVoucher() {
     dispatch(adminAction.setIsAddNewState({ isAddNew: true }));
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
   };
-  const handleOnClickDeleteButton = (account) => {
+  const handleOnClickDeleteButton = (voucher) => {
     dispatch(
-      adminAction.setDeleteAccount({
-        deleteAccountPayLoad: { username: account.username },
+      adminAction.setDeleteVoucher({
+        deleteVoucherPayLoad: { id: voucher.id },
+      })
+    );
+  };
+  const handleOnClickChangeActivateButton = (voucher) => {
+    dispatch(
+      adminAction.setChangeActivateVoucher({
+        changeActivateVoucherPayLoad: { id: voucher.id },
       })
     );
   };
@@ -120,7 +127,9 @@ export function AdminVoucher() {
                         minWidth="100"
                         marginTop="2"
                         colorScheme="yellow"
-                        onClick={() => handleOnClickDeleteButton(voucher)}
+                        onClick={() =>
+                          handleOnClickChangeActivateButton(voucher)
+                        }
                       >
                         Change Activation
                       </Button>

@@ -1,3 +1,4 @@
+   
 import {
   Table,
   Thead,
@@ -36,7 +37,6 @@ export function AdminAccount() {
   
 
   const handleOnClickEditButton = (account) => {
-    console.log(account);
     dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
     dispatch(

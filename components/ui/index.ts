@@ -16,4 +16,11 @@ export * from "./add-staff";
 export * from "./edit-account";
 export * from "./admin-category";
 export * from "./edit-category";
-export * from "./admin-voucher"
+export * from "./edit-admin";
+export * from "./change-password-form";
+export * from "./admin-voucher";
+export * from "./edit-admin";
+export * from "./change-password-form";
+export * from "./admin-product";
+export * from "./product-detail";
+export * from "./add-product";

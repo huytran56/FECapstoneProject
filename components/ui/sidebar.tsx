@@ -35,7 +35,13 @@ import {
 import { IconType } from "react-icons";
 import NavItem from "./nav-item";
 import { useAppDispatch, useAppSelector } from "@app/hook";
-import { adminAction, selectUserInfo } from "@store/admin";
+import {
+  adminAction,
+  selectIsSearchKeyword,
+  selectUserInfo,
+} from "@store/admin";
+import { handleSignOut } from "@api/auth-api";
+import { useRouter } from "next/router";
 
 interface LinkItemProps {
   name: string;
@@ -58,6 +64,7 @@ export default function SidebarWithHeader({
   children: ReactNode;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box minH="100vh">
       <SidebarContent
@@ -91,6 +98,9 @@ interface SidebarProps extends BoxProps {
 }
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const isSearchKeywordSelector = useAppSelector(selectIsSearchKeyword);
+  const dispatch = useAppDispatch();
+
   return (
     <Box
       transition="3s ease"
@@ -126,12 +136,13 @@ interface MobileProps extends FlexProps {
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(adminAction.preSetUserInfo({}));
-  }, []);
+  const router = useRouter();
   const userInfoSelector = useAppSelector(selectUserInfo);
-  console.log(userInfoSelector);
+  const handleOnClickSignOut = () => {
+    dispatch(adminAction.preSignout({}));
+    router.push("/signin");
+  };
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -206,7 +217,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={handleOnClickSignOut}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
