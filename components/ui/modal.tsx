@@ -24,7 +24,7 @@ export function ModalGeneral({ children }: { children: ReactNode }) {
       <Modal isOpen={isOpenModalSelector} onClose={handleOnClose} size="xl">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader></ModalHeader>
           <ModalCloseButton />
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
