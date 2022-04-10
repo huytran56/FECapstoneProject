@@ -8,6 +8,7 @@ import { AdminProduct } from "@components/ui/admin-product";
 
 export const DashBoard = () => {
   const pageIndexSelector = useAppSelector(selectNumberIndex);
+
   return (
     <SidebarWithHeader>
       {pageIndexSelector === 2 ? (

@@ -9,6 +9,7 @@ export interface IAccount {
   gender_id: number;
   birthday: string;
   roles: role[];
+  id?: string;
 }
 
 export interface ICategory {
