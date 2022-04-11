@@ -24,3 +24,4 @@ export * from "./change-password-form";
 export * from "./admin-product";
 export * from "./product-detail";
 export * from "./add-product";
+export * from "./edit-product";

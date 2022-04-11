@@ -114,7 +114,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Online Admin
+          SOS Admin
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -169,7 +169,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        SOS Admin
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>

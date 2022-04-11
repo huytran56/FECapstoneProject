@@ -114,7 +114,7 @@ export const Carousel = ({ children, gap, header }) => {
 
   return (
     <VStack>
-      <Text my={3} mr="auto" px={3}>
+      <Text as="h1" my={3} mr="auto" px={3}>
         {header}
       </Text>
       <Slider {...sliderProps}>
@@ -256,7 +256,6 @@ const Track = ({
   const handleDragStart = () => setDragStartPosition(positions[activeItem]);
 
   const handleDragEnd = (_, info) => {
-
     const distance = info.offset.x;
     const velocity = info.velocity.x * multiplier;
     const direction = velocity < 0 || distance < 0 ? 1 : -1;

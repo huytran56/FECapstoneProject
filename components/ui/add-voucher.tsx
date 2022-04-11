@@ -4,8 +4,18 @@ import { adminAction } from "@store/admin";
 import { Form, Formik } from "formik";
 import React from "react";
 import { TextField } from ".";
+import * as Yup from "yup";
 
 export function AddVoucher() {
+  const validate = Yup.object({
+    code: Yup.string().required("Không được bỏ trống"),
+    name: Yup.string().required("Không được bỏ trống"),
+    description: Yup.string().required("Không được bỏ trống"),
+    minSpend: Yup.string().required("Không được bỏ trống"),
+    maxDiscount: Yup.number().required("Không được bỏ trống"),
+    discountAmount: Yup.string().required("Không được bỏ trống"),
+    active: Yup.string().required("Không được bỏ trống"),
+  });
   const dispatch = useAppDispatch();
   const handleOnClickAddNewVoucher = (value) => {
     console.log(value);
@@ -15,7 +25,6 @@ export function AddVoucher() {
       })
     );
   };
-  const validate = () => {};
   return (
     <Formik
       initialValues={{
@@ -31,6 +40,7 @@ export function AddVoucher() {
       }}
       //   validationSchema={validate}
       onSubmit={handleOnClickAddNewVoucher}
+      validationSchema={validate}
     >
       {({ setFieldValue }) => (
         <Form>

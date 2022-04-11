@@ -5,6 +5,9 @@ import {
   IEditVoucher,
   IOrder,
   IProduct,
+  IProductDetail,
+  IProductRecommend,
+  IProductSKU,
   IVoucher,
 } from "@models/index";
 import axiosClient from "./axios-client";
@@ -150,7 +153,7 @@ export const handleDeleteAccount = async ({ username }: IDeleteAccount) => {
 
 export const handleGetCategory = async (): Promise<ICategory> => {
   try {
-    const url = `/admin/category/listCategory`;
+    const url = `/category/listCategory`;
     const res = await axiosClient.get(url);
     return res.data;
   } catch (error) {
@@ -162,7 +165,7 @@ export const handleCreateCategory = async ({
   category_name,
 }: ICategoryPayLoad): Promise<boolean> => {
   try {
-    const url = `admin/category/createCategory`;
+    const url = `/category/admin/createCategory`;
     const res = await axiosClient.post(url, {
       category_name,
       is_deleted: false,
@@ -178,7 +181,7 @@ export const handlerUpdateCategory = async ({
   category_name,
 }: ICategoryPayLoad): Promise<boolean> => {
   try {
-    const url = `/admin/category/updateCategoryById/${id}`;
+    const url = `/category/admin/updateCategoryById/${id}`;
     console.log(url);
     const res = await axiosClient.put(url, {
       id,
@@ -193,7 +196,7 @@ export const handlerUpdateCategory = async ({
 };
 export const handleDeleteCategory = async ({ id }: ICategoryPayLoad) => {
   try {
-    const url = `/admin/category/deleteCatgoryById/${id}`;
+    const url = `/category/admin/deleteCatgoryById/${id}`;
     const res = await axiosClient.delete(url);
     return res.data;
   } catch (error) {
@@ -342,6 +345,8 @@ export const handlerUpdateUserInformation = async ({
   try {
     const url = `/user/profile/updateInfo`;
     const res = await axiosClient.post(url, {
+      username,
+      email,
       first_name,
       last_name,
       phone_number,
@@ -402,5 +407,54 @@ export const handleDeleteProduct = async ({ product_id }: IProduct) => {
     return res.data;
   } catch (error) {
     console.log(error);
+  }
+};
+export const handleGetRecommendationList = async (): Promise<
+  [IProductRecommend]
+> => {
+  try {
+    const url = "/recommendation/list";
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleGetProductSKUList = async ({
+  product_id,
+}: IProduct): Promise<[IProductSKU]> => {
+  try {
+    const id = product_id;
+    const url = `/productSKU/getSKUByProductId/${id}`;
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleEditProduct = async ({
+  product_id,
+  description_details,
+  description_list,
+  price,
+  product_name,
+  product_status_id,
+  search_word,
+}: IProductDetail): Promise<boolean> => {
+  try {
+    const id = product_id;
+    const url = `/product/admin/updateProductById/${id}`;
+    const res = await axiosClient.put(url, {
+      description_details,
+      description_list,
+      price,
+      product_name,
+      product_status_id,
+      search_word,
+    });
+    return true;
+  } catch (error) {
+    return false;
   }
 };

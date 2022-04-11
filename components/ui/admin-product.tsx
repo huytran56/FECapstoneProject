@@ -27,6 +27,7 @@ import {
 } from "@store/admin";
 import React, { useEffect } from "react";
 import { ChangeStatus } from "./change-status-order";
+import { EditProduct } from "./edit-product";
 
 export function AdminProduct() {
   const dispatch = useAppDispatch();
@@ -100,12 +101,19 @@ export function AdminProduct() {
     dispatch(adminAction.setCurrentProduct({ currentProduct: product }));
   }
   function handleOnClickDelete(product) {
-    console.log(product);
     dispatch(
       adminAction.setDeleteProduct({
         deleteProductPayload: { product_id: product.product_id },
       })
     );
+  }
+  function handleOnClickEditProduct(product) {
+    console.log(product);
+    dispatch(adminAction.setOpenModalProduct({ openModalProduct: 4 }));
+    dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
+    dispatch(adminAction.setCurrentProduct({ currentProduct: product }));
+
+    console.log(currenProduct);
   }
   return (
     <Stack p={4} borderRadius="8px" border="1px solid #d8d8d8">
@@ -117,6 +125,8 @@ export function AdminProduct() {
             <ChangeStatus />
           ) : openModalProductSelector === 1 ? (
             <AddProduct />
+          ) : openModalProductSelector === 4 ? (
+            <EditProduct />
           ) : null}
         </ModalGeneral>
         <HStack justifyContent="space-between" w="100%">
@@ -185,18 +195,38 @@ export function AdminProduct() {
                       <Button
                         minWidth="100"
                         marginTop="2"
+                        width="170px"
                         colorScheme="red"
                         onClick={() => handleOnClickDelete(product)}
                       >
-                        Delete
+                        Xoá
                       </Button>
                       <Button
                         minWidth="100"
                         marginTop="2"
+                        w="170px"
+                        colorScheme="green"
+                        // onClick={() => handleOnClickDelete(product)}
+                      >
+                        Thêm thông tin chi tiết
+                      </Button>
+                      <Button
+                        minWidth="100"
+                        marginTop="2"
+                        w="170px"
                         colorScheme="blue"
                         onClick={() => handleOnClickViewProduct(product)}
                       >
-                        View Product Detail
+                        Xem cụ thể
+                      </Button>
+                      <Button
+                        minWidth="100"
+                        marginTop="2"
+                        w="170px"
+                        colorScheme="blue"
+                        onClick={() => handleOnClickEditProduct(product)}
+                      >
+                        Chỉnh sửa
                       </Button>
                     </VStack>
                   </Td>

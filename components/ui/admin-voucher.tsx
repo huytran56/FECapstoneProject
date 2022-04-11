@@ -105,7 +105,7 @@ export function AdminVoucher() {
                         colorScheme="green"
                         onClick={() => handleOnClickEditButton(voucher)}
                       >
-                        Edit Voucher
+                        Chỉnh sửa
                       </Button>
                       <Button
                         minWidth="100"
@@ -113,7 +113,7 @@ export function AdminVoucher() {
                         colorScheme="red"
                         onClick={() => handleOnClickDeleteButton(voucher)}
                       >
-                        Delete
+                        Xoá
                       </Button>
                       <Button
                         minWidth="100"
@@ -123,7 +123,7 @@ export function AdminVoucher() {
                           handleOnClickChangeActivateButton(voucher)
                         }
                       >
-                        Change Activation
+                        Đổi Activation
                       </Button>
                     </VStack>
                   </Td>

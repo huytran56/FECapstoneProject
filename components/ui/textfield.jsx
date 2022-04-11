@@ -14,7 +14,9 @@ export const TextField = ({ label, ...props }) => {
         {...field}
         {...props}
       />
-      <ErrorMessage name={field.name}></ErrorMessage>
+      <Text textColor="red">
+        <ErrorMessage name={field.name}></ErrorMessage>
+      </Text>
     </VStack>
   );
 };

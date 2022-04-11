@@ -22,6 +22,7 @@ import { TextField } from "./textfield";
 
 export function EditAdmin() {
   const dispatch = useAppDispatch();
+
   const handleOnClickEditAccount = (value) => {
     dispatch(
       adminAction.preUpdateAdminProfile({
@@ -65,7 +66,7 @@ export function EditAdmin() {
         <ChangePasswordForm />
       </ModalGeneral>
       <Button colorScheme="red" onClick={onClickChangePassword}>
-        Change Password
+        Đổi mật khẩu
       </Button>
       <Formik
         initialValues={initialValues}

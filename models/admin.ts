@@ -74,22 +74,47 @@ export interface IProduct {
   price: number;
   imageUrl: string;
 }
+export interface IProductRecommend {
+  product_id: string;
+  product_status_id: string;
+  product_name: string;
+  price: number;
+  imageUrl: string;
+}
 
+// export interface IProductDetail {
+//   product_id: string;
+//   product_status_id: string;
+//   product_name: string;
+//   description_list: string;
+//   description_details: string;
+//   price: number;
+//   imageUrl: string;
+// }
 export interface IProductDetail {
-    product_id: string;
-    product_status_id: string;
-    product_name: string;
-    description_list: string,
-    description_details: string,
-    price: number;
-    imageUrl: string;
+  product_id: string;
+  product_status_id: string;
+  product_name: string;
+  description_list: string;
+  description_details: string;
+  price: number;
+  search_word: string;
 }
 export interface ICreateProduct {
-    fileImage: string[],
-    product_id: string,
-    product_status_id: string,
-    product_name: string,
-    description_list: string,
-    description_details: string,
-    search_word: string
+  fileImage: string[];
+  product_id: string;
+  product_status_id: string;
+  product_name: string;
+  description_list: string;
+  description_details: string;
+  search_word: string;
+}
+export interface ICreateProductSKU {}
+export interface IProductSKU {
+  id: number;
+  stock: number;
+  sale_limit: number;
+  size: string;
+  is_deleted: boolean;
+  product_id: string;
 }

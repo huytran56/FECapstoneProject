@@ -1,16 +1,16 @@
 export const menu = [
   {
-    label: "Men",
+    label: "Trang chủ",
     smallMenuList: [
-      { label: "Sweeter", href: "/" },
-      { label: "Hoodie", href: "/" },
+      // { label: "Sweeter", href: "/" },
+      // { label: "Hoodie", href: "/" },
     ],
   },
   {
-    label: "Woman",
+    label: "Danh mục",
     smallMenuList: [
-      { label: "Sweeter", href: "/" },
-      { label: "Hoodie", href: "/" },
+      { label: "Áo Hoodie Đen", href: "/" },
+      { label: "Áo Blazer đẹp", href: "/" },
     ],
   },
 ];

@@ -23,7 +23,6 @@ import { TextField } from ".";
 export function EditVoucher() {
   const dispatch = useAppDispatch();
   const handleOnClickEditVoucher = (value) => {
-    console.log(value);
     dispatch(adminAction.preEditVoucher({ editVoucherPayLoad: value }));
   };
   const validate = () => {};

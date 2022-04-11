@@ -102,7 +102,7 @@ export function AdminAccount() {
                       colorScheme="twitter"
                       onClick={() => handleOnClickEditButton(account)}
                     >
-                      Edit Role
+                      Thay đổi Role
                     </Button>
                     <Button
                       minWidth="100"
@@ -110,7 +110,7 @@ export function AdminAccount() {
                       colorScheme="whatsapp"
                       onClick={() => handleOnClickDeleteButton(account)}
                     >
-                      Delete
+                      Xoá
                     </Button>
                   </Td>
                 </Tr>

@@ -4,8 +4,14 @@ import { adminAction } from "@store/admin";
 import { Form, Formik } from "formik";
 import React from "react";
 import { TextField } from ".";
+import * as Yup from "yup";
 
 export function AddProduct() {
+  const validate = Yup.object({
+    code: Yup.string().required("Không được bỏ trống"),
+    name: Yup.string().required("Không được bỏ trống"),
+    description: Yup.string().required("Không được bỏ trống"),
+  });
   const dispatch = useAppDispatch();
   const handleOnClickAddNewVoucher = (value) => {
     console.log(value);
@@ -15,7 +21,7 @@ export function AddProduct() {
       })
     );
   };
-  const validate = () => {};
+
   return (
     <Formik
       initialValues={{
@@ -31,6 +37,7 @@ export function AddProduct() {
       }}
       //   validationSchema={validate}
       onSubmit={handleOnClickAddNewVoucher}
+      validationSchema={validate}
     >
       {({ setFieldValue }) => (
         <Form>

@@ -6,6 +6,9 @@ import {
   IOrder,
   IOrderItemDtos,
   IProduct,
+  IProductDetail,
+  IProductRecommend,
+  IProductSKU,
   IVoucher,
 } from "@models/index";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -23,6 +26,7 @@ interface IInitialState {
   accountList: IAccount[];
   voucherList: IVoucher[];
   isOpenModal: boolean;
+  isOpenModalTwo: boolean;
   isAddNew: boolean;
   openModalProduct: number;
   currentEditAccount: IAccount;
@@ -41,12 +45,15 @@ interface IInitialState {
   searchKeyWord: string;
   isSearchingProduct: boolean;
   currentProduct: IProduct;
+  recommendationList: IProductRecommend[];
+  productSKUList: IProductSKU[];
 }
 export interface IAdminPayLoad {
   accountList?: IAccount[];
   voucherList?: IVoucher[];
   currentEditVoucher?: IEditVoucher;
   isOpenModal?: boolean;
+  isOpenModalTwo?: boolean;
   createStaffPayload?: ICreateAccountPayLoad;
   editRoleAccountPayload?: IEditRoleAccount;
   isAddNew?: boolean;
@@ -78,6 +85,9 @@ export interface IAdminPayLoad {
   currentProduct?: IProduct;
   deleteProductPayload?: IProduct;
   createProductPayload?: IProduct;
+  recommendationList?: IProductRecommend[];
+  productSKUList?: IProductSKU[];
+  editProductPayLoad?: IProductDetail;
 }
 
 const initialState: IInitialState = {
@@ -102,6 +112,9 @@ const initialState: IInitialState = {
   searchKeyWord: null,
   isSearchingProduct: true,
   currentProduct: null,
+  recommendationList: [],
+  productSKUList: [],
+  isOpenModalTwo: false,
 };
 
 const adminSlice = createSlice({
@@ -123,6 +136,9 @@ const adminSlice = createSlice({
     },
     setOpenModalProduct(state, action: PayloadAction<IAdminPayLoad>) {
       state.openModalProduct = action.payload.openModalProduct;
+    },
+    setIsOpenModalTwo(state, action: PayloadAction<IAdminPayLoad>) {
+      state.isOpenModalTwo = action.payload.isOpenModalTwo;
     },
     setCurrentEditAccount(state, action: PayloadAction<IAdminPayLoad>) {
       state.currentEditAccount = action.payload.currentEditAccount;
@@ -194,8 +210,16 @@ const adminSlice = createSlice({
     setCurrentProduct(state, action: PayloadAction<IAdminPayLoad>) {
       state.currentProduct = action.payload.currentProduct;
     },
-    setDeleteProduct(state, action: PayloadAction<IAdminPayLoad>){},
-
+    setDeleteProduct(state, action: PayloadAction<IAdminPayLoad>) {},
+    setRecommendationList(state, action: PayloadAction<IAdminPayLoad>) {
+      state.recommendationList = action.payload.recommendationList;
+    },
+    preSetCommendationList(state, action: PayloadAction<IAdminPayLoad>) {},
+    setProductSKUList(state, action: PayloadAction<IAdminPayLoad>) {
+      state.productSKUList = action.payload.productSKUList;
+    },
+    // preSetProductSKUList(state, action: PayloadAction<IAdminPayLoad>) {},
+    preEditProduct(state, action: PayloadAction<IAdminPayLoad>) {},
   },
 });
 
@@ -203,6 +227,8 @@ export const adminAction = adminSlice.actions;
 export const selectAccountList = (state: RootState) => state.admin.accountList;
 export const selectVoucherList = (state: RootState) => state.admin.voucherList;
 export const selectIsOpenModal = (state: RootState) => state.admin.isOpenModal;
+export const selectIsOpenModalTwo = (state: RootState) =>
+  state.admin.isOpenModalTwo;
 export const selectIsAddNewState = (state: RootState) => state.admin.isAddNew;
 export const selectCurrentEditAccount = (state: RootState) =>
   state.admin.currentEditAccount;
@@ -234,4 +260,9 @@ export const selectCurrentProduct = (state: RootState) =>
   state.admin.currentProduct;
 export const selectOpenModalProduct = (state: RootState) =>
   state.admin.openModalProduct;
+export const selectRecommendationList = (state: RootState) =>
+  state.admin.recommendationList;
+export const selectProductSKUList = (state: RootState) =>
+  state.admin.productSKUList;
+
 export const adminReducer = adminSlice.reducer;

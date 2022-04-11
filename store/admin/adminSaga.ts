@@ -8,12 +8,14 @@ import {
   handleDeleteCategory,
   handleDeleteProduct,
   handleDeleteVoucher,
+  handleEditProduct,
   handleEditRoleAccount,
   handleEditVoucher,
   handleGetAccount,
   handleGetCategory,
   handleGetOrder,
   handleGetProduct,
+  handleGetRecommendationList,
   handleGetVoucher,
   handlerChangePassword,
   handlerUpdateCategory,
@@ -26,7 +28,15 @@ import {
   IDeleteAccountRes,
   IUserInformationRes,
 } from "@api/auth-api";
-import { IAccount, ICategory, IOrder, IProduct, IVoucher } from "@models/admin";
+import {
+  IAccount,
+  ICategory,
+  IOrder,
+  IProduct,
+  IProductRecommend,
+  IProductSKU,
+  IVoucher,
+} from "@models/admin";
 import { put, takeLatest, call } from "@redux-saga/core/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IAdminPayLoad } from "@store/index";
@@ -316,6 +326,32 @@ function* deleteProduct(action: PayloadAction<IAdminPayLoad>) {
     console.log(error);
   }
 }
+
+function* getRecommendationList(action: PayloadAction<IAdminPayLoad>) {
+  //   console.log(action.payload.createStaffPayload);
+  try {
+    const recommendationList: IProductRecommend[] = yield call(
+      handleGetRecommendationList
+    );
+    yield put(adminAction.setRecommendationList({ recommendationList }));
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* editProduct(action: PayloadAction<IAdminPayLoad>) {
+  console.log(action.payload.editVoucherPayLoad);
+  try {
+    const editVoucher: boolean = yield call(
+      handleEditProduct,
+      action.payload.editProductPayLoad
+    );
+    const productList: IProduct[] = yield call(handleGetProduct, 0);
+    yield put(adminAction.setProductList({ productList }));
+    yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+  } catch (error) {
+    console.log(error);
+  }
+}
 export function* adminSaga() {
   yield takeLatest(adminAction.preSetAccountList, getAccountList);
   yield takeLatest(adminAction.addNewStaff, createStaff);
@@ -339,4 +375,6 @@ export function* adminSaga() {
   yield takeLatest(adminAction.preSetProductList, getProductList);
   yield takeLatest(adminAction.preSearchProduct, getSearchProduct);
   yield takeLatest(adminAction.setDeleteProduct, deleteProduct);
+  yield takeLatest(adminAction.preSetCommendationList, getRecommendationList);
+  yield takeLatest(adminAction.preEditProduct, editProduct);
 }

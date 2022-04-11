@@ -102,7 +102,7 @@ export function AdminOrder() {
                         handleOnClickOrderItemButton(order.orderItemDtos)
                       }
                     >
-                      View OrderItem
+                      Xem OrderItem
                     </Button>
                   </Td>
                   <Td overflow="hidden" whiteSpace="nowrap">
@@ -130,7 +130,7 @@ export function AdminOrder() {
                         colorScheme="yellow"
                         onClick={() => handleOnClickChangeStatusButton(order)}
                       >
-                        Change Status
+                        Đổi trạng thái
                       </Button>
                     </VStack>
                   </Td>

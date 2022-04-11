@@ -15,13 +15,24 @@ import { adminAction } from "@store/admin";
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { TextField } from ".";
+import * as Yup from "yup";
 
 export function AddStaff() {
+  const validate = Yup.object({
+    birthday: Yup.string().required("Không được bỏ trống"),
+    email: Yup.string()
+      .required("Không được bỏ trống")
+      .email("Email không đúng"),
+    first_name: Yup.string().required("Không được bỏ trống"),
+    last_name: Yup.string().required("Không được bỏ trống"),
+    password: Yup.string().required("Không được bỏ trống"),
+    phone_number: Yup.string().required("Không được bỏ trống"),
+    username: Yup.string().required("Không được bỏ trống"),
+  });
   const dispatch = useAppDispatch();
   const handleOnClickAddNewStaff = (value) => {
     dispatch(adminAction.addNewStaff({ createStaffPayload: value }));
   };
-  const validate = () => {};
   return (
     <Formik
       initialValues={{
@@ -37,6 +48,7 @@ export function AddStaff() {
       }}
       //   validationSchema={validate}
       onSubmit={handleOnClickAddNewStaff}
+      validationSchema={validate}
     >
       {({ setFieldValue }) => (
         <Form>

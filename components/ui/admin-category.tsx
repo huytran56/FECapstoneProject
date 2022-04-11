@@ -87,7 +87,7 @@ export function AdminCategory() {
                     colorScheme="twitter"
                     onClick={() => handleOnClickEditButton(c)}
                   >
-                    Edit Category
+                    Chỉnh sửa
                   </Button>
                   <Button
                     minWidth="100"
@@ -95,7 +95,7 @@ export function AdminCategory() {
                     colorScheme="whatsapp"
                     onClick={() => handleOnClickDeleteButton(c)}
                   >
-                    Delete
+                    Xoá
                   </Button>
                 </VStack>
               </Td>
