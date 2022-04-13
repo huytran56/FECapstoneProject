@@ -28,6 +28,7 @@ import {
 import React, { useEffect } from "react";
 import { ChangeStatus } from "./change-status-order";
 import { EditProduct } from "./edit-product";
+import { ViewProduct } from "./view-product";
 
 export function AdminProduct() {
   const dispatch = useAppDispatch();
@@ -45,26 +46,18 @@ export function AdminProduct() {
       })
     );
   }, [paginationIndexSelector, dispatch]);
-  const handleOnClickEditButton = (voucher) => {
-    // dispatch(adminAction.setOpenModalProduct({ openModalProduct: 3 }));
-    dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
-    dispatch(
-      adminAction.setCurrentEditVoucher({ currentEditVoucher: voucher })
-    );
-  };
-  const handleOnClickAddNew = () => {
-    dispatch(adminAction.setOpenModalProduct({ openModalProduct: 1 }));
-    dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
-  };
-  const handleOnClickChangeStatusButton = (order) => {
-    // dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
-    dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
-    dispatch(
-      adminAction.setChangeStatusOrder({
-        currentChangeStatusOrder: order,
-      })
-    );
-  };
+  // const handleOnClickEditButton = (voucher) => {
+  //   // dispatch(adminAction.setOpenModalProduct({ openModalProduct: 3 }));
+  //   dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
+  //   dispatch(
+  //     adminAction.setCurrentEditVoucher({ currentEditVoucher: voucher })
+  //   );
+  // };
+  // const handleOnClickAddNew = () => {
+  //   dispatch(adminAction.setOpenModalProduct({ openModalProduct: 1 }));
+  //   dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
+  // };
+
   const handleOnClickOrderItemButton = (order) => {
     dispatch(adminAction.setIsAddNewState({ isAddNew: true }));
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
@@ -100,6 +93,7 @@ export function AdminProduct() {
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
     dispatch(adminAction.setCurrentProduct({ currentProduct: product }));
   }
+
   function handleOnClickDelete(product) {
     dispatch(
       adminAction.setDeleteProduct({
@@ -120,7 +114,7 @@ export function AdminProduct() {
       <VStack alignItems="flex-start">
         <ModalGeneral>
           {openModalProductSelector === 3 ? (
-            <ProductDetail />
+            <ViewProduct />
           ) : openModalProductSelector === 2 ? (
             <ChangeStatus />
           ) : openModalProductSelector === 1 ? (
@@ -157,11 +151,10 @@ export function AdminProduct() {
         <Thead>
           <Tr>
             <Th>Product_ID</Th>
-            <Th>Product_Status_ID</Th>
-            <Th>ProductName</Th>
-            <Th>SearchWord</Th>
-            <Th>Price</Th>
-            <Th>Image</Th>
+            <Th>Trạng thái sản phẩm</Th>
+            <Th>Tên sản phẩm</Th>
+            <Th>Giá tiền</Th>
+            <Th>Hình ảnh </Th>
             <Th>Thao tác</Th>
           </Tr>
         </Thead>
@@ -172,8 +165,12 @@ export function AdminProduct() {
                   <Td>{product.product_id}</Td>
                   <Td>{product.product_status_id}</Td>
                   <Td>{product.product_name}</Td>
-                  <Td>{product.search_word}</Td>
-                  <Td>{product.price}</Td>
+                  <Td>
+                    {product.price.toLocaleString("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </Td>
                   <Td>
                     <Image
                       src={product.imageUrl}

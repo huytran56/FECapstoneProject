@@ -6,7 +6,7 @@ import { BannerAdvertiser } from "../components/containers";
 import { ContainerBoxShadow } from "../components/containers";
 import { Carousel } from "../components/containers/carousel";
 import { productCategory } from "../util";
-import { CardCategory } from "../components/ui";
+import { CardCategory, CarouselImage } from "../components/ui";
 import { VStack } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
@@ -27,7 +27,8 @@ export default function Home() {
 
   return (
     <>
-      <BannerAdvertiser />
+      {/* <BannerAdvertiser /> */}
+      <CarouselImage />
       <Carousel gap={10} header="Sản phẩm được gợi ý bởi hệ thống">
         {recommendationListSelector.map((p, index) => (
           <CardCategory {...p} key={index} />

@@ -93,9 +93,17 @@ export function AdminVoucher() {
                   <Td>{voucher.description}</Td>
                   <Td>{voucher.type}</Td>
                   <Td overflow="hidden" whiteSpace="nowrap">
-                    {voucher.minSpend}
+                    {voucher.minSpend.toLocaleString("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </Td>
-                  <Td>{voucher.maxDiscount}</Td>
+                  <Td>
+                    {voucher.maxDiscount.toLocaleString("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </Td>
                   <Td>{voucher.discountAmount}</Td>
                   {voucher.active === false ? <Td>Không</Td> : <Td>Có</Td>}
                   <Td>

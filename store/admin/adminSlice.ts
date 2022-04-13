@@ -7,6 +7,7 @@ import {
   IOrderItemDtos,
   IProduct,
   IProductDetail,
+  IProductFull,
   IProductRecommend,
   IProductSKU,
   IVoucher,
@@ -34,6 +35,8 @@ interface IInitialState {
   currentEditVoucher: IEditVoucher;
   currentOrderItem: IOrderItemDtos[];
   currentChangeStatusOrder: IOrder;
+  currentProductSKU: IProductSKU;
+  currentViewOrder: IOrder;
   pageIndex: number;
   categoryList: ICategory[];
   userInfo: IUserInformationRes;
@@ -47,6 +50,7 @@ interface IInitialState {
   currentProduct: IProduct;
   recommendationList: IProductRecommend[];
   productSKUList: IProductSKU[];
+  productDetailFull: IProductFull;
 }
 export interface IAdminPayLoad {
   accountList?: IAccount[];
@@ -61,6 +65,8 @@ export interface IAdminPayLoad {
   deleteAccountPayLoad?: IDeleteAccount;
   currentEditAccount?: IAccount;
   currentEditCategory?: ICategory;
+  currentProductSKU?: IProductSKU;
+  editProductSKUPayLoad?: IProductSKU;
   pageIndex?: number;
   categoryList?: ICategory[];
   createCategoryPayload?: ICategoryPayLoad;
@@ -88,6 +94,9 @@ export interface IAdminPayLoad {
   recommendationList?: IProductRecommend[];
   productSKUList?: IProductSKU[];
   editProductPayLoad?: IProductDetail;
+  productDetailFull?: IProductFull;
+  productDetailFullPayLoad?: { product_id: string };
+  currentViewOrder?: IOrder;
 }
 
 const initialState: IInitialState = {
@@ -115,6 +124,9 @@ const initialState: IInitialState = {
   recommendationList: [],
   productSKUList: [],
   isOpenModalTwo: false,
+  productDetailFull: null,
+  currentProductSKU: null,
+  currentViewOrder: null,
 };
 
 const adminSlice = createSlice({
@@ -220,6 +232,18 @@ const adminSlice = createSlice({
     },
     // preSetProductSKUList(state, action: PayloadAction<IAdminPayLoad>) {},
     preEditProduct(state, action: PayloadAction<IAdminPayLoad>) {},
+    preSetProductDetailFull(state, action: PayloadAction<IAdminPayLoad>) {},
+    setProductDetailFull(state, action: PayloadAction<IAdminPayLoad>) {
+      state.productDetailFull = action.payload.productDetailFull;
+    },
+    setCurrentProductSKU(state, action: PayloadAction<IAdminPayLoad>) {
+      state.currentProductSKU = action.payload.currentProductSKU;
+    },
+    preEditProductSKU(state, action: PayloadAction<IAdminPayLoad>) {},
+    preSetCurrentViewOrder(state, action: PayloadAction<IAdminPayLoad>) {},
+    SetCurrentViewOrder(state, action: PayloadAction<IAdminPayLoad>) {
+      state.currentViewOrder = action.payload.currentViewOrder;
+    },
   },
 });
 
@@ -264,5 +288,10 @@ export const selectRecommendationList = (state: RootState) =>
   state.admin.recommendationList;
 export const selectProductSKUList = (state: RootState) =>
   state.admin.productSKUList;
-
+export const selectProductDetailFull = (state: RootState) =>
+  state.admin.productDetailFull;
+export const selectCurrentProductSKU = (state: RootState) =>
+  state.admin.currentProductSKU;
+export const selectCurrentViewOrder = (state: RootState) =>
+  state.admin.currentViewOrder;
 export const adminReducer = adminSlice.reducer;

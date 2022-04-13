@@ -66,7 +66,6 @@ export function AdminCategory() {
           <Tr>
             <Th>STT</Th>
             <Th>Danh mục</Th>
-            <Th>Is Delete</Th>
             <Th>Thao tac</Th>
           </Tr>
         </Thead>
@@ -75,7 +74,6 @@ export function AdminCategory() {
             <Tr key={index}>
               <Td>{index + 1}</Td>
               <Td>{c.category_name}</Td>
-              <Td>{c.is_deleted ? "true" : "false"}</Td>
               <Td>
                 <VStack
                   w="100%"
@@ -103,7 +101,6 @@ export function AdminCategory() {
           ))}
         </Tbody>
       </Table>
-      ;
     </Stack>
   );
 }

@@ -118,3 +118,23 @@ export interface IProductSKU {
   is_deleted: boolean;
   product_id: string;
 }
+
+export interface IProductImage {
+  product_image_id: number;
+  name: string;
+  url: string;
+  productId: null;
+  primaries: boolean;
+}
+export interface IProductFull {
+  category: ICategory[];
+  productImage: IProductImage[];
+  product_id: string;
+  product_status_id: string;
+  product_name: string;
+  description_list: string;
+  description_details: string;
+  price: number;
+  search_word: string;
+  productSKUs: IProductSKU[];
+}

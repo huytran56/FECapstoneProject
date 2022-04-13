@@ -1,5 +1,10 @@
 import SidebarWithHeader from "@components/ui/sidebar";
-import { AdminAccount, AdminVoucher, EditAdmin } from "@components/ui/index";
+import {
+  AdminAccount,
+  AdminVoucher,
+  CarouselImage,
+  EditAdmin,
+} from "@components/ui/index";
 import { useAppSelector } from "@app/hook";
 import { selectNumberIndex } from "@store/admin";
 import { AdminCategory } from "@components/ui";
@@ -17,6 +22,8 @@ export const DashBoard = () => {
         <AdminCategory />
       ) : pageIndexSelector === 3 ? (
         <AdminProduct />
+      ) : pageIndexSelector === 1 ? (
+        <CarouselImage />
       ) : pageIndexSelector === 6 ? (
         <AdminVoucher />
       ) : pageIndexSelector === 4 ? (

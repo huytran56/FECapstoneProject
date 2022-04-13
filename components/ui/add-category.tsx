@@ -38,11 +38,7 @@ export function AddCategory() {
           <Stack>
             <TextField label="Category" name="category_name" type="text" />
             <Button type="submit">Submit</Button>
-            <Button onClick={handleOnClickButton}> Add SKU</Button>
-            <ModalGeneralTwo>
-              <AddStaff />
-              <HStack></HStack>
-            </ModalGeneralTwo>
+           
           </Stack>
         </Form>
       )}

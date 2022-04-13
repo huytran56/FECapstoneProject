@@ -9,12 +9,14 @@ import {
   handleDeleteProduct,
   handleDeleteVoucher,
   handleEditProduct,
+  handleEditProductSKU,
   handleEditRoleAccount,
   handleEditVoucher,
   handleGetAccount,
   handleGetCategory,
   handleGetOrder,
   handleGetProduct,
+  handleGetProductDetailFull,
   handleGetRecommendationList,
   handleGetVoucher,
   handlerChangePassword,
@@ -28,11 +30,13 @@ import {
   IDeleteAccountRes,
   IUserInformationRes,
 } from "@api/auth-api";
+import { EditProductSKU } from "@components/ui";
 import {
   IAccount,
   ICategory,
   IOrder,
   IProduct,
+  IProductFull,
   IProductRecommend,
   IProductSKU,
   IVoucher,
@@ -339,7 +343,7 @@ function* getRecommendationList(action: PayloadAction<IAdminPayLoad>) {
   }
 }
 function* editProduct(action: PayloadAction<IAdminPayLoad>) {
-  console.log(action.payload.editVoucherPayLoad);
+  // console.log(action.payload.editVoucherPayLoad);
   try {
     const editVoucher: boolean = yield call(
       handleEditProduct,
@@ -348,6 +352,31 @@ function* editProduct(action: PayloadAction<IAdminPayLoad>) {
     const productList: IProduct[] = yield call(handleGetProduct, 0);
     yield put(adminAction.setProductList({ productList }));
     yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* getProductDetailFull(action: PayloadAction<IAdminPayLoad>) {
+  // console.log(action.payload.productDetailFullPayLoad);
+  try {
+    const productDetail: IProductFull = yield call(handleGetProductDetailFull, {
+      product_id: action.payload.productDetailFullPayLoad.toString(),
+    });
+    yield put(
+      adminAction.setProductDetailFull({ productDetailFull: productDetail })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* editProductSKU(action: PayloadAction<IAdminPayLoad>) {
+  console.log(action.payload.editVoucherPayLoad);
+  try {
+    const editVoucher: boolean = yield call(
+      handleEditProductSKU,
+      action.payload.editProductSKUPayLoad
+    );
+    yield put(adminAction.setIsOpenModalTwo({ isOpenModalTwo: false }));
   } catch (error) {
     console.log(error);
   }
@@ -377,4 +406,6 @@ export function* adminSaga() {
   yield takeLatest(adminAction.setDeleteProduct, deleteProduct);
   yield takeLatest(adminAction.preSetCommendationList, getRecommendationList);
   yield takeLatest(adminAction.preEditProduct, editProduct);
+  yield takeLatest(adminAction.preSetProductDetailFull, getProductDetailFull);
+  yield takeLatest(adminAction.preEditProductSKU, editProductSKU);
 }

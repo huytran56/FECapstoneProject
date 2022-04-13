@@ -6,6 +6,7 @@ import {
   IOrder,
   IProduct,
   IProductDetail,
+  IProductFull,
   IProductRecommend,
   IProductSKU,
   IVoucher,
@@ -452,6 +453,39 @@ export const handleEditProduct = async ({
       product_name,
       product_status_id,
       search_word,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleGetProductDetailFull = async ({
+  product_id,
+}: {
+  product_id: string;
+}): Promise<[IProductFull]> => {
+  try {
+    // const id = product_id;
+    const url = `/product/getProductById/${product_id}`;
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleEditProductSKU = async ({
+  id,
+  sale_limit,
+  size,
+  stock,
+}: IProductSKU): Promise<boolean> => {
+  try {
+    const url = `/admin/productSKU/updateProductBySKUId/${id}`;
+    const res = await axiosClient.put(url, {
+      sale_limit,
+      size,
+      stock,
     });
     return true;
   } catch (error) {

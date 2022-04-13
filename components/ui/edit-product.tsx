@@ -29,7 +29,6 @@ export function EditProduct() {
   };
   const validate = () => {};
   const currentProductSelector = useAppSelector(selectCurrentProduct);
-  console.log(currentProductSelector);
   return (
     <Formik
       initialValues={{
