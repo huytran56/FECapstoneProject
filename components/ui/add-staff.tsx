@@ -56,7 +56,7 @@ export function AddStaff() {
             <TextField label="Username" name="username" type="text" />
             <TextField label="Mật Khẩu" name="password" type="password" />
             <TextField label="Email" name="email" type="text" />
-            <TextField label="Ngày sinh" name="birthday" type="text" />
+            <TextField label="Ngày sinh" name="birthday" type="date" />
             <TextField label="Số điện thoại" name="phone_number" type="text" />
             <TextField label="Họ" name="last_name" type="text" />
             <TextField label="Tên" name="first_name" type="text" />
@@ -69,7 +69,7 @@ export function AddStaff() {
               <option value="1">Nữ</option>
             </Select>
             <FormLabel htmlFor="roles">Role Staff</FormLabel>
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
       )}

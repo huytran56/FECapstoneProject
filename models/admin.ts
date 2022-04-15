@@ -27,6 +27,7 @@ export interface IVoucher {
   minSpend: number;
   maxDiscount: number;
   discountAmount: number;
+  quantity: number;
   active: boolean;
 }
 export interface IEditVoucher {
@@ -101,13 +102,13 @@ export interface IProductDetail {
   search_word: string;
 }
 export interface ICreateProduct {
-  fileImage: string[];
+  fileImage: File[];
   product_id: string;
   product_status_id: string;
   product_name: string;
-  description_list: string;
   description_details: string;
-  search_word: string;
+  price: number;
+  category: string[];
 }
 export interface ICreateProductSKU {}
 export interface IProductSKU {

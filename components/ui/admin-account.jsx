@@ -1,4 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@app/index";
+import { AiFillEdit, AiOutlineDelete, AiFillPlusCircle } from "react-icons/ai";
+import { FcPlus } from "react-icons/fc";
 import {
   Button,
   Divider,
@@ -10,6 +12,7 @@ import {
   Thead,
   Tr,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import { AddStaff, ModalGeneral } from "@components/ui/index";
 import {
@@ -54,7 +57,7 @@ export function AdminAccount() {
           {isAddNewStateSelector ? <AddStaff /> : <EditAccount />}
         </ModalGeneral>
         <Button zIndex="0" colorScheme="linkedin" onClick={handleOnClickAddNew}>
-          Thêm tài khoản
+          <AiFillPlusCircle size="30px" />
         </Button>
       </VStack>
       <Divider orientation="horizontal" variant="solid" colorScheme="orange" />
@@ -64,15 +67,15 @@ export function AdminAccount() {
           <Tr>
             <Th>STT</Th>
             <Th>Tên tài khoản</Th>
-            <Th>Họ</Th>
-            <Th>Tên</Th>
+            {/* <Th>Họ</Th>
+            <Th>Tên</Th> */}
             <Th>Email</Th>
-            <Th overflow="hidden" whiteSpace="nowrap">
+            {/* <Th overflow="hidden" whiteSpace="nowrap">
               Ngày Sinh
-            </Th>
+            </Th> */}
             <Th>Giới tính</Th>
             <Th>Vai trò</Th>
-            <Th>Thao tac</Th>
+            <Th>Thao tác</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -80,38 +83,46 @@ export function AdminAccount() {
             ? accountListSeclector.map((account, index) => (
                 <Tr key={index}>
                   <Td>{index + 1}</Td>
-                  <Td>{account.username}</Td>
-                  <Td>{account.first_name}</Td>
+                  {/* <Td>{account.username}</Td>
+                  <Td>{account.first_name}</Td> */}
                   <Td>{account.last_name}</Td>
                   <Td>{account.email}</Td>
-                  <Td overflow="hidden" whiteSpace="nowrap">
+                  {/* <Td overflow="hidden" whiteSpace="nowrap">
                     {account.birthday}
-                  </Td>
+                  </Td> */}
                   {account.gender_id == "0" ? <Td>Nam</Td> : <Td>Nữ</Td>}
                   <Td>
                     {account.roles.map((role) => (
                       <>
-                        <span>{role}</span>
+                        <span>
+                          {role === "ROLE_ADMIN"
+                            ? "- Quản trị viên"
+                            : role === "ROLE_STAFF"
+                            ? "- Nhân viên"
+                            : role === "ROLE_USER"
+                            ? "- Người dùng"
+                            : null}
+                        </span>
                         <br />
                       </>
                     ))}
                   </Td>
                   <Td>
-                    <Button
-                      minWidth="100"
-                      colorScheme="twitter"
-                      onClick={() => handleOnClickEditButton(account)}
-                    >
-                      Thay đổi Role
-                    </Button>
-                    <Button
-                      minWidth="100"
-                      marginTop="2"
-                      colorScheme="whatsapp"
-                      onClick={() => handleOnClickDeleteButton(account)}
-                    >
-                      Xoá
-                    </Button>
+                    <HStack>
+                      <Button
+                        colorScheme="twitter"
+                        onClick={() => handleOnClickEditButton(account)}
+                      >
+                        <AiFillEdit fontSize={25} />
+                      </Button>
+                      <Button
+                        marginTop="2"
+                        colorScheme="whatsapp"
+                        onClick={() => handleOnClickDeleteButton(account)}
+                      >
+                        <AiOutlineDelete fontSize={25} />
+                      </Button>
+                    </HStack>
                   </Td>
                 </Tr>
               ))

@@ -52,9 +52,9 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Trang Chủ", icon: FiHome, numberIndex: 1 },
   { name: "Account", icon: FiTrendingUp, numberIndex: 2 },
   { name: "Sản phẩm", icon: FiCompass, numberIndex: 3 },
-  { name: "Order", icon: FiStar, numberIndex: 4 },
-  { name: "Danh mục", icon: FiSettings, numberIndex: 5 },
-  { name: "Voucher", icon: FiVolume, numberIndex: 6 },
+  { name: "Đơn Hàng", icon: FiStar, numberIndex: 4 },
+  { name: "Danh mục", icon: FiMenu, numberIndex: 5 },
+  { name: "Mã giảm giá", icon: FiVolume, numberIndex: 6 },
   { name: "Thông tin", icon: FiInfo, numberIndex: 7 },
 ];
 

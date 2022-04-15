@@ -25,14 +25,15 @@
       "@models/*":["./models/*"],
       "@hook/*":["./hook/*"],
       "@store/*":["./store/*"],
-      "@app/*":["./app/*"]    
+      "@app/*":["./app/*"],  
+      "@util/*":["./util/*"]    
       
     },
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx", "components/ui/authenticateMenu.jsx"
 , "components/ui/admin-account.jsx"  ],
   "exclude": [
     "node_modules"

@@ -1,12 +1,21 @@
 import { useAppDispatch, useAppSelector } from "@app/hook";
-import { VStack, Text, SimpleGrid, Box } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  SimpleGrid,
+  Box,
+  Button,
+  Stack,
+  HStack,
+} from "@chakra-ui/react";
 import {
   adminAction,
   selectPaginationIndex,
   selectProductList,
   selectRecommendationList,
 } from "@store/admin";
-import { useEffect } from "react";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+import React, { useEffect } from "react";
 import { flashSales } from "../../util";
 import { CardProduct } from "../ui";
 
@@ -22,6 +31,22 @@ export function ContainerBoxShadow() {
     );
   }, [paginationIndexSelector, dispatch]);
   console.log(productListSelector);
+  function handleOnClickNextButton() {
+    dispatch(
+      adminAction.setPaginationIndex({
+        paginationIndex: paginationIndexSelector + 1,
+      })
+    );
+  }
+
+  function handleOnClickPreviousButton() {
+    if (paginationIndexSelector === 0) return;
+    dispatch(
+      adminAction.setPaginationIndex({
+        paginationIndex: paginationIndexSelector - 1,
+      })
+    );
+  }
 
   return (
     <VStack
@@ -37,11 +62,23 @@ export function ContainerBoxShadow() {
       <Text as="h1" ml="10px">
         Sản phẩm
       </Text>
-      <SimpleGrid columns={4} gap={3}>
-        {productListSelector.map((product, index) => (
-          <CardProduct {...product} key={index} />
-        ))}
+      <SimpleGrid columns={3} gap={2}>
+        {productListSelector
+          ? productListSelector.map((product, index) => (
+              <Box key={index}>
+                <CardProduct {...product} key={index} />
+              </Box>
+            ))
+          : null}
       </SimpleGrid>
+      <HStack w="100%" alignItems="center">
+        <Button onClick={handleOnClickPreviousButton}>
+          <AiOutlineDoubleLeft />
+        </Button>
+        <Button onClick={handleOnClickNextButton}>
+          <AiOutlineDoubleRight />
+        </Button>
+      </HStack>
     </VStack>
   );
 }

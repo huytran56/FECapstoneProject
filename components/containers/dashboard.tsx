@@ -22,8 +22,6 @@ export const DashBoard = () => {
         <AdminCategory />
       ) : pageIndexSelector === 3 ? (
         <AdminProduct />
-      ) : pageIndexSelector === 1 ? (
-        <CarouselImage />
       ) : pageIndexSelector === 6 ? (
         <AdminVoucher />
       ) : pageIndexSelector === 4 ? (

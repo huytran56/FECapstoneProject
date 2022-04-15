@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@app/index";
 import {
+  Badge,
   Button,
   Divider,
   HStack,
@@ -24,6 +25,7 @@ import React, { useEffect } from "react";
 import { ChangeStatus } from "./change-status-order";
 import { ViewOrders } from "./view-order";
 import { ViewOrder } from "./view-orderitem";
+import { FaCircle, FaCheck, FaWindowClose, FaEye } from "react-icons/fa";
 
 export function AdminOrder() {
   const dispatch = useAppDispatch();
@@ -121,11 +123,10 @@ export function AdminOrder() {
         {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
         <Thead>
           <Tr>
-            <Th>ID</Th>
-            <Th>Trạng thái đơn hàng</Th>
+            <Th>Mã đơn hàng</Th>
+            <Th textAlign="center">Trạng thái đơn hàng</Th>
             {/* <Th>username</Th> */}
-            <Th>Trạng thái thanh toán</Th>
-            <Th></Th>
+            <Th textAlign="center">Trạng thái thanh toán</Th>
             {/* <Th>OrderItem</Th> */}
             {/* <Th>SubTotal</Th> */}
             {/* <Th>VoucherCode</Th> */}
@@ -135,50 +136,66 @@ export function AdminOrder() {
             {/* <Th>PaymentDate</Th> */}
             {/* <Th>AddressID</Th> */}
             <Th>Thao Tác </Th>
+            <Th></Th>
           </Tr>
         </Thead>
         <Tbody>
           {orderListSeclector
             ? orderListSeclector.map((order, index) => (
                 <Tr key={index}>
-                  <Td>{order.id}</Td>
-                  <Td>{order.orderStatus}</Td>
-                  {/* <Td>{order.username}</Td> */}
-                  <Td>
-                    {order.paymentStatus}
-                    {/*  */}
-                  </Td>
-                  <Td>
-                    {(order.orderStatus === "SUCCESSFUL" &&
-                      order.paymentStatus === "SUCCESSFUL") ||
-                    (order.orderStatus === "UNSUCCESSFUL" &&
-                      order.paymentStatus ===
-                        "UNSUCCESSFUL") ? null : order.orderStatus ===
-                      "CONFIRMED" ? (
-                      <Button
-                        colorScheme="green"
-                        onClick={() => handleOnClickComplete(order)}
-                      >
+                  <Td alignItems="center">{order.id}</Td>
+                  {order.orderStatus === "SUCCESSFUL" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="green" fontSize={15}>
                         Hoàn thành
-                      </Button>
-                    ) : (
-                      <VStack>
-                        <Button
-                          colorScheme="blue"
-                          onClick={() => handleOnClickConfirm(order)}
-                        >
-                          Xác nhận
-                        </Button>
-                        {order.paymentStatus === "SUCCESSFUL" ? null : (
-                          <Button
-                            colorScheme="red"
-                            onClick={() => handleOnClickCancel(order)}
-                          >
-                            Huỷ Đơn
-                          </Button>
-                        )}
-                      </VStack>
-                    )}
+                      </Badge>
+                    </Td>
+                  ) : order.orderStatus === "UNSUCCESSFUL" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="red" fontSize={15}>
+                        Đã huỷ
+                      </Badge>
+                    </Td>
+                  ) : order.orderStatus === "CONFIRMED" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="purple" fontSize={15}>
+                        Đã xác nhận
+                      </Badge>
+                    </Td>
+                  ) : order.orderStatus === "PENDING" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="yellow" fontSize={15}>
+                        Chờ xác nhận
+                      </Badge>
+                    </Td>
+                  ) : null}
+                  {/* <Td>{order.username}</Td> */}
+
+                  {order.paymentStatus === "PENDING" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="green" fontSize={15}>
+                        Chờ thanh toán
+                      </Badge>
+                    </Td>
+                  ) : order.paymentStatus === "SUCCESSFUL" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="green" fontSize={15}>
+                        Thành công
+                      </Badge>
+                    </Td>
+                  ) : order.paymentStatus === "UNSUCCESSFUL" ? (
+                    <Td textAlign="center">
+                      <Badge colorScheme="red" fontSize={15}>
+                        Không thành công
+                      </Badge>
+                    </Td>
+                  ) : null}
+
+                  <Td>
+                    {order.paymentTotal.toLocaleString("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </Td>
                   {/* <Td>
                     <Button
@@ -195,12 +212,7 @@ export function AdminOrder() {
                   </Td> */}
                   {/* <Td>{order.voucherCode}</Td> */}
                   {/* <Td>{order.deliveryFeeTotal}</Td> */}
-                  <Td>
-                    {order.paymentTotal.toLocaleString("it-IT", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
-                  </Td>
+
                   {/* <Td>{order.orderDate}</Td> */}
                   {/* <Td>{order.paymentDate}</Td> */}
                   {/* <Td>{order.addressId}</Td> */}
@@ -222,15 +234,49 @@ export function AdminOrder() {
                       >
                         Xem chi tiết đơn hàng
                       </Button> */}
-                      <Button
-                        minWidth="100"
-                        marginTop="2"
-                        colorScheme="yellow"
-                        onClick={() => handleOnclickViewOrderButton(order)}
-                      >
-                        Xem chi tiết đơn hàng
-                      </Button>
+                      <HStack>
+                        {(order.orderStatus === "SUCCESSFUL" &&
+                          order.paymentStatus === "SUCCESSFUL") ||
+                        (order.orderStatus === "UNSUCCESSFUL" &&
+                          order.paymentStatus ===
+                            "UNSUCCESSFUL") ? null : order.orderStatus ===
+                          "CONFIRMED" ? (
+                          <Button
+                            colorScheme="green"
+                            onClick={() => handleOnClickComplete(order)}
+                          >
+                            Hoàn thành
+                          </Button>
+                        ) : (
+                          <HStack>
+                            <Button
+                              colorScheme="blue"
+                              onClick={() => handleOnClickConfirm(order)}
+                            >
+                              <FaCheck />
+                            </Button>
+                            {order.paymentStatus === "SUCCESSFUL" ? null : (
+                              <Button
+                                colorScheme="red"
+                                onClick={() => handleOnClickCancel(order)}
+                              >
+                                <FaWindowClose />
+                              </Button>
+                            )}
+                          </HStack>
+                        )}
+                      </HStack>
                     </VStack>
+                  </Td>
+                  <Td>
+                    {" "}
+                    <Button
+                      marginTop="2"
+                      colorScheme="yellow"
+                      onClick={() => handleOnclickViewOrderButton(order)}
+                    >
+                      <FaEye />
+                    </Button>
                   </Td>
                 </Tr>
               ))

@@ -6,7 +6,7 @@ export function MainLayout({ children }) {
   return (
     <>
       <Center>
-        <Container maxWidth={{ lg: "3718px" }}>
+        <Container maxWidth={{ lg: "3000px" }}>
           <Stack minHeight="100vh">
             <NavigationBar />
             <Box as="main" flexGrow={1}>

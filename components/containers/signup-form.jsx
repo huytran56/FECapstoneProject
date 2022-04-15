@@ -1,4 +1,6 @@
 import React from "react";
+import { useAppDispatch } from "@app/hook";
+import { adminAction } from "@store/admin";
 import { Formik, Form } from "formik";
 import { TextField } from "../ui";
 import * as Yup from "yup";
@@ -15,30 +17,38 @@ import {
   Image,
   VStack,
   Text,
+  Select,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export const SignUp = () => {
   // let navigate = useNavigate()
 
   const validate = Yup.object({
-    firstname: Yup.string()
+    first_name: Yup.string().required("Không được để trống"),
+    last_name: Yup.string().required("Không được để trống"),
+    email: Yup.string()
+      .email("Email is invalid")
       .required("Không được để trống"),
-    lastName: Yup.string()
-      .required("Không được để trống"),
-    email: Yup.string().email("Email is invalid").required("Không được để trống"),
     password: Yup.string()
       .min(6, "Must be at least 6 characters")
       .required("Không được để trống"),
-    phone_number: Yup.string().required("Không được để trống")
+    phone_number: Yup.string().required("Không được để trống"),
+    username: Yup.string().required("Không được để trống"),
+    birthday: Yup.string().required("Không được để trống"),
   });
-
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const handleOnClickLogin = async (value) => {
-    const { email, password } = value;
-    const res = await signin(email, password);
-    console.log(res.data.roles);
-    if (res.data.roles == "ROLE_ADMIN") {
-      return navigate("/admin");
-    }
+    // const { email, password } = value;
+    // const res = await signin(email, password);
+    // console.log(res.data.roles);
+    // if (res.data.roles == "ROLE_ADMIN") {
+    //   return navigate("/admin");
+    // }
+    dispatch(adminAction.addNewStaff({ createStaffPayload: value }));
+    console.log("huy");
+    router.push("/signup-wait");
   };
 
   return (
@@ -57,7 +67,7 @@ export const SignUp = () => {
       validationSchema={validate}
       onSubmit={handleOnClickLogin}
     >
-      {(formik) => (
+      {({ setFieldValue }) => (
         <Form>
           <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
@@ -81,18 +91,29 @@ export const SignUp = () => {
                 </FormControl>
                 <FormControl id="birthday">
                   <FormLabel>Ngày Sinh</FormLabel>
-                  <TextField name="birthday" type="text" />
+                  <TextField name="birthday" type="date" />
                 </FormControl>
                 <FormControl id="password">
                   <FormLabel>Số điện thoại</FormLabel>
                   <TextField name="phone_number" type="number" />
+                </FormControl>
+                <FormControl id="gender_id">
+                  <FormLabel>Giới tính</FormLabel>
+                  <Select
+                    placeholder="Giới tính"
+                    name="gender_id"
+                    onChange={(e) => setFieldValue("gender_id", e.target.value)}
+                  >
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
+                  </Select>
                 </FormControl>
                 <FormControl id="ho">
                   <FormLabel>Họ</FormLabel>
                   <TextField name="last_name" type="text" />
                 </FormControl>
                 <FormControl id="ten">
-                  <FormLabel>Mật khẩu</FormLabel>
+                  <FormLabel>Tên</FormLabel>
                   <TextField name="first_name" type="text" />
                 </FormControl>
                 <Stack spacing={6}>

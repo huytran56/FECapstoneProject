@@ -25,6 +25,14 @@ import {
   selectProductList,
   selectSearchKeyWord,
 } from "@store/admin";
+import {
+  AiFillDelete,
+  AiFillEdit,
+  AiOutlineDelete,
+  AiOutlineSearch,
+  AiOutlineEye,
+  AiFillPlusCircle,
+} from "react-icons/ai";
 import React, { useEffect } from "react";
 import { ChangeStatus } from "./change-status-order";
 import { EditProduct } from "./edit-product";
@@ -57,7 +65,10 @@ export function AdminProduct() {
   //   dispatch(adminAction.setOpenModalProduct({ openModalProduct: 1 }));
   //   dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
   // };
-
+  function handleOnClickAddButton() {
+    dispatch(adminAction.setOpenModalProduct({ openModalProduct: 1 }));
+    dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
+  }
   const handleOnClickOrderItemButton = (order) => {
     dispatch(adminAction.setIsAddNewState({ isAddNew: true }));
     dispatch(adminAction.setIsOpenModal({ isOpenModal: true }));
@@ -124,8 +135,12 @@ export function AdminProduct() {
           ) : null}
         </ModalGeneral>
         <HStack justifyContent="space-between" w="100%">
-          <Button zIndex="0" colorScheme="linkedin">
-            Thêm Sản Phẩm
+          <Button
+            zIndex="0"
+            colorScheme="linkedin"
+            onClick={handleOnClickAddButton}
+          >
+            <AiFillPlusCircle size="20px" />
           </Button>
           <HStack w="40%" minW="400px">
             <Input
@@ -140,7 +155,7 @@ export function AdminProduct() {
               }
             />
             <Button colorScheme="orange" onClick={handleSearchProduct}>
-              Search
+              <AiOutlineSearch />
             </Button>
           </HStack>
         </HStack>
@@ -150,11 +165,11 @@ export function AdminProduct() {
         {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
         <Thead>
           <Tr>
-            <Th>Product_ID</Th>
+            <Th>Mã sản phẩm</Th>
             <Th>Trạng thái sản phẩm</Th>
             <Th>Tên sản phẩm</Th>
             <Th>Giá tiền</Th>
-            <Th>Hình ảnh </Th>
+            {/* <Th>Hình ảnh </Th> */}
             <Th>Thao tác</Th>
           </Tr>
         </Thead>
@@ -163,7 +178,11 @@ export function AdminProduct() {
             ? productListSelector.map((product, index) => (
                 <Tr key={index}>
                   <Td>{product.product_id}</Td>
-                  <Td>{product.product_status_id}</Td>
+                  {product.product_status_id === "instock" ? (
+                    <Td>Còn hàng</Td>
+                  ) : (
+                    <Td>Hết hàng </Td>
+                  )}
                   <Td>{product.product_name}</Td>
                   <Td>
                     {product.price.toLocaleString("it-IT", {
@@ -171,14 +190,14 @@ export function AdminProduct() {
                       currency: "VND",
                     })}
                   </Td>
-                  <Td>
+                  {/* <Td>
                     <Image
                       src={product.imageUrl}
                       alt={product.product_name}
                       w="100px"
                       h="100px"
                     />
-                  </Td>
+                  </Td> */}
                   <Td>
                     <VStack alignItems="flex-start">
                       {/* <Button
@@ -190,15 +209,15 @@ export function AdminProduct() {
                           Delete
                         </Button> */}
                       <Button
-                        minWidth="100"
+                        minWidth="20"
                         marginTop="2"
-                        width="170px"
+                        width="50px"
                         colorScheme="red"
                         onClick={() => handleOnClickDelete(product)}
                       >
-                        Xoá
+                        <AiFillDelete />
                       </Button>
-                      <Button
+                      {/* <Button
                         minWidth="100"
                         marginTop="2"
                         w="170px"
@@ -206,24 +225,24 @@ export function AdminProduct() {
                         // onClick={() => handleOnClickDelete(product)}
                       >
                         Thêm thông tin chi tiết
-                      </Button>
+                      </Button> */}
                       <Button
-                        minWidth="100"
+                        minWidth="20"
                         marginTop="2"
-                        w="170px"
-                        colorScheme="blue"
+                        w="50px"
+                        colorScheme="green"
                         onClick={() => handleOnClickViewProduct(product)}
                       >
-                        Xem cụ thể
+                        <AiOutlineEye />
                       </Button>
                       <Button
-                        minWidth="100"
+                        minWidth="20"
                         marginTop="2"
-                        w="170px"
+                        w="50px"
                         colorScheme="blue"
                         onClick={() => handleOnClickEditProduct(product)}
                       >
-                        Chỉnh sửa
+                        <AiFillEdit />
                       </Button>
                     </VStack>
                   </Td>

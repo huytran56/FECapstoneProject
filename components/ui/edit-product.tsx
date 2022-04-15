@@ -47,13 +47,13 @@ export function EditProduct() {
         <Form>
           <Stack>
             <TextField
-              label="Product ID"
+              label="Mã Sản phẩm"
               name="product_id"
               type="text"
               value={currentProductSelector.product_id}
             />
             <TextField
-              label="Active"
+              label="Trạng thái"
               name="product_status_id"
               type="text"
               value={
@@ -74,7 +74,7 @@ export function EditProduct() {
               }}
             />
             <TextField
-              label="Product Name"
+              label="Tên sản phẩm"
               name="product_name"
               type="text"
               value={

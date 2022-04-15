@@ -40,7 +40,7 @@ export function EditCategory() {
         <Form>
           <Stack>
             <TextField
-              label="Category"
+              label="Danh mục"
               name="category_name"
               type="text"
               value={currentEditCategorySelector?.category_name}
@@ -56,7 +56,7 @@ export function EditCategory() {
                 setFieldValue("category_name", e.target.value);
               }}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
       )}

@@ -8,6 +8,7 @@ export function NavigationButton({ label, smallMenuList }) {
       <MenuButton
         backgroundColor="white"
         as={Button}
+        fontSize={20}
         rightIcon={<ChevronDownIcon />}
       >
         {label}

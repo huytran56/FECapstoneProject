@@ -73,7 +73,7 @@ export function ChangePasswordForm() {
             <FormLabel as="legend">Mật khẩu cũ</FormLabel>
             <Input
               type="password"
-              placeholder="Enter old Password"
+              placeholder="Nhập mật khẩu cũ"
               name="oldPassword"
               onChange={(e) => {
                 setFieldValue("oldPassword", e.target.value);
@@ -82,7 +82,7 @@ export function ChangePasswordForm() {
             <FormLabel as="legend">Mật khẩu mới</FormLabel>
             <Input
               type="password"
-              placeholder="Enter new Password"
+              placeholder="Nhập mật khẩu mới"
               name="newPassword"
               onChange={(e) => {
                 setFieldValue("newPassword", e.target.value);
@@ -91,13 +91,13 @@ export function ChangePasswordForm() {
             <FormLabel as="legend">Nhập lại mật khẩu mới</FormLabel>
             <Input
               type="password"
-              placeholder="Enter new Password"
+              placeholder="Nhập lại mật khẩu mới"
               name="repeatNewPassword"
               onChange={(e) => {
                 setFieldValue("repeatNewPassword", e.target.value);
               }}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Xác nhận</Button>
           </VStack>
         </Form>
       )}

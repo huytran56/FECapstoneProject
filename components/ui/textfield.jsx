@@ -6,7 +6,9 @@ export const TextField = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <VStack alignItems="start" fontSize="13" fontFamily="body" width="100%">
-      <Text fontSize="16">{label}</Text>
+      <Text fontSize="16" fontWeight="bold">
+        {label}
+      </Text>
       <Input
         maxHeight="auto"
         variant="flushed"

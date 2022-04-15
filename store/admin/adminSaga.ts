@@ -2,6 +2,7 @@ import {
   handleChangeActivate,
   handleChangeStatus,
   handleCreateCategory,
+  handleCreateProduct,
   handleCreateStaffAccount,
   handleCreateVoucher,
   handleDeleteAccount,
@@ -381,6 +382,22 @@ function* editProductSKU(action: PayloadAction<IAdminPayLoad>) {
     console.log(error);
   }
 }
+function* createProduct(action: PayloadAction<IAdminPayLoad>) {
+  console.log(action.payload.createProductPayLoad);
+  try {
+    const res: boolean = yield call(
+      handleCreateProduct,
+      action.payload.createProductPayLoad
+    );
+    if (res) {
+      const productList: IProduct[] = yield call(handleGetVoucher);
+      yield put(adminAction.setProductList({ productList }));
+      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 export function* adminSaga() {
   yield takeLatest(adminAction.preSetAccountList, getAccountList);
   yield takeLatest(adminAction.addNewStaff, createStaff);
@@ -408,4 +425,5 @@ export function* adminSaga() {
   yield takeLatest(adminAction.preEditProduct, editProduct);
   yield takeLatest(adminAction.preSetProductDetailFull, getProductDetailFull);
   yield takeLatest(adminAction.preEditProductSKU, editProductSKU);
+  yield takeLatest(adminAction.preCreateProduct, createProduct);
 }

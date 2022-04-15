@@ -20,7 +20,7 @@ export function CardCategory({ product_name, price, imageUrl }) {
           alt={product_name}
         />
       </Link>
-      <Text>{product_name}</Text>
+      <Text textDecor="aqua">{product_name}</Text>
     </VStack>
   );
 }

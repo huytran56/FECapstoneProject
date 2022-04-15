@@ -2,6 +2,7 @@ import {
   IAccount,
   ICategory,
   IChangeStatus,
+  ICreateProduct,
   IEditVoucher,
   IOrder,
   IOrderItemDtos,
@@ -97,6 +98,7 @@ export interface IAdminPayLoad {
   productDetailFull?: IProductFull;
   productDetailFullPayLoad?: { product_id: string };
   currentViewOrder?: IOrder;
+  createProductPayLoad?: ICreateProduct;
 }
 
 const initialState: IInitialState = {
@@ -244,6 +246,7 @@ const adminSlice = createSlice({
     SetCurrentViewOrder(state, action: PayloadAction<IAdminPayLoad>) {
       state.currentViewOrder = action.payload.currentViewOrder;
     },
+    preCreateProduct(state, action: PayloadAction<IAdminPayLoad>) {},
   },
 });
 

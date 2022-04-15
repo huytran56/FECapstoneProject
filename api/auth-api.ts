@@ -1,7 +1,9 @@
 import {
   IAccount,
+  ICartItem,
   ICategory,
   IChangeStatus,
+  ICreateProduct,
   IEditVoucher,
   IOrder,
   IProduct,
@@ -463,14 +465,14 @@ export const handleGetProductDetailFull = async ({
   product_id,
 }: {
   product_id: string;
-}): Promise<[IProductFull]> => {
+}): Promise<[IProductFull] | false> => {
   try {
     // const id = product_id;
     const url = `/product/getProductById/${product_id}`;
     const res = await axiosClient.get(url);
     return res.data;
   } catch (error) {
-    console.log(error);
+    return false;
   }
 };
 
@@ -486,6 +488,100 @@ export const handleEditProductSKU = async ({
       sale_limit,
       size,
       stock,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleCreateProduct = async ({
+  fileImage,
+  product_id,
+  product_status_id,
+  product_name,
+  description_details,
+  price,
+  category,
+}: ICreateProduct): Promise<boolean> => {
+  try {
+    const url = `/product/admin/createProductAll`;
+    const formData = new FormData();
+    fileImage.forEach((file) => {
+      formData.append("fileImage", file);
+    });
+    formData.append("product_id", product_id);
+    formData.append("product_status_id", product_status_id);
+    formData.append("product_name", product_name);
+    formData.append("description_details", description_details);
+    formData.append("price", price.toString());
+    category.forEach((c) => {
+      formData.append("category", c);
+    });
+    console.log(formData);
+    const res = await axiosClient.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleGetCartItemList = async (): Promise<[ICartItem]> => {
+  try {
+    const url = "/cart/";
+    const res = await axiosClient.get(url);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleAddToCartItem = async ({
+  quantity,
+  price,
+  productSKUId,
+}: ICartItem): Promise<boolean> => {
+  try {
+    const url = `/cart/add`;
+    const res = await axiosClient.post(url, {
+      quantity,
+      price,
+      productSKUId,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleDeleteCartItem = async ({
+  id,
+}: {
+  id: Number;
+}): Promise<boolean> => {
+  console.log(id);
+  try {
+    const url = `/cart/delete/${id}`;
+    const res = await axiosClient.delete(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleChangeQuantityCart = async ({
+  id,
+  price,
+  productSKUId,
+  quantity,
+}: ICartItem): Promise<boolean> => {
+  try {
+    const url = `/cart/change_quantity`;
+    const res = await axiosClient.put(url, {
+      id,
+      price,
+      productSKUId,
+      quantity,
     });
     return true;
   } catch (error) {

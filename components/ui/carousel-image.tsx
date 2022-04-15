@@ -30,13 +30,14 @@ export function CarouselImage() {
 
   // These are the images used in the slide
   const cards = [
-    "https://images.unsplash.com/photo-1612852098516-55d01c75769a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1627875764093-315831ac12f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1571432248690-7fd6980a1ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+    "/Image/banner-3.jpg",
+    "/Image/banner-4.jpg",
+    "/Image/banner-5.jpg",
   ];
 
   return (
     <Box
+      marginTop="100px"
       position={"relative"}
       height={"600px"}
       width={"auto"}
@@ -55,9 +56,9 @@ export function CarouselImage() {
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
       />
       {/* Left Icon */}
-      <IconButton
+      {/* <IconButton
         aria-label="left-arrow"
-        colorScheme="messenger"
+        colorScheme="gray"
         borderRadius="full"
         position="absolute"
         left={side}
@@ -67,11 +68,11 @@ export function CarouselImage() {
         onClick={() => slider?.slickPrev()}
       >
         <BiLeftArrowAlt />
-      </IconButton>
+      </IconButton> */}
       {/* Right Icon */}
-      <IconButton
+      {/* <IconButton
         aria-label="right-arrow"
-        colorScheme="messenger"
+        colorScheme="gray"
         borderRadius="full"
         position="absolute"
         right={side}
@@ -81,7 +82,7 @@ export function CarouselImage() {
         onClick={() => slider?.slickNext()}
       >
         <BiRightArrowAlt />
-      </IconButton>
+      </IconButton> */}
       {/* Slider */}
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
         {cards.map((url, index) => (

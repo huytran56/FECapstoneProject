@@ -1,23 +1,42 @@
-import { useAppDispatch } from "@app/hook";
-import { Button, Select, Stack } from "@chakra-ui/react";
-import { adminAction } from "@store/admin";
+import { useAppDispatch, useAppSelector } from "@app/hook";
+import {
+  Button,
+  Checkbox,
+  Input,
+  ListItem,
+  OrderedList,
+  Select,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { adminAction, selectCategoryList } from "@store/admin";
+
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextField } from ".";
 import * as Yup from "yup";
 
 export function AddProduct() {
+  const [category, setCategory] = useState<string[]>([]);
   const validate = Yup.object({
-    code: Yup.string().required("Không được bỏ trống"),
-    name: Yup.string().required("Không được bỏ trống"),
-    description: Yup.string().required("Không được bỏ trống"),
+    product_id: Yup.string().required("Không được bỏ trống"),
+    price: Yup.string().required("Không được bỏ trống"),
+    product_id_status: Yup.string().required("Không được bỏ trống"),
+    product_name: Yup.string().required("Không được bỏ trống"),
+    description_details: Yup.string().required("Không được bỏ trống"),
   });
   const dispatch = useAppDispatch();
-  const handleOnClickAddNewVoucher = (value) => {
+  useEffect(() => {
+    dispatch(adminAction.preSetCategoryList({}));
+  }, [dispatch]);
+  const categoryListSelector = useAppSelector(selectCategoryList);
+  const handleOnClickAddNewProduct = (value) => {
+    console.log(category);
+
     console.log(value);
     dispatch(
-      adminAction.preSetCreateVoucherList({
-        createVoucherPayLoad: value,
+      adminAction.preCreateProduct({
+        createProductPayLoad: { ...value, category },
       })
     );
   };
@@ -25,43 +44,112 @@ export function AddProduct() {
   return (
     <Formik
       initialValues={{
-        id: 0,
-        code: "",
-        name: "",
-        description: "",
-        type: "",
-        minSpend: 0,
-        maxDiscount: 0,
-        discountAmount: 0,
-        active: "",
+        product_id: "",
+        price: 0,
+        product_status_id: "",
+        description_details: "",
+        product_name: "",
+        category: [],
+        fileImage: [],
       }}
       //   validationSchema={validate}
-      onSubmit={handleOnClickAddNewVoucher}
+      onSubmit={handleOnClickAddNewProduct}
       validationSchema={validate}
     >
       {({ setFieldValue }) => (
         <Form>
           <Stack>
-            <TextField label="Code" name="code" type="text" />
-            <TextField label="name" name="name" type="text" />
-            <TextField label="description" name="description" type="text" />
+            <TextField label="Mã sản phẩm" name="product_id" type="text" />
+            <TextField label="Tên sản phẩm" name="product_name" type="text" />
             <Select
-              placeholder="type"
-              name="type"
-              onChange={(e) => setFieldValue("type", e.target.value)}
+              placeholder="Trạng thái"
+              name="product_id_status"
+              onChange={(e) =>
+                setFieldValue("product_id_status", e.target.value)
+              }
             >
-              <option value="PERCENTAGE">PERCENTAGE</option>
-              <option value="FIX_VALUE">FIX_VALUE</option>
+              <option value="outstock">Hết hàng</option>
+              <option value="instock">Còn hàng</option>
             </Select>
-            <TextField label="minSpend" name="minSpend" type="number" />
-            <TextField label="maxDiscount" name="maxDiscount" type="number" />
+            <TextField label="Price" name="price" type="number" />
             <TextField
-              label="discountAmount"
-              name="discountAmount"
-              type="number"
+              label="Chi tiết sản phẩm"
+              name="description_details"
+              type="text"
             />
-            <TextField label="active" name="active" type="active" />
-            <Button type="submit">Submit</Button>
+            {/* style={{ border: "1px dotted blue", margin: 0, padding: 0 }} */}
+
+            <Text>Danh mục: </Text>
+            {categoryListSelector.map((categoryTwo, index) => (
+              <OrderedList>
+                <ListItem
+                  display="inline-block"
+                  width="45%"
+                  margin="0"
+                  padding="0"
+                  verticalAlign="top"
+                >
+                  <Checkbox
+                    name="category"
+                    value={categoryTwo.category_name}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setCategory([...category, e.target.value]);
+                      } else {
+                        const newList = category.filter(
+                          (c) => c !== e.target.value
+                        );
+                        setCategory(newList);
+                      }
+                      // setFieldValue("category", category);
+                    }}
+                  >
+                    {categoryTwo.category_name}
+                  </Checkbox>{" "}
+                </ListItem>
+              </OrderedList>
+            ))}
+            <Text>Chọn ảnh</Text>
+            <Input
+              type="file"
+              name="fileImage"
+              multiple={true}
+              onChange={(e) => {
+                console.log(e.target.files);
+                setFieldValue("fileImage", e.target.files);
+              }}
+            />
+            {/* <Checkbox
+              name="category"
+              value="mu"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCategory([...category, e.target.value]);
+                } else {
+                  const newList = category.filter((c) => c !== e.target.value);
+                  setCategory(newList);
+                }
+                setFieldValue("category", category);
+              }}
+            >
+              mu
+            </Checkbox>
+            <Checkbox
+              name="category"
+              value="quan"
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setCategory([...category, e.target.value]);
+                } else {
+                  const newList = category.filter((c) => c !== e.target.value);
+                  setCategory(newList);
+                }
+              }}
+            >
+              quan
+            </Checkbox> */}
+
+            <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
       )}

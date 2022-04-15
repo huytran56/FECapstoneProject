@@ -21,6 +21,14 @@ import React, { useEffect } from "react";
 import { ModalGeneral } from ".";
 import { AddCategory } from "./add-category";
 import { EditCategory } from "./edit-category";
+import {
+  AiFillDelete,
+  AiFillEdit,
+  AiOutlineDelete,
+  AiOutlineSearch,
+  AiOutlineEye,
+  AiFillPlusCircle,
+} from "react-icons/ai";
 
 export function AdminCategory() {
   const categoryListSelector = useAppSelector(selectCategoryList);
@@ -56,7 +64,7 @@ export function AdminCategory() {
           {isAddNewStateSelector ? <AddCategory /> : <EditCategory />}
         </ModalGeneral>
         <Button zIndex="0" colorScheme="linkedin" onClick={handleOnClickAddNew}>
-          Thêm danh mục
+          <AiFillPlusCircle size="25px" />
         </Button>
       </VStack>
       <Divider orientation="horizontal" variant="solid" colorScheme="orange" />
@@ -81,19 +89,17 @@ export function AdminCategory() {
                   justifyContent="space-around"
                 >
                   <Button
-                    minWidth="100"
                     colorScheme="twitter"
                     onClick={() => handleOnClickEditButton(c)}
                   >
-                    Chỉnh sửa
+                    <AiFillEdit size="25" />
                   </Button>
                   <Button
-                    minWidth="100"
                     marginTop="2"
                     colorScheme="whatsapp"
                     onClick={() => handleOnClickDeleteButton(c)}
                   >
-                    Xoá
+                    <AiFillDelete size="25" />
                   </Button>
                 </VStack>
               </Td>

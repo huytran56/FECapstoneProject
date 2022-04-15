@@ -29,7 +29,7 @@ export default function Home() {
     <>
       {/* <BannerAdvertiser /> */}
       <CarouselImage />
-      <Carousel gap={10} header="Sản phẩm được gợi ý bởi hệ thống">
+      <Carousel gap={10} header="Sản phẩm gợi ý">
         {recommendationListSelector.map((p, index) => (
           <CardCategory {...p} key={index} />
         ))}

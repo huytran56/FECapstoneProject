@@ -20,6 +20,14 @@ import {
 import React, { useEffect } from "react";
 import { AddVoucher } from "./add-voucher";
 import { EditVoucher } from "./edit-voucher";
+import {
+  AiFillDelete,
+  AiFillEdit,
+  AiOutlineDelete,
+  AiOutlineSearch,
+  AiOutlineEye,
+  AiFillPlusCircle,
+} from "react-icons/ai";
 
 export function AdminVoucher() {
   const dispatch = useAppDispatch();
@@ -72,10 +80,11 @@ export function AdminVoucher() {
         <Thead>
           <Tr>
             <Th>ID</Th>
-            <Th>Code</Th>
-            <Th>Name</Th>
+            <Th>Mã giảm giá</Th>
+            <Th>Tên</Th>
             <Th>Mô tả</Th>
-            <Th>Type</Th>
+            <Th>Số lượng mã</Th>
+            <Th>Hình thức giảm</Th>
             <Th>Tiền tối thiểu</Th>
             <Th>Giảm giá tối đa</Th>
             <Th>Tỉ lệ discount</Th>
@@ -91,7 +100,12 @@ export function AdminVoucher() {
                   <Td>{voucher.code}</Td>
                   <Td>{voucher.name}</Td>
                   <Td>{voucher.description}</Td>
-                  <Td>{voucher.type}</Td>
+                  <Td>{voucher.quantity}</Td>
+                  {voucher.type === "PERCENTAGE" ? (
+                    <Td>Phần trăm</Td>
+                  ) : (
+                    <Td>Giảm tiền</Td>
+                  )}
                   <Td overflow="hidden" whiteSpace="nowrap">
                     {voucher.minSpend.toLocaleString("it-IT", {
                       style: "currency",
@@ -113,7 +127,7 @@ export function AdminVoucher() {
                         colorScheme="green"
                         onClick={() => handleOnClickEditButton(voucher)}
                       >
-                        Chỉnh sửa
+                        <AiFillEdit />
                       </Button>
                       <Button
                         minWidth="100"
@@ -121,7 +135,7 @@ export function AdminVoucher() {
                         colorScheme="red"
                         onClick={() => handleOnClickDeleteButton(voucher)}
                       >
-                        Xoá
+                        <AiOutlineDelete />
                       </Button>
                       <Button
                         minWidth="100"

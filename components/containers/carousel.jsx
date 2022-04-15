@@ -113,8 +113,13 @@ export const Carousel = ({ children, gap, header }) => {
   };
 
   return (
-    <VStack>
-      <Text as="h1" my={3} mr="auto" px={3}>
+    <VStack
+      mt={7}
+      p={4}
+      borderRadius="8px"
+      boxShadow=" rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px"
+    >
+      <Text fontWeight="bold" my={3} mr="auto" px={3}>
         {header}
       </Text>
       <Slider {...sliderProps}>
@@ -200,7 +205,7 @@ const Slider = ({
           onClick={handleDecrementClick}
           onFocus={handleFocus}
           mr={`${gap / 3}px`}
-          color="gray.200"
+          color="gray.400"
           variant="link"
           minW={0}
         >
@@ -406,6 +411,7 @@ const Item = ({
         mr: `${gap}px`,
       }}
       py="4px"
+      boxShadow="inner"
     >
       {children}
     </Flex>
