@@ -14,13 +14,14 @@ import {
   NumberDecrementStepper,
   Button,
   Divider,
+  Link,
 } from "@chakra-ui/react";
 import { MainLayout } from "@components/layout";
 import { ICartItem } from "@models/user";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@app/hook";
 import { selectCartItemList, selectNumberItem, userAction } from "@store/user";
-import { AiOutlineLine } from "react-icons/ai";
+import { AiOutlineLine, AiOutlineRollback } from "react-icons/ai";
 
 export default function CartDetail() {
   const dispatch = useAppDispatch();
@@ -95,8 +96,13 @@ export default function CartDetail() {
         <VStack w="75%">
           {CartItemListSelector
             ? CartItemListSelector.map((cartItem, index) => (
-                <HStack w="100%">
-                  <Image src={cartItem.imageUrl} w={130} h={130} />
+                <HStack w="100%" key={index}>
+                  <Image
+                    src={cartItem.imageUrl}
+                    w={130}
+                    h={130}
+                    alt={cartItem.productSKUName}
+                  />
                   <VStack w="60%">
                     <HStack w="100%" justifyContent="space-between">
                       <Text fontWeight="bold">{cartItem.productSKUName}</Text>
@@ -198,6 +204,12 @@ export default function CartDetail() {
               Thanh toán
             </Button>
           </VStack>
+          <HStack w="100%">
+            <AiOutlineRollback color="#42C2FF" />
+            <Link href="/" textColor="#42C2FF">
+              Tiếp tục mua hàng
+            </Link>
+          </HStack>
         </VStack>
       </HStack>
     </>

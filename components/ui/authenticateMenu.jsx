@@ -27,7 +27,6 @@ export function AuthenticationMenu() {
 
   const userInforSelector = useAppSelector(selectUserInfo);
   console.log(userInforSelector);
-  
 
   return (
     <HStack>
@@ -36,7 +35,9 @@ export function AuthenticationMenu() {
           <MenuButton
             as={Button}
             rightIcon={
-              <Code colorScheme="yellow" children={numberItemSelector} m={0} />
+              <Code colorScheme="yellow" m={0}>
+                {numberItemSelector}
+              </Code>
             }
           >
             <Icon

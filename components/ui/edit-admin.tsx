@@ -77,7 +77,7 @@ export function EditAdmin() {
           <Form>
             <Stack border="1px solid #d8d8d8" p={4} borderRadius="8px" my={4}>
               <TextField
-                label="Username"
+                label="Tên đăng nhập"
                 name="username"
                 type="text"
                 value={adminEditInformationSelector?.username}
@@ -111,7 +111,7 @@ export function EditAdmin() {
                 }}
               />
               <TextField
-                label="First Name"
+                label="Tên"
                 name="first_name"
                 type="text"
                 value={adminEditInformationSelector?.first_name}
@@ -128,7 +128,7 @@ export function EditAdmin() {
                 }}
               />
               <TextField
-                label="Last Name"
+                label="Họ"
                 name="last_name"
                 type="text"
                 value={adminEditInformationSelector?.last_name}
@@ -145,7 +145,7 @@ export function EditAdmin() {
                 }}
               />
               <TextField
-                label="Phone Number"
+                label="Số điện thoại"
                 name="phone_number"
                 type="text"
                 value={adminEditInformationSelector?.phone_number}
@@ -182,7 +182,7 @@ export function EditAdmin() {
                   <Radio value="1">Nam</Radio>
                 </HStack>
               </RadioGroup>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Xác nhận</Button>
             </Stack>
           </Form>
         )}

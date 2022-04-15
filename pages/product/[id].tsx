@@ -154,6 +154,7 @@ export default function ProductDetail({
                     m={3}
                     onClick={() => handleOnClickButtonSize(sku.id, index)}
                     isActive={active === index ? true : false}
+                    key={index}
                   >
                     {sku.size}
                   </Button>

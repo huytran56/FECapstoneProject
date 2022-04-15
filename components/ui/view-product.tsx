@@ -35,7 +35,7 @@ export function ViewProduct() {
         productDetailFullPayLoad: currentProductSelector.product_id,
       })
     );
-  }, []);
+  }, [dispatch]);
   function handleOnClickUpdateButton(productSKU) {
     console.log(productSKU);
     dispatch(adminAction.setIsOpenModalTwo({ isOpenModalTwo: true }));
@@ -115,6 +115,7 @@ export function ViewProduct() {
           }
           w="100px"
           h="100px"
+          alt={productDetailFullSelector.description_details}
         />
         <Image
           src={
@@ -124,6 +125,7 @@ export function ViewProduct() {
           }
           w="100px"
           h="100px"
+          alt={productDetailFullSelector.description_details}
         />
       </HStack>
       <Table variant="striped">

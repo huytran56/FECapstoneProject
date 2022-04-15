@@ -51,8 +51,13 @@ export function Cart() {
       <br />
       {CartItemListSelector
         ? CartItemListSelector.map((cartItem, index) => (
-            <HStack w="100%">
-              <Image src={cartItem.imageUrl} w="90px" h="90px" />
+            <HStack w="100%" key={index}>
+              <Image
+                src={cartItem.imageUrl}
+                w="90px"
+                h="90px"
+                alt={cartItem.productSKUName}
+              />
               <VStack w="100%" alignItems="start">
                 <HStack justifyContent="space-between" w="100%">
                   <Text fontSize={18}>{cartItem.productSKUName}</Text>

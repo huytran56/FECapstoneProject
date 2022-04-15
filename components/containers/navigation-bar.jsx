@@ -76,8 +76,8 @@ export function NavigationBar() {
           </MenuButton>
           <MenuList>
             {categoryListSelector
-              ? categoryListSelector.map((c) => (
-                  <MenuItem>
+              ? categoryListSelector.map((c, index) => (
+                  <MenuItem key={index}>
                     <Link href="/">
                       <a></a>
                     </Link>

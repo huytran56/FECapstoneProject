@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function CardCategory({ product_name, price, imageUrl }) {
   return (
-    <VStack mx="auto">
+    <VStack mx="auto" key={index}>
       <Link passHref={true} href="/">
         <Image
           src={imageUrl}

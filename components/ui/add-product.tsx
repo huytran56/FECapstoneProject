@@ -81,7 +81,7 @@ export function AddProduct() {
 
             <Text>Danh mục: </Text>
             {categoryListSelector.map((categoryTwo, index) => (
-              <OrderedList>
+              <OrderedList key={index}>
                 <ListItem
                   display="inline-block"
                   width="45%"

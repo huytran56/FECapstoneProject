@@ -21,7 +21,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(adminAction.preSetCommendationList({}));
-  }, []);
+  }, [dispatch]);
   const recommendationListSelector = useAppSelector(selectRecommendationList);
   console.log(recommendationListSelector);
 
