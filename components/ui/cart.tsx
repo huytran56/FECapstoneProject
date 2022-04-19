@@ -7,6 +7,7 @@ import {
   Button,
   Divider,
   Box,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { selectCartItemList, userAction } from "@store/user";
 import { useRouter } from "next/router";
@@ -41,10 +42,13 @@ export function Cart() {
   function handleViewCart() {
     router.push("/cart/cart-detail");
   }
+  function handleOrder() {
+    router.push("/order");
+  }
   return (
     <VStack w="400px" p={3}>
-      <Box w="100%" textAlign="center" backgroundColor="#DFDFDE">
-        <Text fontWeight="bold" fontSize={20}>
+      <Box w="100%" textAlign="center" backgroundColor="#F9B384">
+        <Text fontWeight="bold" fontSize={20} textColor="white">
           Giỏ hàng
         </Text>
       </Box>
@@ -98,10 +102,22 @@ export function Cart() {
       </HStack>
       <br />
       <HStack justifyContent="space-between" w="100%">
-        <Button w={150} onClick={handleViewCart}>
+        <Button
+          w={150}
+          onClick={handleViewCart}
+          bg={useColorModeValue("gray.900", "gray.50")}
+          color={useColorModeValue("white", "gray.900")}
+        >
           Xem giỏ hàng
         </Button>
-        <Button w={150}>Thanh toán</Button>
+        <Button
+          w={150}
+          onClick={handleOrder}
+          bg={useColorModeValue("gray.900", "gray.50")}
+          color={useColorModeValue("white", "gray.900")}
+        >
+          Thanh toán
+        </Button>
       </HStack>
     </VStack>
   );

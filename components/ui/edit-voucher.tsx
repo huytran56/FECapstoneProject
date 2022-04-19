@@ -45,36 +45,43 @@ export function EditVoucher() {
     >
       {({ setFieldValue }) => (
         <Form>
-          <Stack>
+          <VStack>
+            <Text fontWeight="bold" fontSize="30px">
+              Thay đổi thông tin mã giảm giá
+            </Text>
+            <br />
+            <br />
+            <HStack w="100%" justifyContent="space-around">
+              <TextField
+                label="ID"
+                name="id"
+                type="text"
+                value={currentEditVoucherSelector.id}
+              />
+              <TextField
+                label="Tên"
+                name="name"
+                type="text"
+                value={
+                  currentEditVoucherSelector
+                    ? currentEditVoucherSelector.name
+                    : ""
+                }
+                onChange={(e) => {
+                  dispatch(
+                    adminAction.setCurrentEditVoucher({
+                      currentEditVoucher: {
+                        ...currentEditVoucherSelector,
+                        name: e.target.value,
+                      },
+                    })
+                  );
+                  setFieldValue("name", e.target.value);
+                }}
+              />
+            </HStack>
             <TextField
-              label="id"
-              name="id"
-              type="text"
-              value={currentEditVoucherSelector.id}
-            />
-            <TextField
-              label="Active"
-              name="active"
-              type="text"
-              value={
-                currentEditVoucherSelector
-                  ? currentEditVoucherSelector.active
-                  : ""
-              }
-              onChange={(e) => {
-                dispatch(
-                  adminAction.setCurrentEditVoucher({
-                    currentEditVoucher: {
-                      ...currentEditVoucherSelector,
-                      active: e.target.value,
-                    },
-                  })
-                );
-                setFieldValue("active", e.target.value);
-              }}
-            />
-            <TextField
-              label="Code"
+              label="Mã giảm"
               name="code"
               type="text"
               value={
@@ -95,7 +102,7 @@ export function EditVoucher() {
               }}
             />
             <TextField
-              label="Description"
+              label="Mô tả"
               name="description"
               type="text"
               value={
@@ -115,90 +122,94 @@ export function EditVoucher() {
                 setFieldValue("description", e.target.value);
               }}
             />
-            <TextField
-              label="Discount Amount"
-              name="discountAmount"
-              type="text"
-              value={
-                currentEditVoucherSelector
-                  ? currentEditVoucherSelector.discountAmount
-                  : ""
-              }
-              onChange={(e) => {
-                dispatch(
-                  adminAction.setCurrentEditVoucher({
-                    currentEditVoucher: {
-                      ...currentEditVoucherSelector,
-                      discountAmount: e.target.value,
-                    },
-                  })
-                );
-                setFieldValue("discountAmount", e.target.value);
-              }}
-            />
-            <TextField
-              label="Max Discount"
-              name="maxDiscount"
-              type="text"
-              value={
-                currentEditVoucherSelector
-                  ? currentEditVoucherSelector.maxDiscount
-                  : ""
-              }
-              onChange={(e) => {
-                dispatch(
-                  adminAction.setCurrentEditVoucher({
-                    currentEditVoucher: {
-                      ...currentEditVoucherSelector,
-                      maxDiscount: e.target.value,
-                    },
-                  })
-                );
-                setFieldValue("maxDiscount", e.target.value);
-              }}
-            />
-            <TextField
-              label="Min Spend"
-              name="minSpend"
-              type="text"
-              value={
-                currentEditVoucherSelector
-                  ? currentEditVoucherSelector.minSpend
-                  : ""
-              }
-              onChange={(e) => {
-                dispatch(
-                  adminAction.setCurrentEditVoucher({
-                    currentEditVoucher: {
-                      ...currentEditVoucherSelector,
-                      minSpend: e.target.value,
-                    },
-                  })
-                );
-                setFieldValue("minSpend", e.target.value);
-              }}
-            />
-            <TextField
-              label="Name"
-              name="name"
-              type="text"
-              value={
-                currentEditVoucherSelector
-                  ? currentEditVoucherSelector.name
-                  : ""
-              }
-              onChange={(e) => {
-                dispatch(
-                  adminAction.setCurrentEditVoucher({
-                    currentEditVoucher: {
-                      ...currentEditVoucherSelector,
-                      name: e.target.value,
-                    },
-                  })
-                );
-                setFieldValue("name", e.target.value);
-              }}
-            />
+            <HStack w="100%" justifyContent="space-around">
+              <TextField
+                label="Tỉ lệ giảm giá"
+                name="discountAmount"
+                type="text"
+                value={
+                  currentEditVoucherSelector
+                    ? currentEditVoucherSelector.discountAmount
+                    : ""
+                }
+                onChange={(e) => {
+                  dispatch(
+                    adminAction.setCurrentEditVoucher({
+                      currentEditVoucher: {
+                        ...currentEditVoucherSelector,
+                        discountAmount: e.target.value,
+                      },
+                    })
+                  );
+                  setFieldValue("discountAmount", e.target.value);
+                }}
+              />
+              <TextField
+                label="Giảm giá nhiều nhất"
+                name="maxDiscount"
+                type="text"
+                value={
+                  currentEditVoucherSelector
+                    ? currentEditVoucherSelector.maxDiscount
+                    : ""
+                }
+                onChange={(e) => {
+                  dispatch(
+                    adminAction.setCurrentEditVoucher({
+                      currentEditVoucher: {
+                        ...currentEditVoucherSelector,
+                        maxDiscount: e.target.value,
+                      },
+                    })
+                  );
+                  setFieldValue("maxDiscount", e.target.value);
+                }}
+              />
+            </HStack>
+            <HStack w="100%" justifyContent="space-around">
+              <TextField
+                label="Số tiền sử dụng tối thiểu"
+                name="minSpend"
+                type="text"
+                value={
+                  currentEditVoucherSelector
+                    ? currentEditVoucherSelector.minSpend
+                    : ""
+                }
+                onChange={(e) => {
+                  dispatch(
+                    adminAction.setCurrentEditVoucher({
+                      currentEditVoucher: {
+                        ...currentEditVoucherSelector,
+                        minSpend: e.target.value,
+                      },
+                    })
+                  );
+                  setFieldValue("minSpend", e.target.value);
+                }}
+              />
+              <TextField
+                label="Kích hoạt"
+                name="active"
+                type="text"
+                value={
+                  currentEditVoucherSelector
+                    ? currentEditVoucherSelector.active
+                    : ""
+                }
+                onChange={(e) => {
+                  dispatch(
+                    adminAction.setCurrentEditVoucher({
+                      currentEditVoucher: {
+                        ...currentEditVoucherSelector,
+                        active: e.target.value,
+                      },
+                    })
+                  );
+                  setFieldValue("active", e.target.value);
+                }}
+              />
+            </HStack>
             <Select
               placeholder="Type"
               name="type"
@@ -207,8 +218,8 @@ export function EditVoucher() {
               <option value="PERCENTAGE">PERCENTAGE</option>
               <option value="FIX_VALUE">FIX_VALUE</option>
             </Select>
-            <Button type="submit">Submit</Button>
-          </Stack>
+            <Button type="submit">Xác nhận</Button>
+          </VStack>
         </Form>
       )}
     </Formik>

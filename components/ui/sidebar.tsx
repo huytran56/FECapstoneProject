@@ -50,7 +50,7 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: "Trang Chủ", icon: FiHome, numberIndex: 1 },
-  { name: "Account", icon: FiTrendingUp, numberIndex: 2 },
+  { name: "Tài Khoản", icon: FiTrendingUp, numberIndex: 2 },
   { name: "Sản phẩm", icon: FiCompass, numberIndex: 3 },
   { name: "Đơn Hàng", icon: FiStar, numberIndex: 4 },
   { name: "Danh mục", icon: FiMenu, numberIndex: 5 },
@@ -113,8 +113,8 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          SOS Admin
+        <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
+          Spotlight on Style
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -213,7 +213,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem onClick={handleOnClickSignOut}>Sign out</MenuItem>
+              <MenuItem onClick={handleOnClickSignOut}>Đăng xuất</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

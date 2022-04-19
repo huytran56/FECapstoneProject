@@ -18,6 +18,7 @@ import {
   VStack,
   Text,
   Select,
+  HStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -85,45 +86,49 @@ export const SignUp = () => {
                   <FormLabel>Mật khẩu</FormLabel>
                   <TextField name="password" type="password" />
                 </FormControl>
-                <FormControl id="email">
-                  <FormLabel>Email</FormLabel>
-                  <TextField name="email" type="text" />
-                </FormControl>
-                <FormControl id="birthday">
-                  <FormLabel>Ngày Sinh</FormLabel>
-                  <TextField name="birthday" type="date" />
-                </FormControl>
-                <FormControl id="password">
-                  <FormLabel>Số điện thoại</FormLabel>
-                  <TextField name="phone_number" type="number" />
-                </FormControl>
-                <FormControl id="gender_id">
-                  <FormLabel>Giới tính</FormLabel>
-                  <Select
-                    placeholder="Giới tính"
-                    name="gender_id"
-                    onChange={(e) => setFieldValue("gender_id", e.target.value)}
-                  >
-                    <option value="0">Nam</option>
-                    <option value="1">Nữ</option>
-                  </Select>
-                </FormControl>
-                <FormControl id="ho">
-                  <FormLabel>Họ</FormLabel>
-                  <TextField name="last_name" type="text" />
-                </FormControl>
-                <FormControl id="ten">
-                  <FormLabel>Tên</FormLabel>
-                  <TextField name="first_name" type="text" />
-                </FormControl>
+                <HStack>
+                  <FormControl id="ho">
+                    <FormLabel>Họ</FormLabel>
+                    <TextField name="last_name" type="text" />
+                  </FormControl>
+                  <FormControl id="ten">
+                    <FormLabel>Tên</FormLabel>
+                    <TextField name="first_name" type="text" />
+                  </FormControl>
+                </HStack>
+                <HStack>
+                  <FormControl id="email">
+                    <FormLabel>Email</FormLabel>
+                    <TextField name="email" type="text" />
+                  </FormControl>
+                  <FormControl id="birthday">
+                    <FormLabel>Ngày Sinh</FormLabel>
+                    <TextField name="birthday" type="date" />
+                  </FormControl>
+                </HStack>
+                <HStack>
+                  <FormControl id="password">
+                    <FormLabel>Số điện thoại</FormLabel>
+                    <TextField name="phone_number" type="number" />
+                  </FormControl>
+                  <FormControl id="gender_id">
+                    <FormLabel mb={3}>Giới tính</FormLabel>
+                    <Select
+                      mt={5}
+                      placeholder="Giới tính"
+                      name="gender_id"
+                      h="42px"
+                      onChange={(e) =>
+                        setFieldValue("gender_id", e.target.value)
+                      }
+                    >
+                      <option value="0">Nam</option>
+                      <option value="1">Nữ</option>
+                    </Select>
+                  </FormControl>
+                </HStack>
+
                 <Stack spacing={6}>
-                  <Stack
-                    direction={{ base: "column", sm: "row" }}
-                    align={"start"}
-                    justify={"space-between"}
-                  >
-                    <Link color={"blue.500"}>Quên mật khẩu?</Link>
-                  </Stack>
                   <Button colorScheme={"blue"} variant={"solid"} type="submit">
                     Đăng kí
                   </Button>

@@ -52,25 +52,43 @@ export function AddStaff() {
     >
       {({ setFieldValue }) => (
         <Form>
-          <Stack>
-            <TextField label="Username" name="username" type="text" />
+          <VStack w="100%" alignItems="start">
+            <VStack w="100%">
+              <Text fontWeight="bold" fontSize="30px">
+                Tạo nhân viên mới
+              </Text>
+              <br />
+            </VStack>
+            <HStack w="100%" justifyContent="space-around">
+              <TextField label="Username" name="username" type="text" />
+              <TextField label="Email" name="email" type="text" />
+            </HStack>
             <TextField label="Mật Khẩu" name="password" type="password" />
-            <TextField label="Email" name="email" type="text" />
-            <TextField label="Ngày sinh" name="birthday" type="date" />
-            <TextField label="Số điện thoại" name="phone_number" type="text" />
-            <TextField label="Họ" name="last_name" type="text" />
-            <TextField label="Tên" name="first_name" type="text" />
+            <HStack w="100%" justifyContent="space-around">
+              <TextField label="Ngày sinh" name="birthday" type="date" />
+              <TextField
+                label="Số điện thoại"
+                name="phone_number"
+                type="text"
+              />
+            </HStack>
+            <HStack w="100%" justifyContent="space-around">
+              <TextField label="Họ" name="last_name" type="text" />
+              <TextField label="Tên" name="first_name" type="text" />
+            </HStack>
             <Select
               placeholder="Giới tính"
               name="gender_id"
               onChange={(e) => setFieldValue("gender_id", e.target.value)}
+              mb={5}
             >
-              <option value="0">Nam</option>
-              <option value="1">Nữ</option>
+              <option value="0">Nữ</option>
+              <option value="1">Nam</option>
+              <option value="2">Khác</option>
             </Select>
-            <FormLabel htmlFor="roles">Role Staff</FormLabel>
+            {/* <FormLabel htmlFor="roles">Nhân viên</FormLabel> */}
             <Button type="submit">Xác nhận</Button>
-          </Stack>
+          </VStack>
         </Form>
       )}
     </Formik>

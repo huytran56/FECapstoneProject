@@ -34,7 +34,7 @@ export function ContainerBoxShadow() {
   function handleOnClickNextButton() {
     dispatch(
       adminAction.setPaginationIndex({
-        paginationIndex: paginationIndexSelector + 1,
+        paginationIndex: paginationIndexSelector + 10,
       })
     );
   }
@@ -43,7 +43,7 @@ export function ContainerBoxShadow() {
     if (paginationIndexSelector === 0) return;
     dispatch(
       adminAction.setPaginationIndex({
-        paginationIndex: paginationIndexSelector - 1,
+        paginationIndex: paginationIndexSelector - 10,
       })
     );
   }
@@ -59,10 +59,10 @@ export function ContainerBoxShadow() {
       px="15px"
       py="15px"
     >
-      <Text as="h1" ml="10px">
-        Sản phẩm
+      <Text fontWeight="bold" fontSize="23px" ml="10px">
+        SẢN PHẨM
       </Text>
-      <SimpleGrid columns={3} gap={2}>
+      <SimpleGrid columns={4} spacing={4} w="100%" minChildWidth="400px">
         {productListSelector
           ? productListSelector.map((product, index) => (
               <Box key={index}>
@@ -71,7 +71,7 @@ export function ContainerBoxShadow() {
             ))
           : null}
       </SimpleGrid>
-      <HStack w="100%" alignItems="center">
+      <HStack w="100%" alignItems="center" justifyContent="center">
         <Button onClick={handleOnClickPreviousButton}>
           <AiOutlineDoubleLeft />
         </Button>

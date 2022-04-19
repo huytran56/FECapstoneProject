@@ -45,14 +45,38 @@ export function EditProduct() {
     >
       {({ setFieldValue }) => (
         <Form>
-          <Stack>
+          <VStack>
+            <Text fontWeight="bold" fontSize="30px">
+              Chỉnh sửa sản phẩm
+            </Text>
+            <br />
             <TextField
               label="Mã Sản phẩm"
               name="product_id"
               type="text"
               value={currentProductSelector.product_id}
             />
-            <TextField
+            <VStack w="100%" alignItems="start">
+              <Text fontWeight="semibold" fontSize="16px">
+                Tình trạng sản phẩm
+              </Text>
+              <Select
+                placeholder="Trạng thái"
+                name="product_status_id"
+                // value={
+                //   currentProductSelector
+                //     ? currentProductSelector.product_status_id
+                //     : ""
+                // }
+                onChange={(e) =>
+                  setFieldValue("product_status_id", e.target.value)
+                }
+              >
+                <option value="instock">Còn hàng</option>
+                <option value="outstock">Hết hàng</option>
+              </Select>
+            </VStack>
+            {/* <TextField
               label="Trạng thái"
               name="product_status_id"
               type="text"
@@ -72,7 +96,7 @@ export function EditProduct() {
                 );
                 setFieldValue("product_status_id", e.target.value);
               }}
-            />
+            /> */}
             <TextField
               label="Tên sản phẩm"
               name="product_name"
@@ -94,13 +118,13 @@ export function EditProduct() {
                 setFieldValue("product_name", e.target.value);
               }}
             />
-            <TextField
+            {/* <TextField
               label="Description List"
               name="description_list"
               type="text"
-            />
+            /> */}
             <TextField
-              label="Description Details"
+              label="Mô tả sản phẩm"
               name="description_details"
               type="text"
             />
@@ -121,7 +145,7 @@ export function EditProduct() {
                 setFieldValue("price", e.target.value);
               }}
             />
-            <TextField
+            {/* <TextField
               label="Search Word"
               name="search_word"
               type="text"
@@ -139,9 +163,9 @@ export function EditProduct() {
                 );
                 setFieldValue("search_word", e.target.value);
               }}
-            />
-            <Button type="submit">Submit</Button>
-          </Stack>
+            /> */}
+            <Button type="submit">Xác nhận</Button>
+          </VStack>
         </Form>
       )}
     </Formik>

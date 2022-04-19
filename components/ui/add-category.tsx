@@ -36,9 +36,8 @@ export function AddCategory() {
       {({ setFieldValue }) => (
         <Form>
           <Stack>
-            <TextField label="Category" name="category_name" type="text" />
-            <Button type="submit">Submit</Button>
-           
+            <TextField label="Tên danh mục" name="category_name" type="text" />
+            <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
       )}

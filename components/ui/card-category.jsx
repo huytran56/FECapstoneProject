@@ -1,26 +1,46 @@
-import { VStack, Image, Text } from "@chakra-ui/react";
+import { VStack, Image, Text, Box } from "@chakra-ui/react";
 import Link from "next/link";
 
-export function CardCategory({ product_name, price, imageUrl }) {
+export function CardCategory({ product_name, price, imageUrl, index }) {
   return (
-    <VStack mx="auto" key={index}>
-      <Link passHref={true} href="/">
-        <Image
-          src={imageUrl}
-          w={{
-            base: "300px", // 0-48em
-            md: "300px", // 48em-80em,
-            xl: "200px", // 80em+
-          }}
-          h={{ xl: "200px" }}
-          transition="all 0.5s ease"
-          borderRadius="8px"
-          boxShadow="rgba(0, 0, 0, 0.05) 0px 1px 2px 0px"
-          _hover={{ transform: "scale(1.15)", transform: "rotate(2deg)" }}
-          alt={product_name}
-        />
-      </Link>
-      <Text textDecor="aqua">{product_name}</Text>
+    <VStack
+      mx="auto"
+      key={index}
+      boxShadow="rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;"
+      w="100%"
+      borderRadius="base"
+      py={8}
+      _hover={{ transform: "scale(1.1)" }}
+      transition="all 0.5s ease"
+    >
+      <Box
+        backgroundImage={`url("${imageUrl}")`}
+        w={{
+          base: "300px", // 0-48em
+          md: "200px", // 48em-80em,
+          xl: "300px", // 80em+
+        }}
+        h={{ xl: "200px" }}
+        transition="all 0.5s ease"
+        borderRadius="8px"
+        boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+        _hover={{ transform: "rotate(2deg)" }}
+        alt={product_name}
+        maxWidth="200px"
+        backgroundRepeat="no-repeat"
+        backgroundSize="cover"
+        backgroundPosition="center"
+        border="1px solid #f8f8f8"
+      />
+      <Text textDecor="aqua" fontWeight="bold" textAlign="center">
+        {product_name}
+      </Text>
+      <Text textColor="red" fontWeight="bold" fontSize={13}>
+        {price.toLocaleString("it-IT", {
+          style: "currency",
+          currency: "VND",
+        })}
+      </Text>
     </VStack>
   );
 }

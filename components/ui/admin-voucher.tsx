@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@app/index";
 import {
   Button,
   Divider,
+  HStack,
   Stack,
   Table,
   Tbody,
@@ -27,6 +28,7 @@ import {
   AiOutlineSearch,
   AiOutlineEye,
   AiFillPlusCircle,
+  AiOutlineBulb,
 } from "react-icons/ai";
 
 export function AdminVoucher() {
@@ -71,7 +73,7 @@ export function AdminVoucher() {
           {isAddNewStateSelector ? <AddVoucher /> : <EditVoucher />}
         </ModalGeneral>
         <Button zIndex="0" colorScheme="linkedin" onClick={handleOnClickAddNew}>
-          Thêm voucher
+          <AiFillPlusCircle size="25px" />
         </Button>
       </VStack>
       <Divider orientation="horizontal" variant="solid" colorScheme="orange" />
@@ -121,33 +123,28 @@ export function AdminVoucher() {
                   <Td>{voucher.discountAmount}</Td>
                   {voucher.active === false ? <Td>Không</Td> : <Td>Có</Td>}
                   <Td>
-                    <VStack alignItems="flex-start">
+                    <HStack alignItems="flex-start">
                       <Button
-                        minWidth="100"
-                        colorScheme="green"
+                        colorScheme="blue"
                         onClick={() => handleOnClickEditButton(voucher)}
                       >
-                        <AiFillEdit />
+                        <AiFillEdit size="20" />
                       </Button>
                       <Button
-                        minWidth="100"
-                        marginTop="2"
                         colorScheme="red"
                         onClick={() => handleOnClickDeleteButton(voucher)}
                       >
-                        <AiOutlineDelete />
+                        <AiOutlineDelete size="20" />
                       </Button>
                       <Button
-                        minWidth="100"
-                        marginTop="2"
                         colorScheme="yellow"
                         onClick={() =>
                           handleOnClickChangeActivateButton(voucher)
                         }
                       >
-                        Đổi Activation
+                        <AiOutlineBulb size="20" />
                       </Button>
-                    </VStack>
+                    </HStack>
                   </Td>
                 </Tr>
               ))

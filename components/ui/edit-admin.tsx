@@ -180,6 +180,7 @@ export function EditAdmin() {
                 <HStack spacing="24px">
                   <Radio value="0">Nữ</Radio>
                   <Radio value="1">Nam</Radio>
+                  <Radio value="2">Khác</Radio>
                 </HStack>
               </RadioGroup>
               <Button type="submit">Xác nhận</Button>

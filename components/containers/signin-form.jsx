@@ -65,7 +65,7 @@ export const SignIn = () => {
               <Stack spacing={4} w={"full"} maxW={"md"}>
                 <Heading fontSize={"3xl"}>Đăng nhập vào tài khoản</Heading>
                 <FormControl id="email">
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Tên tài khoản hoặc Email</FormLabel>
                   <TextField
                     // label="Email"
                     name="usernameOrEmail"

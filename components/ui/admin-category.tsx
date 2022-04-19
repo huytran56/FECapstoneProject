@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@app/hook";
 import {
   Button,
   Divider,
+  HStack,
   Stack,
   Table,
   Tbody,
@@ -10,6 +11,7 @@ import {
   Thead,
   Tr,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import { ICategory } from "@models/admin";
 import {
@@ -78,33 +80,35 @@ export function AdminCategory() {
           </Tr>
         </Thead>
         <Tbody>
-          {categoryListSelector.map((c, index) => (
-            <Tr key={index}>
-              <Td>{index + 1}</Td>
-              <Td>{c.category_name}</Td>
-              <Td>
-                <VStack
-                  w="100%"
-                  alignItems="start"
-                  justifyContent="space-around"
-                >
-                  <Button
-                    colorScheme="twitter"
-                    onClick={() => handleOnClickEditButton(c)}
-                  >
-                    <AiFillEdit size="25" />
-                  </Button>
-                  <Button
-                    marginTop="2"
-                    colorScheme="whatsapp"
-                    onClick={() => handleOnClickDeleteButton(c)}
-                  >
-                    <AiFillDelete size="25" />
-                  </Button>
-                </VStack>
-              </Td>
-            </Tr>
-          ))}
+          {categoryListSelector ? (
+            categoryListSelector.map((c, index) => (
+              <Tr key={index}>
+                <Td>{index + 1}</Td>
+                <Td>{c.category_name}</Td>
+                <Td>
+                  <HStack alignItems="center">
+                    <Button
+                      colorScheme="twitter"
+                      onClick={() => handleOnClickEditButton(c)}
+                    >
+                      <AiFillEdit size="24" />
+                    </Button>
+                    <Button
+                      marginTop="2"
+                      colorScheme="red"
+                      onClick={() => handleOnClickDeleteButton(c)}
+                    >
+                      <AiFillDelete size="25" />
+                    </Button>
+                  </HStack>
+                </Td>
+              </Tr>
+            ))
+          ) : (
+            <Stack w="100%" h="100%" alignItems="center">
+              <Text>Hiện không có danh mục nào</Text>
+            </Stack>
+          )}
         </Tbody>
       </Table>
     </Stack>

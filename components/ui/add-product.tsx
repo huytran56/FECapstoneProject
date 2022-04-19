@@ -2,12 +2,15 @@ import { useAppDispatch, useAppSelector } from "@app/hook";
 import {
   Button,
   Checkbox,
+  HStack,
   Input,
   ListItem,
   OrderedList,
   Select,
+  SimpleGrid,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { adminAction, selectCategoryList } from "@store/admin";
 
@@ -58,9 +61,14 @@ export function AddProduct() {
     >
       {({ setFieldValue }) => (
         <Form>
-          <Stack>
-            <TextField label="Mã sản phẩm" name="product_id" type="text" />
-            <TextField label="Tên sản phẩm" name="product_name" type="text" />
+          <VStack>
+            <Text fontWeight="bold" fontSize="30px">
+              Tạo sản phẩm
+            </Text>
+            <HStack w="100%" justifyContent="space-around">
+              <TextField label="Mã sản phẩm" name="product_id" type="text" />
+              <TextField label="Tên sản phẩm" name="product_name" type="text" />
+            </HStack>
             <Select
               placeholder="Trạng thái"
               name="product_id_status"
@@ -71,54 +79,59 @@ export function AddProduct() {
               <option value="outstock">Hết hàng</option>
               <option value="instock">Còn hàng</option>
             </Select>
-            <TextField label="Price" name="price" type="number" />
+            <TextField label="Giá tiền" name="price" type="number" />
             <TextField
               label="Chi tiết sản phẩm"
               name="description_details"
               type="text"
             />
             {/* style={{ border: "1px dotted blue", margin: 0, padding: 0 }} */}
-
-            <Text>Danh mục: </Text>
-            {categoryListSelector.map((categoryTwo, index) => (
-              <OrderedList key={index}>
-                <ListItem
-                  display="inline-block"
-                  width="45%"
-                  margin="0"
-                  padding="0"
-                  verticalAlign="top"
-                >
-                  <Checkbox
-                    name="category"
-                    value={categoryTwo.category_name}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setCategory([...category, e.target.value]);
-                      } else {
-                        const newList = category.filter(
-                          (c) => c !== e.target.value
-                        );
-                        setCategory(newList);
-                      }
-                      // setFieldValue("category", category);
-                    }}
-                  >
-                    {categoryTwo.category_name}
-                  </Checkbox>{" "}
-                </ListItem>
-              </OrderedList>
-            ))}
-            <Text>Chọn ảnh</Text>
-            <Input
-              type="file"
-              name="fileImage"
-              multiple={true}
-              onChange={(e) => {
-                console.log(e.target.files);
-                setFieldValue("fileImage", e.target.files);
-              }}
-            />
+            <VStack w="100%" alignItems="start">
+              <Text fontWeight="bold">Danh mục: </Text>
+              <SimpleGrid column={2} gap={2} w="100%">
+                {categoryListSelector.map((categoryTwo, index) => (
+                  <OrderedList key={index}>
+                    <ListItem
+                      display="inline-block"
+                      width="45%"
+                      margin="0"
+                      padding="0"
+                      verticalAlign="top"
+                    >
+                      <Checkbox
+                        name="category"
+                        value={categoryTwo.category_name}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setCategory([...category, e.target.value]);
+                          } else {
+                            const newList = category.filter(
+                              (c) => c !== e.target.value
+                            );
+                            setCategory(newList);
+                          }
+                          // setFieldValue("category", category);
+                        }}
+                      >
+                        {categoryTwo.category_name}
+                      </Checkbox>{" "}
+                    </ListItem>
+                  </OrderedList>
+                ))}
+              </SimpleGrid>
+            </VStack>
+            <VStack w="100%" alignItems="start">
+              <Text fontWeight="bold">Chọn ảnh</Text>
+              <Input
+                type="file"
+                name="fileImage"
+                multiple={true}
+                onChange={(e) => {
+                  console.log(e.target.files);
+                  setFieldValue("fileImage", e.target.files);
+                }}
+              />
+            </VStack>
             {/* <Checkbox
               name="category"
               value="mu"
@@ -150,7 +163,7 @@ export function AddProduct() {
             </Checkbox> */}
 
             <Button type="submit">Xác nhận</Button>
-          </Stack>
+          </VStack>
         </Form>
       )}
     </Formik>

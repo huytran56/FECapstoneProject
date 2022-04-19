@@ -15,6 +15,7 @@ import {
   Button,
   Divider,
   Link,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { MainLayout } from "@components/layout";
 import { ICartItem } from "@models/user";
@@ -79,8 +80,8 @@ export default function CartDetail() {
         </Text>
         <VStack marginTop="100px">
           <Text>
-            Có {numberItemSelector ? numberItemSelector : null} sản phẩm trong
-            giỏ hàng
+            Có {CartItemListSelector ? CartItemListSelector.length : 0} sản phẩm
+            trong giỏ hàng
           </Text>
           <AiOutlineLine size={50} />
         </VStack>
@@ -93,7 +94,7 @@ export default function CartDetail() {
         /> */}
       </VStack>
       <HStack paddingLeft={20}>
-        <VStack w="75%">
+        <VStack w="65%">
           {CartItemListSelector
             ? CartItemListSelector.map((cartItem, index) => (
                 <HStack w="100%" key={index}>
@@ -171,9 +172,10 @@ export default function CartDetail() {
             : null}
         </VStack>
         <VStack
-          w="40%"
-          p={3}
+          w="50%"
+          p={5}
           boxShadow="rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"
+          marginRight="30px"
         >
           <Text fontWeight="bold" fontSize="30">
             Thông tin đơn hàng
@@ -185,10 +187,12 @@ export default function CartDetail() {
               Tổng tiền
             </Text>
             <Text fontWeight="bold" fontSize="25">
-              {sum.toLocaleString("it-IT", {
-                style: "currency",
-                currency: "VND",
-              })}
+              {sum
+                ? sum.toLocaleString("it-IT", {
+                    style: "currency",
+                    currency: "VND",
+                  })
+                : null}
             </Text>
           </HStack>
           <br />
@@ -200,7 +204,11 @@ export default function CartDetail() {
             <Text fontSize="15">
               Bạn cũng có thể nhập mã giảm giá ở trang thanh toán
             </Text>
-            <Button w="100%" colorScheme="twitter" textColor="white">
+            <Button
+              w="100%"
+              bg={useColorModeValue("gray.900", "gray.50")}
+              color={useColorModeValue("white", "gray.900")}
+            >
               Thanh toán
             </Button>
           </VStack>

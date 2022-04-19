@@ -1,5 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@app/hook";
-import { Button, FormLabel, Input, useToast, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  FormLabel,
+  Input,
+  useToast,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { adminAction, selectIsChangePasswordSuccess } from "@store/admin";
 import { Form, Formik } from "formik";
 import { useEffect } from "react";
@@ -97,7 +104,9 @@ export function ChangePasswordForm() {
                 setFieldValue("repeatNewPassword", e.target.value);
               }}
             />
-            <Button type="submit">Xác nhận</Button>
+            <Button bg={"gray.900"} color={"white"} type="submit">
+              Xác nhận
+            </Button>
           </VStack>
         </Form>
       )}

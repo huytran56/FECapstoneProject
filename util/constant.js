@@ -144,7 +144,7 @@ export const productCategory = [
 
 export const footerInformation = [
   {
-    title: "Social",
+    title: "Mạng xã hội",
     infor: [
       {
         title: "Instagram",

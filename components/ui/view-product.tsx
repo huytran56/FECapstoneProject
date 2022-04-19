@@ -22,6 +22,7 @@ import {
   selectProductDetailFull,
 } from "@store/admin";
 import React, { useEffect, useState } from "react";
+import { AiOutlineFileAdd, AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
 import { EditProductSKU, ModalGeneralTwo } from ".";
 
 export function ViewProduct() {
@@ -53,10 +54,12 @@ export function ViewProduct() {
         <EditProductSKU />
       </ModalGeneralTwo>
       <Stack alignItems="center">
-        <Text fontSize="xl">Chi tiết sản phẩm</Text>
+        <Text fontSize="xl" fontWeight="bold">
+          Chi tiết sản phẩm
+        </Text>
       </Stack>
       <HStack>
-        <Text> - ID: </Text>
+        <Text fontWeight="bold"> - ID: </Text>
         <Text>
           {productDetailFullSelector
             ? productDetailFullSelector.product_id
@@ -64,7 +67,7 @@ export function ViewProduct() {
         </Text>
       </HStack>
       <HStack>
-        <Text> - Tên sản phẩm: </Text>
+        <Text fontWeight="bold"> - Tên sản phẩm: </Text>
         <Text>
           {productDetailFullSelector
             ? productDetailFullSelector.product_name
@@ -72,7 +75,7 @@ export function ViewProduct() {
         </Text>
       </HStack>
       <HStack>
-        <Text> - Tên danh mục: </Text>
+        <Text fontWeight="bold"> - Tên danh mục: </Text>
         <Text>
           {productDetailFullSelector
             ? productDetailFullSelector.category[0].category_name
@@ -80,23 +83,23 @@ export function ViewProduct() {
         </Text>
       </HStack>
       <HStack>
-        <Text> - Trạng thái sản phẩm: </Text>
+        <Text fontWeight="bold"> - Trạng thái sản phẩm: </Text>
         <Text>
           {productDetailFullSelector
             ? productDetailFullSelector.product_status_id
             : null}
         </Text>
       </HStack>
-      <HStack>
-        <Text> - Mô tả sản phẩm: </Text>
+      <VStack w="100%" alignItems="start">
+        <Text fontWeight="bold"> - Mô tả sản phẩm: </Text>
         <Text>
           {productDetailFullSelector
             ? productDetailFullSelector.description_details
             : null}
         </Text>
-      </HStack>
+      </VStack>
       <HStack>
-        <Text> - Giá tiền: </Text>
+        <Text fontWeight="bold"> - Giá tiền: </Text>
         <Text>
           {productDetailFullSelector
             ? productDetailFullSelector.price.toLocaleString("it-IT", {
@@ -115,7 +118,7 @@ export function ViewProduct() {
           }
           w="100px"
           h="100px"
-          alt={productDetailFullSelector.description_details}
+          alt="image1"
         />
         <Image
           src={
@@ -125,9 +128,12 @@ export function ViewProduct() {
           }
           w="100px"
           h="100px"
-          alt={productDetailFullSelector.description_details}
+          alt="image2"
         />
       </HStack>
+      <Button colorScheme="linkedin" w="50px">
+        <AiFillPlusCircle size="25px" />
+      </Button>
       <Table variant="striped">
         <Thead>
           <Tr>
@@ -148,10 +154,10 @@ export function ViewProduct() {
                   <Td>{productSKU.sale_limit}</Td>
                   <Td>
                     <Button
-                      colorScheme="yellow"
+                      colorScheme="twitter"
                       onClick={() => handleOnClickUpdateButton(productSKU)}
                     >
-                      Chỉnh Sửa
+                      <AiFillEdit fontSize={25} />
                     </Button>
                   </Td>
                 </Tr>

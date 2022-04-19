@@ -37,13 +37,13 @@ export function EditAccount() {
         <Form>
           <Stack>
             <TextField
-              label="Username"
+              label="Tên tài khoản"
               name="username"
               type="text"
               value={currentEditAccountSelector.username}
             />
             <TextField
-              label="Roles"
+              label="Vai trò"
               name="roles"
               type="text"
               value={
@@ -63,7 +63,7 @@ export function EditAccount() {
                 setFieldValue("roles", e.target.value);
               }}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
       )}

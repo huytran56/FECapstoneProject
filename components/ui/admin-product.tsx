@@ -77,7 +77,7 @@ export function AdminProduct() {
   function handleOnClickNextButton() {
     dispatch(
       adminAction.setPaginationIndex({
-        paginationIndex: paginationIndexSelector + 1,
+        paginationIndex: paginationIndexSelector + 10,
       })
     );
   }
@@ -86,7 +86,7 @@ export function AdminProduct() {
     if (paginationIndexSelector === 0) return;
     dispatch(
       adminAction.setPaginationIndex({
-        paginationIndex: paginationIndexSelector - 1,
+        paginationIndex: paginationIndexSelector - 10,
       })
     );
   }
@@ -141,6 +141,13 @@ export function AdminProduct() {
             onClick={handleOnClickAddButton}
           >
             <AiFillPlusCircle size="20px" />
+          </Button>
+          <Button
+            zIndex="0"
+            colorScheme="whatsapp"
+            onClick={handleOnClickAddButton}
+          >
+            Trích xuất đặc trưng
           </Button>
           <HStack w="40%" minW="400px">
             <Input
@@ -199,7 +206,7 @@ export function AdminProduct() {
                     />
                   </Td> */}
                   <Td>
-                    <VStack alignItems="flex-start">
+                    <HStack>
                       {/* <Button
                           minWidth="100"
                           marginTop="2"
@@ -209,13 +216,10 @@ export function AdminProduct() {
                           Delete
                         </Button> */}
                       <Button
-                        minWidth="20"
-                        marginTop="2"
-                        width="50px"
                         colorScheme="red"
                         onClick={() => handleOnClickDelete(product)}
                       >
-                        <AiFillDelete />
+                        <AiFillDelete size={25} />
                       </Button>
                       {/* <Button
                         minWidth="100"
@@ -227,24 +231,18 @@ export function AdminProduct() {
                         Thêm thông tin chi tiết
                       </Button> */}
                       <Button
-                        minWidth="20"
-                        marginTop="2"
-                        w="50px"
-                        colorScheme="green"
+                        colorScheme="yellow"
                         onClick={() => handleOnClickViewProduct(product)}
                       >
-                        <AiOutlineEye />
+                        <AiOutlineEye size={25} />
                       </Button>
                       <Button
-                        minWidth="20"
-                        marginTop="2"
-                        w="50px"
                         colorScheme="blue"
                         onClick={() => handleOnClickEditProduct(product)}
                       >
-                        <AiFillEdit />
+                        <AiFillEdit size={25} />
                       </Button>
-                    </VStack>
+                    </HStack>
                   </Td>
                 </Tr>
               ))

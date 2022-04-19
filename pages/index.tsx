@@ -29,9 +29,12 @@ export default function Home() {
     <>
       {/* <BannerAdvertiser /> */}
       <CarouselImage />
-      <Carousel gap={10} header="Sản phẩm gợi ý">
+      <Carousel
+        gap={10}
+        header="CHÀO HUY, CÓ THỂ BẠN SẼ MUỐN NHỮNG MẶT HÀNG SAU: "
+      >
         {recommendationListSelector.map((p, index) => (
-          <CardCategory {...p} key={index} />
+          <CardCategory {...p} key={index} index />
         ))}
       </Carousel>
       <ContainerBoxShadow />

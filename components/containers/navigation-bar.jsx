@@ -40,9 +40,11 @@ export function NavigationBar() {
       px={5}
       position="fixed"
       w="100%"
-      backgroundColor="white"
+      // backgroundColor="white"
       zIndex="1000"
       paddingRight={10}
+      backgroundColor="#630000"
+      opacity="100%"
     >
       <HStack>
         <Link href="/">
@@ -50,10 +52,12 @@ export function NavigationBar() {
         </Link>
         <Menu>
           <MenuButton
-            backgroundColor="white"
+            // backgroundColor="white"
             as={Button}
             fontSize={20}
             leftIcon={<AiFillHome />}
+            backgroundColor="#630000"
+            textColor="white"
           >
             <Link href="/">Trang chủ</Link>
           </MenuButton>
@@ -67,10 +71,12 @@ export function NavigationBar() {
         </Menu>
         <Menu>
           <MenuButton
-            backgroundColor="white"
+            // backgroundColor="white"
             as={Button}
             fontSize={20}
             leftIcon={<AiFillDatabase />}
+            backgroundColor="#630000"
+            textColor="white"
           >
             Danh mục
           </MenuButton>
@@ -88,11 +94,13 @@ export function NavigationBar() {
         </Menu>
         <Menu>
           <MenuButton
-            backgroundColor="white"
+            // backgroundColor="white"
             as={Button}
             fontSize={20}
             leftIcon={<AiOutlineContacts />}
             href="/"
+            backgroundColor="#630000"
+            textColor="white"
           >
             Giới thiệu
           </MenuButton>

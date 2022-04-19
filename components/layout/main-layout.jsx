@@ -5,9 +5,9 @@ import { Footer } from "../containers";
 export function MainLayout({ children }) {
   return (
     <>
-      <Center>
-        <Container maxWidth={{ lg: "3000px" }}>
-          <Stack minHeight="100vh">
+      <Center m={0} p={0}>
+        <Container maxWidth={{ lg: "3000px" }} p={0}>
+          <Stack minHeight="100vh" w="100%">
             <NavigationBar />
             <Box as="main" flexGrow={1}>
               {children}

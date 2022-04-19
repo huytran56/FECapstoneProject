@@ -73,7 +73,6 @@ export function AdminAccount() {
             {/* <Th overflow="hidden" whiteSpace="nowrap">
               Ngày Sinh
             </Th> */}
-            <Th>Giới tính</Th>
             <Th>Vai trò</Th>
             <Th>Thao tác</Th>
           </Tr>
@@ -90,7 +89,13 @@ export function AdminAccount() {
                   {/* <Td overflow="hidden" whiteSpace="nowrap">
                     {account.birthday}
                   </Td> */}
-                  {account.gender_id == "0" ? <Td>Nam</Td> : <Td>Nữ</Td>}
+                  {/* {account.gender_id == "0" ? (
+                    <Td>Nữ</Td>
+                  ) : account.gender_id == "1" ? (
+                    <Td>Nam</Td>
+                  ) : (
+                    <Td>Khác</Td>
+                  )} */}
                   <Td>
                     {account.roles.map((role) => (
                       <>
@@ -110,14 +115,14 @@ export function AdminAccount() {
                   <Td>
                     <HStack>
                       <Button
-                        colorScheme="twitter"
+                        colorScheme="linkedin"
                         onClick={() => handleOnClickEditButton(account)}
                       >
                         <AiFillEdit fontSize={25} />
                       </Button>
                       <Button
                         marginTop="2"
-                        colorScheme="whatsapp"
+                        colorScheme="red"
                         onClick={() => handleOnClickDeleteButton(account)}
                       >
                         <AiOutlineDelete fontSize={25} />

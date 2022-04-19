@@ -1,5 +1,5 @@
 import { useAppDispatch } from "@app/hook";
-import { Button, Select, Stack } from "@chakra-ui/react";
+import { Button, Select, Stack, VStack, HStack, Text } from "@chakra-ui/react";
 import { adminAction } from "@store/admin";
 import { Form, Formik } from "formik";
 import React from "react";
@@ -44,28 +44,42 @@ export function AddVoucher() {
     >
       {({ setFieldValue }) => (
         <Form>
-          <Stack>
-            <TextField label="Code" name="code" type="text" />
-            <TextField label="name" name="name" type="text" />
-            <TextField label="description" name="description" type="text" />
+          <VStack>
+            <Text fontWeight="bold" fontSize="30px">
+              Tạo mã giảm giá
+            </Text>
+            <br />
+            <HStack w="100%" justifyContent="space-around">
+              <TextField label="Mã Giảm giá" name="code" type="text" />
+              <TextField label="Tên mã" name="name" type="text" />
+            </HStack>
+
+            <TextField label="Mô tả" name="description" type="text" />
             <Select
-              placeholder="type"
+              placeholder="Loại"
               name="type"
               onChange={(e) => setFieldValue("type", e.target.value)}
             >
-              <option value="PERCENTAGE">PERCENTAGE</option>
-              <option value="FIX_VALUE">FIX_VALUE</option>
+              <option value="PERCENTAGE">Phần trăm</option>
+              <option value="FIX_VALUE">Trừ tiền</option>
             </Select>
-            <TextField label="minSpend" name="minSpend" type="number" />
-            <TextField label="maxDiscount" name="maxDiscount" type="number" />
-            <TextField
-              label="discountAmount"
-              name="discountAmount"
-              type="number"
-            />
-            <TextField label="active" name="active" type="active" />
-            <Button type="submit">Submit</Button>
-          </Stack>
+            <HStack w="100%" justifyContent="space-around">
+              <TextField label="Tiền tối thiểu" name="minSpend" type="number" />
+              <TextField
+                label="Tiền giảm tối đa"
+                name="maxDiscount"
+                type="number"
+              />
+              <TextField
+                label="Phần trăm giảm"
+                name="discountAmount"
+                type="number"
+              />
+            </HStack>
+
+            <TextField label="Kích hoạt" name="active" type="active" />
+            <Button type="submit">Xác nhận</Button>
+          </VStack>
         </Form>
       )}
     </Formik>

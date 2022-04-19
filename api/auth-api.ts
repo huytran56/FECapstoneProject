@@ -1,5 +1,6 @@
 import {
   IAccount,
+  IAddress,
   ICartItem,
   ICategory,
   IChangeStatus,
@@ -583,6 +584,59 @@ export const handleChangeQuantityCart = async ({
       productSKUId,
       quantity,
     });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleGetAddressList = async (): Promise<[IAddress]> => {
+  try {
+    const url = "/address/";
+    const res = await axiosClient.get(url);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleAddNewAddress = async ({
+  city,
+  district,
+  id,
+  phoneNumber,
+  postalCode,
+  province,
+  receiverName,
+  street,
+  subDistrict,
+}: IAddress): Promise<boolean> => {
+  try {
+    const url = `/address/create`;
+    const res = await axiosClient.post(url, {
+      city,
+      district,
+      id,
+      phoneNumber,
+      postalCode,
+      province,
+      receiverName,
+      street,
+      subDistrict,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleDeleteAddress = async ({
+  id,
+}: {
+  id: Number;
+}): Promise<boolean> => {
+  console.log(id);
+  try {
+    const url = `/address/delete/${id}`;
+    const res = await axiosClient.delete(url);
     return true;
   } catch (error) {
     return false;

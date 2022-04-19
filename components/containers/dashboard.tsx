@@ -10,6 +10,8 @@ import { selectNumberIndex } from "@store/admin";
 import { AdminCategory } from "@components/ui";
 import { AdminOrder } from "@components/ui/admin-order";
 import { AdminProduct } from "@components/ui/admin-product";
+import React from "react";
+import BasicStatistics from "@components/ui/dasboard";
 
 export const DashBoard = () => {
   const pageIndexSelector = useAppSelector(selectNumberIndex);
@@ -28,6 +30,8 @@ export const DashBoard = () => {
         <AdminOrder />
       ) : pageIndexSelector === 7 ? (
         <EditAdmin />
+      ) : pageIndexSelector === 1 ? (
+        <BasicStatistics />
       ) : null}
     </SidebarWithHeader>
   );

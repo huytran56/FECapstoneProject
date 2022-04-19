@@ -28,3 +28,9 @@ export * from "./edit-product";
 export * from "./carousel-image";
 export * from "./edit-productSKU";
 export * from "./cart";
+export * from "./add-address";
+export * from "./order-history-detail";
+export * from "./dasboard";
+export * from "./star-review"
+export * from "./star"
+export * from "./forgot-password"

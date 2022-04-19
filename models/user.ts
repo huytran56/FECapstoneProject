@@ -9,3 +9,14 @@ export interface ICartItem {
   unitPrice: number;
   stock: boolean;
 }
+export interface IAddress {
+  id: number;
+  receiverName: string;
+  province: string;
+  city: string;
+  district: string;
+  subDistrict: string;
+  street: string;
+  postalCode: string;
+  phoneNumber: string;
+}

@@ -7,7 +7,7 @@ export function Logo() {
       maxHeight="70px"
       maxWidth="70px"
       alt="logoImage"
-      src="/Image/logo.png"
+      src="/Image/logo3.png"
     />
   );
 }

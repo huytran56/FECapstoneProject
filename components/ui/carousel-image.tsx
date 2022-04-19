@@ -30,9 +30,9 @@ export function CarouselImage() {
 
   // These are the images used in the slide
   const cards = [
-    "/Image/banner-3.jpg",
-    "/Image/banner-4.jpg",
-    "/Image/banner-5.jpg",
+    "/Image/banner-10.jpg",
+    "/Image/banner-11.jpg",
+    "/Image/banner-12.jpg",
   ];
 
   return (

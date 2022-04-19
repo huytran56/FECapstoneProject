@@ -173,7 +173,7 @@ export function AdminOrder() {
 
                   {order.paymentStatus === "PENDING" ? (
                     <Td textAlign="center">
-                      <Badge colorScheme="green" fontSize={15}>
+                      <Badge colorScheme="yellow" fontSize={15}>
                         Chờ thanh toán
                       </Badge>
                     </Td>
@@ -255,14 +255,13 @@ export function AdminOrder() {
                             >
                               <FaCheck />
                             </Button>
-                            {order.paymentStatus === "SUCCESSFUL" ? null : (
-                              <Button
-                                colorScheme="red"
-                                onClick={() => handleOnClickCancel(order)}
-                              >
-                                <FaWindowClose />
-                              </Button>
-                            )}
+                            {/* {order.paymentStatus === "SUCCESSFUL" ? null : ( */}
+                            <Button
+                              colorScheme="red"
+                              onClick={() => handleOnClickCancel(order)}
+                            >
+                              <FaWindowClose size={25} />
+                            </Button>
                           </HStack>
                         )}
                       </HStack>

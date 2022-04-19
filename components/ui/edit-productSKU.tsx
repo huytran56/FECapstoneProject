@@ -112,7 +112,7 @@ export function EditProductSKU() {
                 setFieldValue("sale_limit", e.target.value);
               }}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
       )}

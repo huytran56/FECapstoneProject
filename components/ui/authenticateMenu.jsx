@@ -14,7 +14,7 @@ import {
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Cart } from "@components/ui/index";
-import { selectNumberItem } from "@store/user";
+import { selectNumberItem, selectCartItemList } from "@store/user";
 import { useAppDispatch, useAppSelector } from "@app/hook";
 import { useEffect } from "react";
 import { adminAction, selectUserInfo } from "@store/admin";
@@ -26,6 +26,7 @@ export function AuthenticationMenu() {
   }, [dispatch]);
 
   const userInforSelector = useAppSelector(selectUserInfo);
+  const cartItemListSelector = useAppSelector(selectCartItemList);
   console.log(userInforSelector);
 
   return (
@@ -36,15 +37,17 @@ export function AuthenticationMenu() {
             as={Button}
             rightIcon={
               <Code colorScheme="yellow" m={0}>
-                {numberItemSelector}
+                {cartItemListSelector ? cartItemListSelector.length : 0}
               </Code>
             }
+            colorScheme="white"
           >
             <Icon
               as={AiOutlineShoppingCart}
               m={0}
               fontSize={25}
               _hover={{ cursor: `pointer` }}
+              color="white"
             />
           </MenuButton>
           <MenuList>
@@ -52,8 +55,30 @@ export function AuthenticationMenu() {
           </MenuList>
         </Menu>
       </VStack>
-      {userInforSelector ? (
-        <Link>{userInforSelector.username}</Link>
+      {userInforSelector !== null ? (
+        <HStack _hover={{ cursor: `pointer` }}>
+          <Text fontWeight="bold" textColor="white" fontSize={20}>
+            Xin chào,
+          </Text>
+          <Menu>
+            <MenuButton color="white" fontSize={20}>
+              <Link>{userInforSelector.username}</Link>
+            </MenuButton>
+            <MenuList>
+              {/* MenuItems are not rendered unless Menu is open */}
+              <MenuItem>
+                <Link href="/address">Tạo địa chỉ</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/orderHistory">Xem lịch sử mua hàng</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/changeInfo">Thay đổi thông tin</Link>
+              </MenuItem>
+              <MenuItem>Đăng xuất</MenuItem>
+            </MenuList>
+          </Menu>
+        </HStack>
       ) : (
         <Link href="/signin">
           <Text ml="auto" mr={5} fontWeight="bold" fontSize="17">

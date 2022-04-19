@@ -29,7 +29,7 @@ export function CardProduct({
 }) {
   const router = useRouter();
   return (
-    <Flex p={50} w="full" alignItems="center" justifyContent="center">
+    <Flex p={50} w="xl" alignItems="center" justifyContent="center">
       <Box
         bg={useColorModeValue("white", "gray.800")}
         maxW="sm"
@@ -37,6 +37,7 @@ export function CardProduct({
         rounded="lg"
         shadow="lg"
         position="relative"
+        marginRight={35}
       >
         {/* {data.isNew && (
           <Circle
@@ -76,6 +77,21 @@ export function CardProduct({
             >
               {product_name}
             </Box>
+          </Flex>
+
+          <Flex justifyContent="space-between" alignContent="center">
+            {/* <Rating rating={data.rating} numReviews={data.numReviews} /> */}
+            <Box
+              fontSize="xl"
+              color={useColorModeValue("gray.800", "white")}
+              textColor="red"
+            >
+              <Box as="span" color={"gray.600"} fontSize="lg"></Box>
+              {price.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </Box>
             <Tooltip
               label="Add to cart"
               bg="white"
@@ -87,17 +103,6 @@ export function CardProduct({
                 <Icon as={FiShoppingCart} h={7} w={7} alignSelf={"center"} />
               </chakra.a>
             </Tooltip>
-          </Flex>
-
-          <Flex justifyContent="space-between" alignContent="center">
-            {/* <Rating rating={data.rating} numReviews={data.numReviews} /> */}
-            <Box fontSize="xl" color={useColorModeValue("gray.800", "white")}>
-              <Box as="span" color={"gray.600"} fontSize="lg"></Box>
-              {price.toLocaleString("it-IT", {
-                style: "currency",
-                currency: "VND",
-              })}
-            </Box>
           </Flex>
         </Box>
       </Box>

@@ -32,9 +32,9 @@ export function ModalGeneral({ children }: { children: ReactNode }) {
           <ModalCloseButton />
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleOnClose}>
+            {/* <Button colorScheme="blue" mr={3} onClick={handleOnClose}>
               Đóng
-            </Button>
+            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -56,9 +56,9 @@ export function ModalGeneralTwo({ children }: { children: ReactNode }) {
           <ModalCloseButton />
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleOnClose}>
+            {/* <Button colorScheme="blue" mr={3} onClick={handleOnClose}>
               Đóng
-            </Button>
+            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>
