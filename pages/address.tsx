@@ -49,7 +49,10 @@ export default function Address() {
         Địa chỉ giao hàng
       </Text>
       <VStack marginTop="100px">
-        <Text>Có {addressListSelector.length} địa chỉ đã tạo</Text>
+        <Text>
+          Có {addressListSelector ? addressListSelector.length : 0} địa chỉ đã
+          tạo
+        </Text>
         <AiOutlineLine size={50} />
       </VStack>
       <br />
