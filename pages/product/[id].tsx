@@ -39,7 +39,6 @@ import { MainLayout } from "@components/layout";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@app/hook";
 import {
-  selectProduct,
   selectRecommendListByProduct,
   selectReviewList,
   userAction,
@@ -62,7 +61,6 @@ export default function ProductDetail({
   const [productSKUId, setProductSKUId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [active, setActive] = useState(-1);
-  const productSelector = useAppSelector(selectProduct);
   function handleOnClickButtonSize(sku, index) {
     setProductSKUId(sku);
     setActive(index);
@@ -75,23 +73,6 @@ export default function ProductDetail({
       })
     );
   }
-
-  useEffect(() => {
-    dispatch(
-      userAction.setProduct({
-        product: {
-          productImage,
-          price,
-          product_name,
-          product_status_id,
-          productSKUs,
-          description_details,
-          category,
-          product_id,
-        },
-      })
-    );
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(
