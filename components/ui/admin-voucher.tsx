@@ -30,6 +30,9 @@ import {
   AiFillPlusCircle,
   AiOutlineBulb,
 } from "react-icons/ai";
+import { ModalGeneralTwo } from "./modal";
+import { ViewVoucher } from "./view-voucher";
+import { selectUserRole } from "@store/user";
 
 export function AdminVoucher() {
   const dispatch = useAppDispatch();
@@ -39,6 +42,7 @@ export function AdminVoucher() {
   const voucherListSeclector = useAppSelector(selectVoucherList);
   console.log(voucherListSeclector);
   const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
+  const userRoleSelector = useAppSelector(selectUserRole);
 
   const handleOnClickEditButton = (voucher) => {
     dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
@@ -66,15 +70,34 @@ export function AdminVoucher() {
       })
     );
   };
+  const handleOnClickViewDetail = (voucher) => {
+    dispatch(adminAction.setIsOpenModalTwo({ isOpenModalTwo: true }));
+    dispatch(
+      adminAction.setCurrentEditVoucher({ currentEditVoucher: voucher })
+    );
+  };
   return (
     <Stack p={4} borderRadius="8px" border="1px solid #d8d8d8">
       <VStack alignItems="flex-start">
         <ModalGeneral>
           {isAddNewStateSelector ? <AddVoucher /> : <EditVoucher />}
         </ModalGeneral>
-        <Button zIndex="0" colorScheme="linkedin" onClick={handleOnClickAddNew}>
-          <AiFillPlusCircle size="25px" />
-        </Button>
+        <ModalGeneralTwo>
+          <ViewVoucher />
+        </ModalGeneralTwo>
+        {userRoleSelector.map((role) => {
+          if (role === "ROLE_ADMIN") {
+            return (
+              <Button
+                zIndex="0"
+                colorScheme="linkedin"
+                onClick={handleOnClickAddNew}
+              >
+                <AiFillPlusCircle size="25px" />
+              </Button>
+            );
+          }
+        })}
       </VStack>
       <Divider orientation="horizontal" variant="solid" colorScheme="orange" />
       <Table variant="striped">
@@ -83,13 +106,15 @@ export function AdminVoucher() {
           <Tr>
             <Th>ID</Th>
             <Th>Mã giảm giá</Th>
-            <Th>Tên</Th>
-            <Th>Mô tả</Th>
+            {/* <Th>Tên</Th> */}
+            {/* <Th>Mô tả</Th> */}
             <Th>Số lượng mã</Th>
             <Th>Hình thức giảm</Th>
             <Th>Tiền tối thiểu</Th>
             <Th>Giảm giá tối đa</Th>
-            <Th>Tỉ lệ discount</Th>
+            <Th>Tỉ lệ/ Số tiền giảm</Th>
+            {/* <Th>Ngày áp dụng</Th> */}
+            {/* <Th>Ngày kết thúc</Th> */}
             <Th>Kích hoạt</Th>
             <Th>Thao tác</Th>
           </Tr>
@@ -100,8 +125,8 @@ export function AdminVoucher() {
                 <Tr key={index}>
                   <Td>{voucher.id}</Td>
                   <Td>{voucher.code}</Td>
-                  <Td>{voucher.name}</Td>
-                  <Td>{voucher.description}</Td>
+                  {/* <Td>{voucher.name}</Td> */}
+                  {/* <Td>{voucher.description}</Td> */}
                   <Td>{voucher.quantity}</Td>
                   {voucher.type === "PERCENTAGE" ? (
                     <Td>Phần trăm</Td>
@@ -121,28 +146,47 @@ export function AdminVoucher() {
                     })}
                   </Td>
                   <Td>{voucher.discountAmount}</Td>
+                  {/* <Td>{voucher.fromDate}</Td> */}
+                  {/* <Td>{voucher.toDate}</Td> */}
                   {voucher.active === false ? <Td>Không</Td> : <Td>Có</Td>}
                   <Td>
                     <HStack alignItems="flex-start">
-                      <Button
-                        colorScheme="blue"
-                        onClick={() => handleOnClickEditButton(voucher)}
-                      >
-                        <AiFillEdit size="20" />
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={() => handleOnClickDeleteButton(voucher)}
-                      >
-                        <AiOutlineDelete size="20" />
-                      </Button>
+                      {userRoleSelector.map((role) => {
+                        if (role === "ROLE_ADMIN") {
+                          return (
+                            <>
+                              <Button
+                                colorScheme="blue"
+                                onClick={() => handleOnClickEditButton(voucher)}
+                              >
+                                <AiFillEdit size="20" />
+                              </Button>
+                              <Button
+                                colorScheme="red"
+                                onClick={() =>
+                                  handleOnClickDeleteButton(voucher)
+                                }
+                              >
+                                <AiOutlineDelete size="20" />
+                              </Button>
+                              <Button
+                                colorScheme="orange"
+                                onClick={() =>
+                                  handleOnClickChangeActivateButton(voucher)
+                                }
+                              >
+                                <AiOutlineBulb size="20" />
+                              </Button>
+                            </>
+                          );
+                        }
+                      })}
+
                       <Button
                         colorScheme="yellow"
-                        onClick={() =>
-                          handleOnClickChangeActivateButton(voucher)
-                        }
+                        onClick={() => handleOnClickViewDetail(voucher)}
                       >
-                        <AiOutlineBulb size="20" />
+                        <AiOutlineEye size="20" />
                       </Button>
                     </HStack>
                   </Td>

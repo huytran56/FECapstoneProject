@@ -19,29 +19,50 @@ import {
   Image,
   VStack,
   Text,
+  cookieStorageManager,
 } from "@chakra-ui/react";
+import { useAppDispatch } from "@app/index";
+import { userAction } from "@store/user";
 
 export const SignIn = () => {
   // let navigate = useNavigate()
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const validate = Yup.object({
-    usernameOrEmail: Yup.string()
-      .email("Email không đúng")
-      .required("Không được bỏ trống"),
+    usernameOrEmail: Yup.string().required("Không được bỏ trống"),
     password: Yup.string()
       .min(6, "Cần ít nhất 6 kí tự")
       .required("Không được bỏ trống"),
   });
 
+  function createCookie(name, value, days) {
+    var expires;
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toGMTString();
+    } else {
+      expires = "";
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
+
   const handleOnClickLogin = async (value) => {
+    dispatch(userAction.setIsFirstGetRole({ isFisrtGetRole: true }));
     const { password, usernameOrEmail } = value;
     const res = await handleSignIn({ password, usernameOrEmail });
     console.log(res);
+    const { accessToken, roles } = res.token;
+    console.log(roles);
+
+    localStorage.setItem("token", accessToken);
+    createCookie("token", accessToken);
+    // console.log(localStorage.getItem("token"));
     if (!res.success) {
       console.log("Fail");
     } else {
-      router.replace("/dashboard");
+      router.push("/dashboard");
     }
   };
   const handleTestClick = async (value) => {
@@ -69,7 +90,7 @@ export const SignIn = () => {
                   <TextField
                     // label="Email"
                     name="usernameOrEmail"
-                    type="email"
+                    type="text"
                   />
                 </FormControl>
                 <FormControl id="password">

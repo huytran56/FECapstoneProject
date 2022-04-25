@@ -141,6 +141,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const handleOnClickSignOut = () => {
     dispatch(adminAction.preSignout({}));
     router.push("/signin");
+    window.localStorage.clear();
   };
 
   return (
@@ -200,9 +201,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   ml="2"
                 >
                   <Text fontSize="sm">{userInfoSelector?.username}</Text>
-                  <Text fontSize="xs" color="gray.600">
+                  {/* <Text fontSize="xs" color="gray.600">
                     Admin
-                  </Text>
+                  </Text> */}
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
@@ -214,6 +215,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem onClick={handleOnClickSignOut}>Đăng xuất</MenuItem>
+              <MenuItem onClick={() => router.push(`/`)}>
+                Chuyển sang mua hàng
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>

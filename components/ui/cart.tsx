@@ -20,7 +20,7 @@ export function Cart() {
     dispatch(userAction.preSetCartItemList({}));
   }, [dispatch]);
   const CartItemListSelector = useAppSelector(selectCartItemList);
-  console.log(CartItemListSelector);
+  // console.log(CartItemListSelector);
   let sum;
   if (CartItemListSelector !== undefined) {
     sum = CartItemListSelector.reduce(
@@ -47,7 +47,7 @@ export function Cart() {
   }
   return (
     <VStack w="400px" p={3}>
-      <Box w="100%" textAlign="center" backgroundColor="#F9B384">
+      <Box w="100%" textAlign="center" backgroundColor="#630000">
         <Text fontWeight="bold" fontSize={20} textColor="white">
           Giỏ hàng
         </Text>

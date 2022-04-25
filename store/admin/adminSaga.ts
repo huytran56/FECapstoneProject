@@ -3,6 +3,7 @@ import {
   handleChangeStatus,
   handleCreateCategory,
   handleCreateProduct,
+  handleCreateProductSKU,
   handleCreateStaffAccount,
   handleCreateVoucher,
   handleDeleteAccount,
@@ -56,7 +57,8 @@ function* getAccountList(action: PayloadAction<IAdminPayLoad>) {
   }
 }
 function* createStaff(action: PayloadAction<IAdminPayLoad>) {
-  //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setWarning({ warningPopup: null }));
   try {
     const addStaffRes: ICreateStaffRes = yield call(
       handleCreateStaffAccount,
@@ -65,12 +67,18 @@ function* createStaff(action: PayloadAction<IAdminPayLoad>) {
     const accountList: IAccount[] = yield call(handleGetAccount);
     yield put(adminAction.setAccountList({ accountList }));
     yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setWarning({
+        warningPopup: "Truy cập email xác nhận và sử dụng tài khoản",
+      })
+    );
   } catch (error) {
-    console.log(error);
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
   }
 }
 function* editRoleAccount(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const addStaffRes: ICreateStaffRes = yield call(
       handleEditRoleAccount,
@@ -79,12 +87,17 @@ function* editRoleAccount(action: PayloadAction<IAdminPayLoad>) {
     const accountList: IAccount[] = yield call(handleGetAccount);
     yield put(adminAction.setAccountList({ accountList }));
     yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Thay đổi role thành công" })
+    );
   } catch (error) {
     console.log(error);
   }
 }
 function* deleteAccount(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setSuccess({ successPopup: null }));
+  yield put(adminAction.setError({ errorPopup: null }));
   try {
     const deleteAccount: IDeleteAccountRes = yield call(
       handleDeleteAccount,
@@ -92,8 +105,13 @@ function* deleteAccount(action: PayloadAction<IAdminPayLoad>) {
     );
     const accountList: IAccount[] = yield call(handleGetAccount);
     yield put(adminAction.setAccountList({ accountList }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Xoá tài khoản thành công" })
+    );
   } catch (error) {
-    console.log(error);
+    yield put(
+      adminAction.setError({ errorPopup: "Tài khoản phải được xác nhận" })
+    );
   }
 }
 
@@ -109,40 +127,48 @@ function* getCategory(action: PayloadAction<IAdminPayLoad>) {
 
 function* createCategory(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const res: boolean = yield call(
       handleCreateCategory,
       action.payload.createCategoryPayload
     );
-    if (res) {
-      const categoryList: ICategory[] = yield call(handleGetCategory);
-      yield put(adminAction.setCategoryList({ categoryList }));
-      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
-    }
+
+    const categoryList: ICategory[] = yield call(handleGetCategory);
+    yield put(adminAction.setCategoryList({ categoryList }));
+    yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Tạo danh mục thành công" })
+    );
   } catch (error) {
-    console.log(error);
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
   }
 }
 
 function* updateCategory(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createCategoryPayload);
-
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const res: boolean = yield call(
       handlerUpdateCategory,
       action.payload.createCategoryPayload
     );
-    if (res) {
-      const categoryList: ICategory[] = yield call(handleGetCategory);
-      yield put(adminAction.setCategoryList({ categoryList }));
-      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
-    }
+
+    const categoryList: ICategory[] = yield call(handleGetCategory);
+    yield put(adminAction.setCategoryList({ categoryList }));
+    yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Chỉnh sửa danh mục thành công" })
+    );
   } catch (error) {
-    console.log(error);
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
   }
 }
 function* deleteCategory(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const deleteCategory: IDeleteAccountRes = yield call(
       handleDeleteCategory,
@@ -150,6 +176,9 @@ function* deleteCategory(action: PayloadAction<IAdminPayLoad>) {
     );
     const categoryList: ICategory[] = yield call(handleGetCategory);
     yield put(adminAction.setCategoryList({ categoryList }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Xoá danh mục thành công" })
+    );
   } catch (error) {
     console.log(error);
   }
@@ -172,23 +201,28 @@ function* getVoucherList(action: PayloadAction<IAdminPayLoad>) {
   }
 }
 function* createVoucher(action: PayloadAction<IAdminPayLoad>) {
-  console.log(action.payload.createVoucherPayLoad);
+  // console.log(action.payload.createVoucherPayLoad);
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const res: boolean = yield call(
       handleCreateVoucher,
       action.payload.createVoucherPayLoad
     );
-    if (res) {
-      const voucherList: IVoucher[] = yield call(handleGetVoucher);
-      yield put(adminAction.setVoucherList({ voucherList }));
-      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
-    }
+
+    const voucherList: IVoucher[] = yield call(handleGetVoucher);
+    yield put(adminAction.setVoucherList({ voucherList }));
+    yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Tạo mã giảm giá thành công" })
+    );
   } catch (error) {
-    console.log(error);
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
   }
 }
 function* editVoucher(action: PayloadAction<IAdminPayLoad>) {
-  console.log(action.payload.editVoucherPayLoad);
+  // console.log(action.payload.editVoucherPayLoad);
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const editVoucher: boolean = yield call(
       handleEditVoucher,
@@ -198,12 +232,18 @@ function* editVoucher(action: PayloadAction<IAdminPayLoad>) {
     console.log(voucherList);
     yield put(adminAction.setVoucherList({ voucherList }));
     yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({
+        successPopup: "Thay đổi mã giảm giá thành công",
+      })
+    );
   } catch (error) {
     console.log(error);
   }
 }
 function* deleteVoucher(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const deleteVoucher: boolean = yield call(
       handleDeleteVoucher,
@@ -211,6 +251,9 @@ function* deleteVoucher(action: PayloadAction<IAdminPayLoad>) {
     );
     const voucherList: IVoucher[] = yield call(handleGetVoucher);
     yield put(adminAction.setVoucherList({ voucherList }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Xoá mã giảm giá thành công" })
+    );
   } catch (error) {
     console.log(error);
   }
@@ -259,16 +302,19 @@ function* signOut(action: PayloadAction<IAdminPayLoad>) {
   }
 }
 function* updateAdminProfile(action: PayloadAction<IAdminPayLoad>) {
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const res = yield call(
       handlerUpdateUserInformation,
       action.payload.preUpdateAdminProfilePayload
     );
-    if (res) {
-      const userInfo: IUserInformationRes = yield call(handleUserInfomation);
 
-      yield put(adminAction.setUserInfo({ userInfo }));
-    }
+    const userInfo: IUserInformationRes = yield call(handleUserInfomation);
+
+    yield put(adminAction.setUserInfo({ userInfo }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Thay đổi thông tin thành công" })
+    );
   } catch (error) {
     console.log(error);
   }
@@ -318,6 +364,7 @@ function* getSearchProduct(action: PayloadAction<IAdminPayLoad>) {
 }
 function* deleteProduct(action: PayloadAction<IAdminPayLoad>) {
   //   console.log(action.payload.createStaffPayload);
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const deleteProduct: boolean = yield call(
       handleDeleteProduct,
@@ -327,6 +374,9 @@ function* deleteProduct(action: PayloadAction<IAdminPayLoad>) {
     const productList: IProduct[] = yield call(handleGetProduct, 0);
 
     yield put(adminAction.setProductList({ productList }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Xoá sản phẩm thành công" })
+    );
   } catch (error) {
     console.log(error);
   }
@@ -345,6 +395,7 @@ function* getRecommendationList(action: PayloadAction<IAdminPayLoad>) {
 }
 function* editProduct(action: PayloadAction<IAdminPayLoad>) {
   // console.log(action.payload.editVoucherPayLoad);
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const editVoucher: boolean = yield call(
       handleEditProduct,
@@ -353,6 +404,9 @@ function* editProduct(action: PayloadAction<IAdminPayLoad>) {
     const productList: IProduct[] = yield call(handleGetProduct, 0);
     yield put(adminAction.setProductList({ productList }));
     yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Chỉnh sửa sản phẩm thành công" })
+    );
   } catch (error) {
     console.log(error);
   }
@@ -371,31 +425,54 @@ function* getProductDetailFull(action: PayloadAction<IAdminPayLoad>) {
   }
 }
 function* editProductSKU(action: PayloadAction<IAdminPayLoad>) {
-  console.log(action.payload.editVoucherPayLoad);
+  console.log(action.payload.editProductSKUPayLoad);
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const editVoucher: boolean = yield call(
       handleEditProductSKU,
       action.payload.editProductSKUPayLoad
     );
     yield put(adminAction.setIsOpenModalTwo({ isOpenModalTwo: false }));
+    yield put(adminAction.setSuccess({ successPopup: "Chỉnh sửa thành công" }));
   } catch (error) {
-    console.log(error);
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
   }
 }
 function* createProduct(action: PayloadAction<IAdminPayLoad>) {
-  console.log(action.payload.createProductPayLoad);
+  // console.log(action.payload.createProductPayLoad);
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setSuccess({ successPopup: null }));
   try {
     const res: boolean = yield call(
       handleCreateProduct,
       action.payload.createProductPayLoad
     );
-    if (res) {
-      const productList: IProduct[] = yield call(handleGetVoucher);
-      yield put(adminAction.setProductList({ productList }));
-      yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
-    }
+
+    const productList: IProduct[] = yield call(handleGetProduct, 0);
+    yield put(adminAction.setProductList({ productList }));
+    yield put(adminAction.setIsOpenModal({ isOpenModal: false }));
+    yield put(
+      adminAction.setSuccess({ successPopup: "Thêm sản phẩm thành công" })
+    );
   } catch (error) {
-    console.log(error);
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
+  }
+}
+function* createProductSKU(action: PayloadAction<IAdminPayLoad>) {
+  console.log(action.payload.createProductSKUPayload);
+  yield put(adminAction.setError({ errorPopup: null }));
+  yield put(adminAction.setSuccess({ successPopup: null }));
+  try {
+    const res: boolean = yield call(
+      handleCreateProductSKU,
+      action.payload.createProductSKUPayload
+    );
+
+    yield put(adminAction.setIsOpenModalTwo({ isOpenModalTwo: false }));
+    yield put(adminAction.setSuccess({ successPopup: "Tạo thành công" }));
+  } catch (error) {
+    yield put(adminAction.setError({ errorPopup: error.response.data }));
   }
 }
 export function* adminSaga() {
@@ -426,4 +503,5 @@ export function* adminSaga() {
   yield takeLatest(adminAction.preSetProductDetailFull, getProductDetailFull);
   yield takeLatest(adminAction.preEditProductSKU, editProductSKU);
   yield takeLatest(adminAction.preCreateProduct, createProduct);
+  yield takeLatest(adminAction.preAddProductSKU, createProductSKU);
 }

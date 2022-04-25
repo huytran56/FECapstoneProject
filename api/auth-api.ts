@@ -7,14 +7,21 @@ import {
   ICreateProduct,
   IEditVoucher,
   IOrder,
+  IOrderItemDetail,
   IProduct,
   IProductDetail,
   IProductFull,
   IProductRecommend,
   IProductSKU,
+  IReview,
+  IReviewResponse,
+  IVnpay,
+  IVnpayResponse,
   IVoucher,
+  IVoucherNewPrice,
+  IVoucherValidate,
 } from "@models/index";
-import axiosClient from "./axios-client";
+import axiosClient, { axiosServer } from "./axios-client";
 
 interface ILoginPayLoad {
   password: string;
@@ -69,6 +76,7 @@ export interface IDeleteAccount {
 interface ILoginRes {
   success: boolean;
   messege: string;
+  token: string;
 }
 export const handleSignIn = async ({
   password,
@@ -77,9 +85,9 @@ export const handleSignIn = async ({
   try {
     const url = "/auth/signin";
     const res = await axiosClient.post(url, { password, usernameOrEmail });
-    return { success: true, messege: "Login success" };
+    return { success: true, messege: "Login success", token: res.data };
   } catch (error) {
-    return { success: false, messege: "Login fail" };
+    return { success: false, messege: "Login fail", token: "" };
   }
 };
 
@@ -104,23 +112,19 @@ export const handleCreateStaffAccount = async ({
   roles,
   username,
 }: ICreateAccountPayLoad): Promise<ICreateStaffRes> => {
-  try {
-    const url = "/auth/signup";
-    const res = await axiosClient.post(url, {
-      birthday,
-      email,
-      first_name,
-      gender_id,
-      last_name,
-      password,
-      phone_number,
-      roles,
-      username,
-    });
-    return res.data;
-  } catch (error) {
-    return error;
-  }
+  const url = "/auth/signup";
+  const res = await axiosClient.post(url, {
+    birthday,
+    email,
+    first_name,
+    gender_id,
+    last_name,
+    password,
+    phone_number,
+    roles,
+    username,
+  });
+  return res.data;
 };
 
 export const handleGetAccount = async (): Promise<[IAccount]> => {
@@ -168,44 +172,32 @@ export const handleGetCategory = async (): Promise<ICategory> => {
 export const handleCreateCategory = async ({
   category_name,
 }: ICategoryPayLoad): Promise<boolean> => {
-  try {
-    const url = `/category/admin/createCategory`;
-    const res = await axiosClient.post(url, {
-      category_name,
-      is_deleted: false,
-    });
-    return true;
-  } catch (error) {
-    return false;
-  }
+  const url = `/category/admin/createCategory`;
+  const res = await axiosClient.post(url, {
+    category_name,
+    is_deleted: false,
+  });
+  return res.data;
 };
 
 export const handlerUpdateCategory = async ({
   id,
   category_name,
 }: ICategoryPayLoad): Promise<boolean> => {
-  try {
-    const url = `/category/admin/updateCategoryById/${id}`;
-    console.log(url);
-    const res = await axiosClient.put(url, {
-      id,
-      category_name,
-      is_delete: false,
-    });
+  const url = `/category/admin/updateCategoryById/${id}`;
+  console.log(url);
+  const res = await axiosClient.put(url, {
+    id,
+    category_name,
+    is_delete: false,
+  });
 
-    return true;
-  } catch (error) {
-    return false;
-  }
+  return res.data;
 };
 export const handleDeleteCategory = async ({ id }: ICategoryPayLoad) => {
-  try {
-    const url = `/category/admin/deleteCatgoryById/${id}`;
-    const res = await axiosClient.delete(url);
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const url = `/category/admin/deleteCatgoryById/${id}`;
+  const res = await axiosClient.delete(url);
+  return res.data;
 };
 
 export const handleUserInfomation = async (): Promise<IUserInformationRes> => {
@@ -214,7 +206,7 @@ export const handleUserInfomation = async (): Promise<IUserInformationRes> => {
     const res = await axiosClient.get(url);
     return res.data;
   } catch (error) {
-    return error!;
+    return null!;
   }
 };
 export const handleGetVoucher = async (): Promise<[IVoucher]> => {
@@ -236,35 +228,26 @@ export const handleCreateVoucher = async ({
   maxDiscount,
   discountAmount,
   active,
+  quantity,
+  fromDate,
+  toDate,
 }: IVoucher): Promise<boolean> => {
-  try {
-    console.log({
-      id,
-      code,
-      name,
-      description,
-      type,
-      minSpend,
-      maxDiscount,
-      discountAmount,
-      active,
-    });
-    const url = `/voucher/create`;
-    const res = await axiosClient.post(url, {
-      id,
-      code,
-      name,
-      description,
-      type,
-      minSpend,
-      maxDiscount,
-      discountAmount,
-      active,
-    });
-    return true;
-  } catch (error) {
-    return false;
-  }
+  const url = `/voucher/create`;
+  const res = await axiosClient.post(url, {
+    id,
+    code,
+    name,
+    description,
+    type,
+    minSpend,
+    maxDiscount,
+    discountAmount,
+    active,
+    quantity,
+    fromDate,
+    toDate,
+  });
+  return res.data;
 };
 export const handleEditVoucher = async ({
   id,
@@ -276,6 +259,9 @@ export const handleEditVoucher = async ({
   minSpend,
   name,
   type,
+  quantity,
+  fromDate,
+  toDate,
 }: IEditVoucher) => {
   try {
     const url = `/voucher/update/${id}`;
@@ -288,6 +274,9 @@ export const handleEditVoucher = async ({
       minSpend,
       name,
       type,
+      quantity,
+      fromDate,
+      toDate,
     });
     return res.data;
   } catch (error) {
@@ -476,6 +465,27 @@ export const handleGetProductDetailFull = async ({
     return false;
   }
 };
+export const handleGetProductDetailFullServer = async ({
+  product_id,
+  token,
+}: {
+  product_id: string;
+  token: string;
+}): Promise<[IProductFull] | false> => {
+  try {
+    // const id = product_id;
+    const url = `/product/getProductById/${product_id}`;
+    const res = await axiosServer.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return false;
+  }
+};
 
 export const handleEditProductSKU = async ({
   id,
@@ -483,17 +493,13 @@ export const handleEditProductSKU = async ({
   size,
   stock,
 }: IProductSKU): Promise<boolean> => {
-  try {
-    const url = `/admin/productSKU/updateProductBySKUId/${id}`;
-    const res = await axiosClient.put(url, {
-      sale_limit,
-      size,
-      stock,
-    });
-    return true;
-  } catch (error) {
-    return false;
-  }
+  const url = `/admin/productSKU/updateProductBySKUId/${id}`;
+  const res = await axiosClient.put(url, {
+    sale_limit,
+    size,
+    stock,
+  });
+  return res.data;
 };
 export const handleCreateProduct = async ({
   fileImage,
@@ -504,36 +510,34 @@ export const handleCreateProduct = async ({
   price,
   category,
 }: ICreateProduct): Promise<boolean> => {
-  try {
-    const url = `/product/admin/createProductAll`;
-    const formData = new FormData();
-    fileImage.forEach((file) => {
-      formData.append("fileImage", file);
-    });
-    formData.append("product_id", product_id);
-    formData.append("product_status_id", product_status_id);
-    formData.append("product_name", product_name);
-    formData.append("description_details", description_details);
-    formData.append("price", price.toString());
-    category.forEach((c) => {
-      formData.append("category", c);
-    });
-    console.log(formData);
-    const res = await axiosClient.post(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return true;
-  } catch (error) {
-    return false;
-  }
+  // console.log(product_status_id);
+  const url = `/product/admin/createProductAll`;
+  const formData = new FormData();
+  console.log({ fileImage, category });
+  Object.keys(fileImage).map((key) => {
+    formData.append("fileImage", fileImage[key]);
+  });
+  formData.append("product_id", product_id);
+  formData.append("product_status_id", product_status_id);
+  formData.append("product_name", product_name);
+  formData.append("description_details", description_details);
+  formData.append("price", price.toString());
+  category.map((c) => {
+    formData.append("category[0]", c);
+  });
+  // console.log({ formData });
+  const res = await axiosClient.post(url, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res.data;
 };
 export const handleGetCartItemList = async (): Promise<[ICartItem]> => {
   try {
     const url = "/cart/";
     const res = await axiosClient.get(url);
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -640,5 +644,260 @@ export const handleDeleteAddress = async ({
     return true;
   } catch (error) {
     return false;
+  }
+};
+
+export const handleCreateOrder = async ({
+  username,
+  payment,
+  orderItemDtos,
+  subTotal,
+  voucherCode,
+  deliveryFeeTotal,
+  paymentTotal,
+  addressId,
+}: IOrder): Promise<IOrder> => {
+  // console.log(orderItemDtos, payment);
+  try {
+    const url = `/user/order/create`;
+    const res = await axiosClient.post(url, {
+      username,
+      payment,
+      orderItemDtos,
+      subTotal,
+      voucherCode,
+      deliveryFeeTotal,
+      paymentTotal,
+      addressId,
+    });
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const handleApplyVoucher = async ({
+  cartTotal,
+  voucherCode,
+}: IVoucherValidate): Promise<IVoucherNewPrice> => {
+  try {
+    const url = `/voucher/validate`;
+    const res = await axiosClient.post(url, {
+      cartTotal,
+      voucherCode,
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const handleVnpay = async ({
+  amount,
+  bankCode,
+  billingFullname,
+  language,
+  vnpOrderInfo,
+}: IVnpay): Promise<IVnpayResponse> => {
+  try {
+    console.log(amount, bankCode);
+    const url = `/payment/vnpay/`;
+    const res = await axiosClient.post(url, {
+      amount,
+      bankCode,
+      billingFullname,
+      language,
+      vnpOrderInfo,
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const handleSaveOrder = async (): Promise<boolean> => {
+  try {
+    const url = "/recommendation/save";
+    const res = await axiosClient.get(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleGetOrderUser = async (): Promise<[IOrder]> => {
+  try {
+    const url = "/user/order/";
+    const res = await axiosClient.get(url);
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleGetProductSKU = async ({
+  id,
+}: {
+  id: Number;
+}): Promise<IProductSKU> => {
+  console.log(id);
+  try {
+    const url = `/admin/productSKU/getProductBySKUId/${id}`;
+    const res = await axiosClient.get(url);
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleGetProductDetail = async ({
+  product_id,
+}: {
+  product_id: string;
+}): Promise<IProductFull> => {
+  try {
+    const url = `/product/getProductById/${product_id}`;
+    const res = await axiosClient.get(url);
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleGetOrderInformation = async ({
+  order,
+}: {
+  order: IOrder;
+}): Promise<IOrderItemDetail[]> => {
+  console.log("aaaa");
+  try {
+    let { orderItemDtos } = order;
+    const productSKUListPromise = orderItemDtos.map((order) =>
+      handleGetProductSKU({ id: order.productSKUId })
+    );
+    const productSKUList = await Promise.all(productSKUListPromise);
+    let orderDetail: IOrderItemDetail[] = orderItemDtos.map((order, index) => ({
+      ...order,
+      productSKU: productSKUList[index],
+    }));
+    const productListPromise = orderDetail.map((order) =>
+      handleGetProductDetail({ product_id: order.productSKU.product_id })
+    );
+    const productList = await Promise.all(productListPromise);
+    orderDetail = orderDetail.map((order, index) => ({
+      ...order,
+      productSKU: { ...order.productSKU, product: productList[index] },
+    }));
+    return orderDetail;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleAddReview = async ({
+  description,
+  numberRating,
+  orderId,
+  productSKUId,
+}: IReview): Promise<boolean> => {
+  // console.log(orderItemDtos, payment);
+  try {
+    const url = `/review/create`;
+    const res = await axiosClient.post(url, {
+      description,
+      numberRating,
+      orderId,
+      productSKUId,
+    });
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const handleGetReviewList = async ({
+  product_id,
+}: {
+  product_id: string;
+}): Promise<[IReviewResponse]> => {
+  try {
+    const url = `/review/${product_id}`;
+    const res = await axiosClient.get(url);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleCancelOrder = async ({
+  id,
+}: {
+  id: Number;
+}): Promise<boolean> => {
+  try {
+    const url = `/user/order/cancel/${id}`;
+    const res = await axiosClient.put(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+export const handleGetRecommendListByProduct = async ({
+  product_id,
+}: {
+  product_id: string;
+}): Promise<[IProductRecommend]> => {
+  try {
+    const url = `/recommendation/get_list_by_product/${product_id}`;
+    const res = await axiosClient.get(url);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleGetAddressById = async ({
+  id,
+}: {
+  id: number;
+}): Promise<[IAddress]> => {
+  try {
+    const url = `/address/${id}`;
+    const res = await axiosClient.get(url);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleCreateProductSKU = async ({
+  product_id,
+  id,
+  sale_limit,
+  size,
+  stock,
+}: IProductSKU): Promise<IOrder> => {
+  // console.log(orderItemDtos, payment);
+  try {
+    const url = `/admin/productSKU/createSKU/${product_id}`;
+    const res = await axiosClient.post(url, {
+      id,
+      sale_limit,
+      size,
+      stock,
+    });
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const handleGetUserRole = async (): Promise<[string]> => {
+  try {
+    const url = "/user/roles";
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    return null;
   }
 };

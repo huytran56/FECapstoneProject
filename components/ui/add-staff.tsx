@@ -25,12 +25,24 @@ export function AddStaff() {
       .email("Email không đúng"),
     first_name: Yup.string().required("Không được bỏ trống"),
     last_name: Yup.string().required("Không được bỏ trống"),
-    password: Yup.string().required("Không được bỏ trống"),
-    phone_number: Yup.string().required("Không được bỏ trống"),
+    password: Yup.string()
+      .required("Không được bỏ trống")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+        "Tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số"
+      ),
+    phone_number: Yup.string()
+      .required("Không được bỏ trống")
+      .matches(
+        /((09|03|07|08|05)+([0-9]{8})\b)/g,
+        "Đủ 10 số và bắt đầu bằng 0"
+      ),
     username: Yup.string().required("Không được bỏ trống"),
+    gender_id: Yup.string().required("Không được bỏ trống"),
   });
   const dispatch = useAppDispatch();
   const handleOnClickAddNewStaff = (value) => {
+    console.log("Click");
     dispatch(adminAction.addNewStaff({ createStaffPayload: value }));
   };
   return (

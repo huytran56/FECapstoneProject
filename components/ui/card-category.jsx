@@ -1,7 +1,15 @@
 import { VStack, Image, Text, Box } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-export function CardCategory({ product_name, price, imageUrl, index }) {
+export function CardCategory({
+  product_name,
+  price,
+  imageUrl,
+  index,
+  product_id,
+}) {
+  const router = useRouter();
   return (
     <VStack
       mx="auto"
@@ -31,6 +39,7 @@ export function CardCategory({ product_name, price, imageUrl, index }) {
         backgroundSize="cover"
         backgroundPosition="center"
         border="1px solid #f8f8f8"
+        onClick={() => router.push(`/product/${product_id}`)}
       />
       <Text textDecor="aqua" fontWeight="bold" textAlign="center">
         {product_name}

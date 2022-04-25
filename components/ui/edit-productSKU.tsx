@@ -24,6 +24,7 @@ import { TextField } from ".";
 export function EditProductSKU() {
   const dispatch = useAppDispatch();
   const handleOnClickEditProductSKU = (value) => {
+    console.log(value);
     dispatch(adminAction.preEditProductSKU({ editProductSKUPayLoad: value }));
   };
   const validate = () => {};
@@ -51,6 +52,12 @@ export function EditProductSKU() {
       {({ setFieldValue }) => (
         <Form>
           <Stack>
+            <VStack w="100%">
+              <Text fontWeight="bold" fontSize="30px">
+                Chỉnh sửa chi tiết sản phẩm
+              </Text>
+              <br />
+            </VStack>
             <TextField
               label="ID"
               name="id"

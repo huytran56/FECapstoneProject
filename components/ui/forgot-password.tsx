@@ -66,14 +66,14 @@ export const ForgotPassword = () => {
           <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
               <Stack spacing={4} w={"full"} maxW={"md"}>
-                <Heading fontSize={"3xl"}>Đổi lại mật khẩu</Heading>
+                <Heading fontSize={"3xl"}>Nhập email tài khoản</Heading>
                 {/* <FormControl id="username">
                   <TextField label="Email" name="username" type="text" />
                 </FormControl> */}
                 <FormControl id="username">
-                  <TextField label="Mã xác nhận" name="username" type="text" />
+                  <TextField label="Email" name="username" type="text" />
                 </FormControl>
-                <FormControl id="username">
+                {/* <FormControl id="username">
                   <TextField
                     label="Nhập mật khẩu mới"
                     name="username"
@@ -86,7 +86,7 @@ export const ForgotPassword = () => {
                     name="username"
                     type="text"
                   />
-                </FormControl>
+                </FormControl> */}
                 <Stack spacing={6}>
                   <Button colorScheme={"blue"} variant={"solid"} type="submit">
                     Xác nhận

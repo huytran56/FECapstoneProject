@@ -1,4 +1,7 @@
-import { handleGetProductDetailFull } from "@api/auth-api";
+import {
+  handleGetProductDetailFull,
+  handleGetProductDetailFullServer,
+} from "@api/auth-api";
 import { IProductFull } from "@models/admin";
 import { GetServerSideProps } from "next";
 import {
@@ -35,7 +38,11 @@ import { MainLayout } from "@components/layout";
 
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@app/hook";
-import { userAction } from "@store/user";
+import {
+  selectRecommendListByProduct,
+  selectReviewList,
+  userAction,
+} from "@store/user";
 import { adminAction, selectRecommendationList } from "@store/admin";
 import { Carousel } from "@components/containers/carousel";
 import { CardCategory } from "@components/ui";
@@ -48,6 +55,7 @@ export default function ProductDetail({
   productSKUs,
   description_details,
   category,
+  product_id,
 }: IProductFull) {
   const dispatch = useAppDispatch();
   const [productSKUId, setProductSKUId] = useState("");
@@ -66,11 +74,26 @@ export default function ProductDetail({
     );
   }
   useEffect(() => {
-    dispatch(adminAction.preSetCommendationList({}));
+    dispatch(
+      userAction.preSetRecommendListByProduct({ productIDPayload: product_id })
+    );
+  }, []);
+
+  useEffect(() => {
+    dispatch(
+      userAction.preSetReviewList({ productIdReviewListPayload: product_id })
+    );
   }, [dispatch]);
-  const recommendationListSelector = useAppSelector(selectRecommendationList);
+
+  const reviewListSelector = useAppSelector(selectReviewList);
+  console.log(reviewListSelector);
+
+  const recommendationListSelector = useAppSelector(
+    selectRecommendListByProduct
+  );
   console.log(recommendationListSelector);
-  console.log(quantity);
+  // console.log(recommendationListSelector);
+  // console.log(quantity);
   return (
     <>
       <Container maxW={"7xl"}>
@@ -240,9 +263,11 @@ export default function ProductDetail({
         </SimpleGrid>
       </Container>
       <Carousel gap={10} header="Sản phẩm gợi ý">
-        {recommendationListSelector.map((p, index) => (
-          <CardCategory {...p} key={index} index />
-        ))}
+        {recommendationListSelector
+          ? recommendationListSelector.map((p, index) => (
+              <CardCategory {...p} key={index} index />
+            ))
+          : null}
       </Carousel>
 
       <VStack
@@ -256,30 +281,33 @@ export default function ProductDetail({
         <Text fontWeight="bold" fontSize="20px">
           Đánh giá sản phẩm
         </Text>
-        <VStack
-          w="100%"
-          alignItems="start"
-          boxShadow="rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset"
-          borderRadius="20px"
-          p={3}
-        >
-          <HStack>
-            <AiOutlineUser size={30} />
-            <Text>adminhana</Text>
-          </HStack>
-          <HStack paddingLeft="35px">
-            <AiOutlineStar size="30px" color="orange" />
-            <Text>4,5</Text>
-          </HStack>
-          <HStack paddingLeft="35px">
-            <Text fontWeight="medium">
-              Sau khi mình mua về thì mình thấy áo hơi rộng so với người nhưng
-              chất liệu đẹp và đáng để đầu tư thêm vào những sản phẩm khác.
-            </Text>
-          </HStack>
-          <br />
-        </VStack>
-        <VStack
+        {reviewListSelector
+          ? reviewListSelector.map((review, index) => (
+              <VStack
+                w="100%"
+                alignItems="start"
+                boxShadow="rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset"
+                borderRadius="20px"
+                p={3}
+                key={index}
+              >
+                <HStack>
+                  <AiOutlineUser size={30} />
+                  <Text>{review.fullname}</Text>
+                </HStack>
+                <HStack paddingLeft="35px">
+                  <AiOutlineStar size="30px" color="orange" />
+                  <Text>{review.numberRating}</Text>
+                </HStack>
+                <HStack paddingLeft="35px">
+                  <Text fontWeight="medium">{review.description}</Text>
+                </HStack>
+                <br />
+              </VStack>
+            ))
+          : null}
+
+        {/* <VStack
           w="100%"
           alignItems="start"
           boxShadow="rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset"
@@ -301,16 +329,26 @@ export default function ProductDetail({
             </Text>
           </HStack>
           <br />
-        </VStack>
+        </VStack> */}
       </VStack>
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  res,
+  req,
+}) => {
   const { id } = query;
-
+  // console.log(id);
+  console.log({ req: req.cookies.token });
   if (typeof id === "string") {
-    const product_detail = await handleGetProductDetailFull({ product_id: id });
+    const product_detail = await handleGetProductDetailFullServer({
+      product_id: id,
+      token: req.cookies.token,
+    });
+    // console.log(product_detail);
+
     if (!product_detail) return { notFound: true };
     if (product_detail) return { props: { ...product_detail } };
   }

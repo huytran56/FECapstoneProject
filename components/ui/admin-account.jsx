@@ -13,6 +13,7 @@ import {
   Tr,
   VStack,
   HStack,
+  Text,
 } from "@chakra-ui/react";
 import { AddStaff, ModalGeneral } from "@components/ui/index";
 import {
@@ -20,8 +21,11 @@ import {
   selectAccountList,
   selectIsAddNewState,
 } from "@store/admin";
+import { selectUserRole } from "@store/user";
 import { useEffect } from "react";
 import { EditAccount } from "./edit-account";
+import { FiActivity } from "react-icons/fi";
+import { FcBusinessman, FcAssistant, FcPortraitMode } from "react-icons/fc";
 
 export function AdminAccount() {
   const dispatch = useAppDispatch();
@@ -30,6 +34,7 @@ export function AdminAccount() {
   }, [dispatch]);
   const accountListSeclector = useAppSelector(selectAccountList);
   const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
+  const userRoleSelector = useAppSelector(selectUserRole);
 
   const handleOnClickEditButton = (account) => {
     dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
@@ -56,9 +61,19 @@ export function AdminAccount() {
         <ModalGeneral>
           {isAddNewStateSelector ? <AddStaff /> : <EditAccount />}
         </ModalGeneral>
-        <Button zIndex="0" colorScheme="linkedin" onClick={handleOnClickAddNew}>
-          <AiFillPlusCircle size="30px" />
-        </Button>
+        {userRoleSelector.map((role) => {
+          if (role === "ROLE_ADMIN") {
+            return (
+              <Button
+                zIndex="0"
+                colorScheme="linkedin"
+                onClick={handleOnClickAddNew}
+              >
+                <AiFillPlusCircle size="30px" />
+              </Button>
+            );
+          }
+        })}
       </VStack>
       <Divider orientation="horizontal" variant="solid" colorScheme="orange" />
       <Table variant="striped">
@@ -74,7 +89,11 @@ export function AdminAccount() {
               Ngày Sinh
             </Th> */}
             <Th>Vai trò</Th>
-            <Th>Thao tác</Th>
+            {userRoleSelector.map((role) => {
+              if (role === "ROLE_ADMIN") {
+                return <Th>Thao tác</Th>;
+              }
+            })}
           </Tr>
         </Thead>
         <Tbody>
@@ -82,9 +101,9 @@ export function AdminAccount() {
             ? accountListSeclector.map((account, index) => (
                 <Tr key={index}>
                   <Td>{index + 1}</Td>
-                  {/* <Td>{account.username}</Td>
-                  <Td>{account.first_name}</Td> */}
-                  <Td>{account.last_name}</Td>
+                  <Td>{account.username}</Td>
+                  {/* <Td>{account.first_name}</Td> */}
+                  {/* <Td>{account.last_name}</Td> */}
                   <Td>{account.email}</Td>
                   {/* <Td overflow="hidden" whiteSpace="nowrap">
                     {account.birthday}
@@ -100,34 +119,49 @@ export function AdminAccount() {
                     {account.roles.map((role) => (
                       <>
                         <span>
-                          {role === "ROLE_ADMIN"
-                            ? "- Quản trị viên"
-                            : role === "ROLE_STAFF"
-                            ? "- Nhân viên"
-                            : role === "ROLE_USER"
-                            ? "- Người dùng"
-                            : null}
+                          {role === "ROLE_ADMIN" ? (
+                            <HStack>
+                              <FcBusinessman size="23px" />
+                              <Text>Quản trị viên</Text>
+                            </HStack>
+                          ) : role === "ROLE_STAFF" ? (
+                            <HStack>
+                              <FcAssistant size="23px" />
+                              <Text>Nhân viên</Text>
+                            </HStack>
+                          ) : role === "ROLE_USER" ? (
+                            <HStack>
+                              <FcPortraitMode size="23px" />
+                              <Text>Người dùng</Text>
+                            </HStack>
+                          ) : null}
                         </span>
                         <br />
                       </>
                     ))}
                   </Td>
                   <Td>
-                    <HStack>
-                      <Button
-                        colorScheme="linkedin"
-                        onClick={() => handleOnClickEditButton(account)}
-                      >
-                        <AiFillEdit fontSize={25} />
-                      </Button>
-                      <Button
-                        marginTop="2"
-                        colorScheme="red"
-                        onClick={() => handleOnClickDeleteButton(account)}
-                      >
-                        <AiOutlineDelete fontSize={25} />
-                      </Button>
-                    </HStack>
+                    {userRoleSelector.map((role) => {
+                      if (role === "ROLE_ADMIN") {
+                        return (
+                          <HStack>
+                            <Button
+                              colorScheme="linkedin"
+                              onClick={() => handleOnClickEditButton(account)}
+                            >
+                              <AiFillEdit fontSize={25} />
+                            </Button>
+                            <Button
+                              marginTop="2"
+                              colorScheme="red"
+                              onClick={() => handleOnClickDeleteButton(account)}
+                            >
+                              <AiOutlineDelete fontSize={25} />
+                            </Button>
+                          </HStack>
+                        );
+                      }
+                    })}
                   </Td>
                 </Tr>
               ))

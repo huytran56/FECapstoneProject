@@ -41,7 +41,7 @@ import React, { useEffect } from "react";
 import { ModalGeneralTwo, TextField } from ".";
 import AddReview from "./add-review";
 
-export function OrderHistoryDetail() {
+export function OrderHistoryDetailAdmin() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const currentOrderDetailSelector = useAppSelector(selectCurrentOrderDetail);
@@ -53,24 +53,21 @@ export function OrderHistoryDetail() {
     console.log({ currentOrderDetailPopupSelector });
   }, [dispatch, currentOrderDetailPopupSelector]);
 
-  function handleOnClickReview(order) {
-    dispatch(adminAction.setIsOpenModalTwo({ isOpenModalTwo: true }));
-    dispatch(
-      userAction.setProductSKU({ currentProductSKUPayload: order.productSKUId })
-    );
-  }
+  //   function handleOnClickReview(order) {
+  //     dispatch(adminAction.setIsOpenModalTwo({ isOpenModalTwo: true }));
+  //     dispatch(
+  //       userAction.setProductSKU({ currentProductSKUPayload: order.productSKUId })
+  //     );
+  //   }
 
   return (
     <VStack w="100%">
-      <ModalGeneralTwo>
+      {/* <ModalGeneralTwo>
         <AddReview />
-      </ModalGeneralTwo>
+      </ModalGeneralTwo> */}
       <Text fontWeight="bold" fontSize="25">
         Chi tiết đơn hàng
       </Text>
-      <HStack>
-        <Text>Địa chỉ giao hàng</Text>
-      </HStack>
       <br />
       {currentOrderDetailPopupSelector
         ? currentOrderDetailPopupSelector.map((order: any, index) => (
@@ -107,17 +104,17 @@ export function OrderHistoryDetail() {
                   })}
                 </Text>
               </VStack>
-              {currentOrderDetailSelector.orderStatus === "SUCCESSFUL" &&
+              {/* {currentOrderDetailSelector.orderStatus === "SUCCESSFUL" &&
               order.review === false ? (
                 <Button
-                  bg="gray.900"
-                  color="white"
+                  bg={useColorModeValue("gray.900", "gray.50")}
+                  color={useColorModeValue("white", "gray.900")}
                   w="200px"
                   onClick={() => handleOnClickReview(order)}
                 >
                   Đánh giá
                 </Button>
-              ) : null}
+              ) : null} */}
               {/* <Divider /> */}
             </HStack>
           ))

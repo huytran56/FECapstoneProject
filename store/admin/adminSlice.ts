@@ -52,6 +52,10 @@ interface IInitialState {
   recommendationList: IProductRecommend[];
   productSKUList: IProductSKU[];
   productDetailFull: IProductFull;
+  errorPopup: string;
+  successPopup: string;
+  warningPopup: string;
+  currentProductId: string;
 }
 export interface IAdminPayLoad {
   accountList?: IAccount[];
@@ -99,6 +103,11 @@ export interface IAdminPayLoad {
   productDetailFullPayLoad?: { product_id: string };
   currentViewOrder?: IOrder;
   createProductPayLoad?: ICreateProduct;
+  errorPopup?: string;
+  successPopup?: string;
+  warningPopup?: string;
+  productIdPayload?: string;
+  createProductSKUPayload?: IProductSKU;
 }
 
 const initialState: IInitialState = {
@@ -129,6 +138,10 @@ const initialState: IInitialState = {
   productDetailFull: null,
   currentProductSKU: null,
   currentViewOrder: null,
+  errorPopup: null,
+  successPopup: null,
+  warningPopup: null,
+  currentProductId: null,
 };
 
 const adminSlice = createSlice({
@@ -247,6 +260,20 @@ const adminSlice = createSlice({
       state.currentViewOrder = action.payload.currentViewOrder;
     },
     preCreateProduct(state, action: PayloadAction<IAdminPayLoad>) {},
+    setError(state, action: PayloadAction<IAdminPayLoad>) {
+      state.errorPopup = action.payload.errorPopup;
+    },
+    setSuccess(state, action: PayloadAction<IAdminPayLoad>) {
+      state.successPopup = action.payload.successPopup;
+    },
+    setWarning(state, action: PayloadAction<IAdminPayLoad>) {
+      state.warningPopup = action.payload.warningPopup;
+    },
+    preSetCurrentProductId(state, action: PayloadAction<IAdminPayLoad>) {},
+    setCurrentProductId(state, action: PayloadAction<IAdminPayLoad>) {
+      state.currentProductId = action.payload.productIdPayload;
+    },
+    preAddProductSKU(state, action: PayloadAction<IAdminPayLoad>) {},
   },
 });
 
@@ -297,4 +324,12 @@ export const selectCurrentProductSKU = (state: RootState) =>
   state.admin.currentProductSKU;
 export const selectCurrentViewOrder = (state: RootState) =>
   state.admin.currentViewOrder;
+export const selectErrorPopup = (state: RootState) => state.admin.errorPopup;
+export const selectSuccessPopup = (state: RootState) =>
+  state.admin.successPopup;
+export const selectWarningPopup = (state: RootState) =>
+  state.admin.warningPopup;
+export const selectCurrentProductId = (state: RootState) =>
+  state.admin.currentProductId;
+
 export const adminReducer = adminSlice.reducer;

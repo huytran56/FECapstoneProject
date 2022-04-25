@@ -10,6 +10,7 @@ import {
   Select,
   Text,
   Button,
+  Checkbox,
 } from "@chakra-ui/react";
 import { adminAction, selectCurrentEditAccount } from "@store/admin";
 import { Field, Form, Formik } from "formik";
@@ -63,6 +64,9 @@ export function EditAccount() {
                 setFieldValue("roles", e.target.value);
               }}
             />
+            {/* <Checkbox defaultChecked>Quản trị viên</Checkbox>
+            <Checkbox defaultChecked>Nhân viên</Checkbox>
+            <Checkbox defaultChecked>Người dùng</Checkbox> */}
             <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>

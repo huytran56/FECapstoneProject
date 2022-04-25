@@ -72,10 +72,10 @@ export function ContainerBoxShadow() {
           : null}
       </SimpleGrid>
       <HStack w="100%" alignItems="center" justifyContent="center">
-        <Button onClick={handleOnClickPreviousButton}>
+        <Button onClick={handleOnClickPreviousButton} w="100px">
           <AiOutlineDoubleLeft />
         </Button>
-        <Button onClick={handleOnClickNextButton}>
+        <Button onClick={handleOnClickNextButton} w="100px">
           <AiOutlineDoubleRight />
         </Button>
       </HStack>

@@ -1,12 +1,12 @@
-import { useAppDispatch } from "@app/hook";
+import { useAppDispatch, useAppSelector } from "@app/hook";
 import { DashBoard } from "@components/containers/index";
+import { AuthenticateLayout } from "@components/layout";
 import { adminAction } from "@store/admin";
+import { selectUserRole, userAction } from "@store/user";
 import { useEffect } from "react";
 
 export default function DashBoardPage() {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(adminAction.preSetUserInfo({}));
-  }, [dispatch]);
   return <DashBoard />;
 }
+
+DashBoardPage.Layout = AuthenticateLayout;

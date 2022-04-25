@@ -23,9 +23,11 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@app/hook";
 import { selectCartItemList, selectNumberItem, userAction } from "@store/user";
 import { AiOutlineLine, AiOutlineRollback } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 export default function CartDetail() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [quantity, setQuantity] = useState(0);
   useEffect(() => {
     dispatch(userAction.preSetCartItemList({}));
@@ -64,6 +66,9 @@ export default function CartDetail() {
         changeQuantityCartPayLoad: { id, price, productSKUId, quantity },
       })
     );
+  }
+  function handleOrder() {
+    router.push("/order");
   }
 
   // console.log(CartItemListSelector);
@@ -208,6 +213,7 @@ export default function CartDetail() {
               w="100%"
               bg={useColorModeValue("gray.900", "gray.50")}
               color={useColorModeValue("white", "gray.900")}
+              onClick={handleOrder}
             >
               Thanh toán
             </Button>

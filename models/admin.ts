@@ -1,3 +1,5 @@
+import { Tracing } from "trace_events";
+
 type role = "ROLE_STAFF" | "ROLE_ADMIN" | "ROLE_USER";
 
 export interface IAccount {
@@ -29,6 +31,8 @@ export interface IVoucher {
   discountAmount: number;
   quantity: number;
   active: boolean;
+  fromDate: string;
+  toDate: string;
 }
 export interface IEditVoucher {
   id: number;
@@ -40,13 +44,16 @@ export interface IEditVoucher {
   minSpend: number;
   name: string;
   type: string;
+  quantity: number;
+  fromDate: string;
+  toDate: string;
 }
 export interface IOrder {
   id: number;
   orderStatus: string;
   username: string;
   paymentStatus: string;
-  payment: number;
+  payment: string;
   orderItemDtos: IOrderItemDtos[];
   subTotal: number;
   voucherCode: string;
@@ -61,6 +68,15 @@ export interface IOrderItemDtos {
   productSKUId: number;
   quantity: number;
   price: number;
+  review: boolean;
+}
+
+export interface IOrderItemDetail extends IOrderItemDtos {
+  productSKU: IProductSKUDetail | IProductSKU;
+}
+
+export interface IProductSKUDetail extends IProductSKU {
+  product: IProductFull;
 }
 export interface IChangeStatus {
   id: number;
@@ -116,7 +132,6 @@ export interface IProductSKU {
   stock: number;
   sale_limit: number;
   size: string;
-  is_deleted: boolean;
   product_id: string;
 }
 

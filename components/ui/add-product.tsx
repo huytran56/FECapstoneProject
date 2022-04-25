@@ -24,7 +24,7 @@ export function AddProduct() {
   const validate = Yup.object({
     product_id: Yup.string().required("Không được bỏ trống"),
     price: Yup.string().required("Không được bỏ trống"),
-    product_id_status: Yup.string().required("Không được bỏ trống"),
+    product_status_id: Yup.string().required("Không được bỏ trống"),
     product_name: Yup.string().required("Không được bỏ trống"),
     description_details: Yup.string().required("Không được bỏ trống"),
   });
@@ -71,9 +71,9 @@ export function AddProduct() {
             </HStack>
             <Select
               placeholder="Trạng thái"
-              name="product_id_status"
+              name="product_status_id"
               onChange={(e) =>
-                setFieldValue("product_id_status", e.target.value)
+                setFieldValue("product_status_id", e.target.value)
               }
             >
               <option value="outstock">Hết hàng</option>

@@ -18,8 +18,11 @@ import { selectNumberItem, selectCartItemList } from "@store/user";
 import { useAppDispatch, useAppSelector } from "@app/hook";
 import { useEffect } from "react";
 import { adminAction, selectUserInfo } from "@store/admin";
+import { useRouter } from "next/router";
+import { useState } from "react";
 export function AuthenticationMenu() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const numberItemSelector = useAppSelector(selectNumberItem);
   useEffect(() => {
     dispatch(adminAction.preSetUserInfo({}));
@@ -28,6 +31,12 @@ export function AuthenticationMenu() {
   const userInforSelector = useAppSelector(selectUserInfo);
   const cartItemListSelector = useAppSelector(selectCartItemList);
   console.log(userInforSelector);
+  const handleOnClickSignOut = () => {
+    dispatch(adminAction.preSignout({}));
+    router.push("/signin");
+  };
+
+  // console.log(userInforSelector);
 
   return (
     <HStack>
@@ -75,7 +84,7 @@ export function AuthenticationMenu() {
               <MenuItem>
                 <Link href="/changeInfo">Thay đổi thông tin</Link>
               </MenuItem>
-              <MenuItem>Đăng xuất</MenuItem>
+              <MenuItem onClick={handleOnClickSignOut}>Đăng xuất</MenuItem>
             </MenuList>
           </Menu>
         </HStack>

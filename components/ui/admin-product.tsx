@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@app/index";
 import {
+  Badge,
   Button,
   Divider,
   HStack,
@@ -37,6 +38,7 @@ import React, { useEffect } from "react";
 import { ChangeStatus } from "./change-status-order";
 import { EditProduct } from "./edit-product";
 import { ViewProduct } from "./view-product";
+import { selectUserRole } from "@store/user";
 
 export function AdminProduct() {
   const dispatch = useAppDispatch();
@@ -47,6 +49,7 @@ export function AdminProduct() {
   const searchKeywordSelector = useAppSelector(selectSearchKeyWord);
   const openModalProductSelector = useAppSelector(selectOpenModalProduct);
   const currenProduct = useAppSelector(selectCurrentProduct);
+  const userRoleSelector = useAppSelector(selectUserRole);
   useEffect(() => {
     dispatch(
       adminAction.preSetProductList({
@@ -135,20 +138,29 @@ export function AdminProduct() {
           ) : null}
         </ModalGeneral>
         <HStack justifyContent="space-between" w="100%">
-          <Button
-            zIndex="0"
-            colorScheme="linkedin"
-            onClick={handleOnClickAddButton}
-          >
-            <AiFillPlusCircle size="20px" />
-          </Button>
-          <Button
-            zIndex="0"
-            colorScheme="whatsapp"
-            onClick={handleOnClickAddButton}
-          >
-            Trích xuất đặc trưng
-          </Button>
+          {userRoleSelector.map((role) => {
+            if (role === "ROLE_ADMIN") {
+              return (
+                <>
+                  <Button
+                    zIndex="0"
+                    colorScheme="linkedin"
+                    onClick={handleOnClickAddButton}
+                  >
+                    <AiFillPlusCircle size="20px" />
+                  </Button>
+                  <Button
+                    zIndex="0"
+                    colorScheme="whatsapp"
+                    onClick={handleOnClickAddButton}
+                  >
+                    Trích xuất đặc trưng
+                  </Button>
+                </>
+              );
+            }
+          })}
+
           <HStack w="40%" minW="400px">
             <Input
               type="text"
@@ -186,9 +198,17 @@ export function AdminProduct() {
                 <Tr key={index}>
                   <Td>{product.product_id}</Td>
                   {product.product_status_id === "instock" ? (
-                    <Td>Còn hàng</Td>
+                    <Td>
+                      <Badge colorScheme="green" fontSize={15}>
+                        Còn hàng
+                      </Badge>
+                    </Td>
                   ) : (
-                    <Td>Hết hàng </Td>
+                    <Td>
+                      <Badge colorScheme="red" fontSize={15}>
+                        Hết hàng
+                      </Badge>
+                    </Td>
                   )}
                   <Td>{product.product_name}</Td>
                   <Td>
@@ -215,12 +235,21 @@ export function AdminProduct() {
                         >
                           Delete
                         </Button> */}
-                      <Button
-                        colorScheme="red"
-                        onClick={() => handleOnClickDelete(product)}
-                      >
-                        <AiFillDelete size={25} />
-                      </Button>
+                      {userRoleSelector.map((role) => {
+                        if (role === "ROLE_ADMIN") {
+                          return (
+                            <>
+                              <Button
+                                colorScheme="red"
+                                onClick={() => handleOnClickDelete(product)}
+                              >
+                                <AiFillDelete size={25} />
+                              </Button>
+                            </>
+                          );
+                        }
+                      })}
+
                       {/* <Button
                         minWidth="100"
                         marginTop="2"
@@ -236,12 +265,22 @@ export function AdminProduct() {
                       >
                         <AiOutlineEye size={25} />
                       </Button>
-                      <Button
-                        colorScheme="blue"
-                        onClick={() => handleOnClickEditProduct(product)}
-                      >
-                        <AiFillEdit size={25} />
-                      </Button>
+                      {userRoleSelector.map((role) => {
+                        if (role === "ROLE_ADMIN") {
+                          return (
+                            <>
+                              <Button
+                                colorScheme="blue"
+                                onClick={() =>
+                                  handleOnClickEditProduct(product)
+                                }
+                              >
+                                <AiFillEdit size={25} />
+                              </Button>
+                            </>
+                          );
+                        }
+                      })}
                     </HStack>
                   </Td>
                 </Tr>

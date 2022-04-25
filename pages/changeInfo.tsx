@@ -185,7 +185,7 @@ export default function ChangeInfo() {
                   <HStack spacing="24px">
                     <Radio value="0">Nữ</Radio>
                     <Radio value="1">Nam</Radio>
-                    <Radio value="2">LGBT</Radio>
+                    <Radio value="2">Khác</Radio>
                   </HStack>
                 </RadioGroup>
                 <Button type="submit" bg={"gray.900"} color={"white"}>

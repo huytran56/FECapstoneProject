@@ -15,6 +15,7 @@ import {
   adminAction,
   selectCurrentProduct,
   selectRecommendationList,
+  selectUserInfo,
 } from "@store/admin";
 
 export default function Home() {
@@ -22,6 +23,10 @@ export default function Home() {
   useEffect(() => {
     dispatch(adminAction.preSetCommendationList({}));
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(adminAction.preSetUserInfo({}));
+  }, [dispatch]);
+  const userInforSelector = useAppSelector(selectUserInfo);
   const recommendationListSelector = useAppSelector(selectRecommendationList);
   console.log(recommendationListSelector);
 
@@ -31,11 +36,18 @@ export default function Home() {
       <CarouselImage />
       <Carousel
         gap={10}
-        header="CHÀO HUY, CÓ THỂ BẠN SẼ MUỐN NHỮNG MẶT HÀNG SAU: "
+        header={`${
+          userInforSelector
+            ? userInforSelector.username.toLocaleUpperCase()
+            : "XIN CHÀO"
+        }, CÓ THỂ BẠN SẼ MUỐN NHỮNG MẶT HÀNG SAU: `}
+        
       >
-        {recommendationListSelector.map((p, index) => (
-          <CardCategory {...p} key={index} index />
-        ))}
+        {recommendationListSelector
+          ? recommendationListSelector.map((p, index) => (
+              <CardCategory {...p} key={index} index />
+            ))
+          : null}
       </Carousel>
       <ContainerBoxShadow />
     </>

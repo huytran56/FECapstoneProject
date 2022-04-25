@@ -19,16 +19,18 @@ import {
   adminAction,
   selectCurrentOrderItem,
   selectCurrentProduct,
+  selectIsAddNewState,
   selectProductDetailFull,
 } from "@store/admin";
 import React, { useEffect, useState } from "react";
 import { AiOutlineFileAdd, AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
-import { EditProductSKU, ModalGeneralTwo } from ".";
+import { AddProductSKU, EditProductSKU, ModalGeneralTwo } from ".";
 
 export function ViewProduct() {
   const dispatch = useAppDispatch();
   const currentProductSelector = useAppSelector(selectCurrentProduct);
   const productDetailFullSelector = useAppSelector(selectProductDetailFull);
+  const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
 
   useEffect(() => {
     dispatch(
@@ -39,99 +41,111 @@ export function ViewProduct() {
   }, [dispatch]);
   function handleOnClickUpdateButton(productSKU) {
     console.log(productSKU);
+    dispatch(adminAction.setIsAddNewState({ isAddNew: false }));
     dispatch(adminAction.setIsOpenModalTwo({ isOpenModalTwo: true }));
     dispatch(
       adminAction.setCurrentProductSKU({ currentProductSKU: productSKU })
     );
   }
+  function handleOnClickAddButton(id) {
+    dispatch(adminAction.setIsAddNewState({ isAddNew: true }));
+    dispatch(adminAction.setIsOpenModalTwo({ isOpenModalTwo: true }));
+    dispatch(adminAction.setCurrentProductId({ productIdPayload: id }));
+  }
 
-  console.log(productDetailFullSelector);
+  // console.log(productDetailFullSelector);
   const validate = () => {};
 
   return (
     <Stack>
       <ModalGeneralTwo>
-        <EditProductSKU />
+        {isAddNewStateSelector ? <AddProductSKU /> : <EditProductSKU />}
       </ModalGeneralTwo>
-      <Stack alignItems="center">
-        <Text fontSize="xl" fontWeight="bold">
-          Chi tiết sản phẩm
-        </Text>
-      </Stack>
-      <HStack>
-        <Text fontWeight="bold"> - ID: </Text>
-        <Text>
-          {productDetailFullSelector
-            ? productDetailFullSelector.product_id
-            : null}
-        </Text>
-      </HStack>
-      <HStack>
-        <Text fontWeight="bold"> - Tên sản phẩm: </Text>
-        <Text>
-          {productDetailFullSelector
-            ? productDetailFullSelector.product_name
-            : null}
-        </Text>
-      </HStack>
-      <HStack>
-        <Text fontWeight="bold"> - Tên danh mục: </Text>
-        <Text>
-          {productDetailFullSelector
-            ? productDetailFullSelector.category[0].category_name
-            : null}
-        </Text>
-      </HStack>
-      <HStack>
-        <Text fontWeight="bold"> - Trạng thái sản phẩm: </Text>
-        <Text>
-          {productDetailFullSelector
-            ? productDetailFullSelector.product_status_id
-            : null}
-        </Text>
-      </HStack>
-      <VStack w="100%" alignItems="start">
-        <Text fontWeight="bold"> - Mô tả sản phẩm: </Text>
-        <Text>
-          {productDetailFullSelector
-            ? productDetailFullSelector.description_details
-            : null}
-        </Text>
+      <VStack>
+        <Stack alignItems="center">
+          <Text fontSize="30px" fontWeight="bold">
+            Chi tiết sản phẩm
+          </Text>
+        </Stack>
+        <HStack>
+          <Text fontWeight="bold"> - ID: </Text>
+          <Text>
+            {productDetailFullSelector
+              ? productDetailFullSelector.product_id
+              : null}
+          </Text>
+        </HStack>
       </VStack>
-      <HStack>
-        <Text fontWeight="bold"> - Giá tiền: </Text>
-        <Text>
+      <br />
+      <Stack
+        w="100%"
+        boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
+        p={4}
+      >
+        <HStack>
+          <Text fontWeight="bold"> - Tên sản phẩm: </Text>
+          <Text>
+            {productDetailFullSelector
+              ? productDetailFullSelector.product_name
+              : null}
+          </Text>
+        </HStack>
+        <HStack>
+          <Text fontWeight="bold"> - Tên danh mục: </Text>
+          <Text>
+            {productDetailFullSelector
+              ? productDetailFullSelector.category[0].category_name
+              : null}
+          </Text>
+        </HStack>
+        <HStack>
+          <Text fontWeight="bold"> - Trạng thái sản phẩm: </Text>
+          <Text>
+            {productDetailFullSelector
+              ? productDetailFullSelector.product_status_id
+              : null}
+          </Text>
+        </HStack>
+        <VStack w="100%" alignItems="start">
+          <Text fontWeight="bold"> - Mô tả sản phẩm: </Text>
+          <Text>
+            {productDetailFullSelector
+              ? productDetailFullSelector.description_details
+              : null}
+          </Text>
+        </VStack>
+        <HStack>
+          <Text fontWeight="bold"> - Giá tiền: </Text>
+          <Text>
+            {productDetailFullSelector
+              ? productDetailFullSelector.price.toLocaleString("it-IT", {
+                  style: "currency",
+                  currency: "VND",
+                })
+              : null}
+          </Text>
+        </HStack>
+        <HStack alignItems="center">
           {productDetailFullSelector
-            ? productDetailFullSelector.price.toLocaleString("it-IT", {
-                style: "currency",
-                currency: "VND",
-              })
+            ? productDetailFullSelector.productImage.map((image, index) => (
+                <Image
+                  src={image.url}
+                  w="100px"
+                  h="100px"
+                  alt="image1"
+                  key={index}
+                />
+              ))
             : null}
-        </Text>
-      </HStack>
-      <HStack alignItems="center">
-        <Image
-          src={
-            productDetailFullSelector
-              ? productDetailFullSelector.productImage[0].url
-              : null
-          }
-          w="100px"
-          h="100px"
-          alt="image1"
-        />
-        <Image
-          src={
-            productDetailFullSelector
-              ? productDetailFullSelector.productImage[0].url
-              : null
-          }
-          w="100px"
-          h="100px"
-          alt="image2"
-        />
-      </HStack>
-      <Button colorScheme="linkedin" w="50px">
+        </HStack>
+      </Stack>
+      <Button
+        colorScheme="linkedin"
+        w="50px"
+        onClick={() =>
+          handleOnClickAddButton(productDetailFullSelector.product_id)
+        }
+      >
         <AiFillPlusCircle size="25px" />
       </Button>
       <Table variant="striped">

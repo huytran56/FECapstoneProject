@@ -48,8 +48,8 @@ export const SignUp = () => {
     //   return navigate("/admin");
     // }
     dispatch(adminAction.addNewStaff({ createStaffPayload: value }));
-    console.log("huy");
-    router.push("/signup-wait");
+    // console.log("huy");
+    // router.push("/signup-wait");
   };
 
   return (
