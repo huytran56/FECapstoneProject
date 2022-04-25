@@ -3,6 +3,7 @@ import {
   ICategory,
   IChangeStatus,
   ICreateProduct,
+  IDashboard,
   IEditVoucher,
   IOrder,
   IOrderItemDtos,
@@ -56,6 +57,7 @@ interface IInitialState {
   successPopup: string;
   warningPopup: string;
   currentProductId: string;
+  dashboard: IDashboard;
 }
 export interface IAdminPayLoad {
   accountList?: IAccount[];
@@ -108,6 +110,7 @@ export interface IAdminPayLoad {
   warningPopup?: string;
   productIdPayload?: string;
   createProductSKUPayload?: IProductSKU;
+  dashboard?: IDashboard;
 }
 
 const initialState: IInitialState = {
@@ -142,6 +145,7 @@ const initialState: IInitialState = {
   successPopup: null,
   warningPopup: null,
   currentProductId: null,
+  dashboard: null,
 };
 
 const adminSlice = createSlice({
@@ -274,6 +278,10 @@ const adminSlice = createSlice({
       state.currentProductId = action.payload.productIdPayload;
     },
     preAddProductSKU(state, action: PayloadAction<IAdminPayLoad>) {},
+    preSetDashboard(state, action: PayloadAction<IAdminPayLoad>) {},
+    setDashboard(state, action: PayloadAction<IAdminPayLoad>) {
+      state.dashboard = action.payload.dashboard;
+    },
   },
 });
 
@@ -331,5 +339,6 @@ export const selectWarningPopup = (state: RootState) =>
   state.admin.warningPopup;
 export const selectCurrentProductId = (state: RootState) =>
   state.admin.currentProductId;
+export const selectDashboard = (state: RootState) => state.admin.dashboard;
 
 export const adminReducer = adminSlice.reducer;

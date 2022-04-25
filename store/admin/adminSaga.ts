@@ -16,6 +16,7 @@ import {
   handleEditVoucher,
   handleGetAccount,
   handleGetCategory,
+  handleGetDashboard,
   handleGetOrder,
   handleGetProduct,
   handleGetProductDetailFull,
@@ -36,6 +37,7 @@ import { EditProductSKU } from "@components/ui";
 import {
   IAccount,
   ICategory,
+  IDashboard,
   IOrder,
   IProduct,
   IProductFull,
@@ -433,6 +435,12 @@ function* editProductSKU(action: PayloadAction<IAdminPayLoad>) {
       handleEditProductSKU,
       action.payload.editProductSKUPayLoad
     );
+    const productDetail: IProductFull = yield call(handleGetProductDetailFull, {
+      product_id: action.payload.editProductSKUPayLoad.product_id,
+    });
+    yield put(
+      adminAction.setProductDetailFull({ productDetailFull: productDetail })
+    );
     yield put(adminAction.setIsOpenModalTwo({ isOpenModalTwo: false }));
     yield put(adminAction.setSuccess({ successPopup: "Chỉnh sửa thành công" }));
   } catch (error) {
@@ -468,11 +476,25 @@ function* createProductSKU(action: PayloadAction<IAdminPayLoad>) {
       handleCreateProductSKU,
       action.payload.createProductSKUPayload
     );
-
+    const productDetail: IProductFull = yield call(handleGetProductDetailFull, {
+      product_id: action.payload.createProductSKUPayload.product_id,
+    });
+    yield put(
+      adminAction.setProductDetailFull({ productDetailFull: productDetail })
+    );
     yield put(adminAction.setIsOpenModalTwo({ isOpenModalTwo: false }));
     yield put(adminAction.setSuccess({ successPopup: "Tạo thành công" }));
   } catch (error) {
     yield put(adminAction.setError({ errorPopup: error.response.data }));
+  }
+}
+function* getDashboard(action: PayloadAction<IAdminPayLoad>) {
+  //   console.log(action.payload.createStaffPayload);
+  try {
+    const dashboard: IDashboard = yield call(handleGetDashboard);
+    yield put(adminAction.setDashboard({ dashboard }));
+  } catch (error) {
+    console.log(error);
   }
 }
 export function* adminSaga() {
@@ -504,4 +526,5 @@ export function* adminSaga() {
   yield takeLatest(adminAction.preEditProductSKU, editProductSKU);
   yield takeLatest(adminAction.preCreateProduct, createProduct);
   yield takeLatest(adminAction.preAddProductSKU, createProductSKU);
+  yield takeLatest(adminAction.preSetDashboard, getDashboard);
 }

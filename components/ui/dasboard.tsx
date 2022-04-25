@@ -8,15 +8,18 @@ import {
   StatNumber,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { BsPerson } from "react-icons/bs";
 import { FiServer } from "react-icons/fi";
 import { GoLocation } from "react-icons/go";
 import { AiOutlineFileProtect, AiOutlineDollarCircle } from "react-icons/ai";
+import { useAppDispatch } from "@app/hook";
+import { useAppSelector } from "@app/hook";
+import { adminAction, selectDashboard } from "@store/admin";
 
 interface StatsCardProps {
   title: string;
-  stat: string;
+  stat: number;
   icon: ReactNode;
 }
 function StatsCard(props: StatsCardProps) {
@@ -52,6 +55,12 @@ function StatsCard(props: StatsCardProps) {
 }
 
 export default function BasicStatistics() {
+  const dispatch = useAppDispatch();
+  const dashboardSelector = useAppSelector(selectDashboard);
+  useEffect(() => {
+    dispatch(adminAction.preSetDashboard({}));
+  }, [dispatch]);
+  console.log(dashboardSelector);
   return (
     <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
       <chakra.h1
@@ -65,32 +74,32 @@ export default function BasicStatistics() {
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
           title={"Đơn hàng"}
-          stat={"500"}
+          stat={dashboardSelector.numOfOrders}
           icon={<AiOutlineFileProtect size={"3em"} />}
         />
         <StatsCard
           title={"Số đơn thành công"}
-          stat={"300"}
+          stat={dashboardSelector.numOfSuccessfulOrder}
           icon={<FiServer size={"3em"} />}
         />
         <StatsCard
           title={"Số đơn đã xác nhận"}
-          stat={"450"}
+          stat={dashboardSelector.numOfConfirmedOrder}
           icon={<AiOutlineDollarCircle size={"3em"} />}
         />
         <StatsCard
           title={"Đơn đang chờ xử lý"}
-          stat={"50"}
+          stat={dashboardSelector.numOfPendingOrder}
           icon={<AiOutlineFileProtect size={"3em"} />}
         />
         <StatsCard
           title={"Số đơn bị huỷ"}
-          stat={"50"}
+          stat={dashboardSelector.numOfUnsuccessfulOrder}
           icon={<FiServer size={"3em"} />}
         />
         <StatsCard
           title={"Doanh thu"}
-          stat={"39.000.000"}
+          stat={dashboardSelector.totalSale}
           icon={<AiOutlineDollarCircle size={"3em"} />}
         />
       </SimpleGrid>

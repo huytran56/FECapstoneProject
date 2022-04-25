@@ -5,6 +5,7 @@ import {
   ICategory,
   IChangeStatus,
   ICreateProduct,
+  IDashboard,
   IEditVoucher,
   IOrder,
   IOrderItemDetail,
@@ -895,6 +896,15 @@ export const handleCreateProductSKU = async ({
 export const handleGetUserRole = async (): Promise<[string]> => {
   try {
     const url = "/user/roles";
+    const res = await axiosClient.get(url);
+    return res.data;
+  } catch (error) {
+    return null;
+  }
+};
+export const handleGetDashboard = async (): Promise<IDashboard> => {
+  try {
+    const url = "/admin/order/statistic_by_month";
     const res = await axiosClient.get(url);
     return res.data;
   } catch (error) {

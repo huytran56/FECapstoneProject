@@ -31,7 +31,9 @@ export function EditProductSKU() {
   const dispatch = useAppDispatch();
   const handleOnClickEditProductSKU = (value) => {
     console.log(value);
-    dispatch(adminAction.preEditProductSKU({ editProductSKUPayLoad: value }));
+    dispatch(
+      adminAction.preEditProductSKU({ editProductSKUPayLoad: { ...value } })
+    );
   };
 
   const currentEditProductSKUSelector = useAppSelector(selectCurrentProductSKU);
@@ -50,6 +52,9 @@ export function EditProductSKU() {
           : "",
         sale_limit: currentEditProductSKUSelector
           ? currentEditProductSKUSelector.sale_limit
+          : "",
+        product_id: currentEditProductSKUSelector
+          ? currentEditProductSKUSelector.product_id
           : "",
       }}
       validationSchema={validate}
@@ -109,7 +114,7 @@ export function EditProductSKU() {
               }}
             />
             <TextField
-              label="Giảm giá tối đa"
+              label="Số lượng mua tối đa"
               name="sale_limit"
               type="text"
               value={currentEditProductSKUSelector?.sale_limit}

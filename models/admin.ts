@@ -154,3 +154,12 @@ export interface IProductFull {
   search_word: string;
   productSKUs: IProductSKU[];
 }
+
+export interface IDashboard {
+  numOfOrders: number;
+  numOfSuccessfulOrder: number;
+  numOfConfirmedOrder: number;
+  numOfPendingOrder: number;
+  numOfUnsuccessfulOrder: number;
+  totalSale: number;
+}

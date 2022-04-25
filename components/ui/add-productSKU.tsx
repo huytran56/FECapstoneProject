@@ -49,9 +49,9 @@ export function AddProductSKU() {
     <Formik
       initialValues={{
         id: 0,
-        stock: 0,
+        stock: "",
         size: "",
-        sale_limit: 0,
+        sale_limit: "",
       }}
       //   validationSchema={validate}
       onSubmit={handleOnClickAddProductSKU}
@@ -69,7 +69,11 @@ export function AddProductSKU() {
             {/* <TextField label="ID" name="id" type="text" /> */}
             <TextField label="Số lượng hàng" name="stock" type="text" />
             <TextField label="Kích Cỡ" name="size" type="text" />
-            <TextField label="Giảm giá tối đa" name="sale_limit" type="text" />
+            <TextField
+              label="Số lượng mua tối đa"
+              name="sale_limit"
+              type="text"
+            />
             <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>

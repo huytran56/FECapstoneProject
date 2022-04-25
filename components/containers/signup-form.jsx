@@ -37,12 +37,11 @@ export const SignUp = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
         "Tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số"
       ),
-    phone_number: Yup.string()
-      .required("Không được bỏ trống")
-      .matches(
-        /((09|03|07|08|05)+([0-9]{8})\b)/g,
-        "Đủ 10 số và bắt đầu bằng 0"
-      ),
+    phone_number: Yup.string().required("Không được bỏ trống"),
+    // .matches(
+    //   /((09|03|07|08|05)+([0-9]{8})\b)/g,
+    //   "Đủ 10 số và bắt đầu bằng 0"
+    // ),
     username: Yup.string().required("Không được để trống"),
     birthday: Yup.string().required("Không được để trống"),
   });

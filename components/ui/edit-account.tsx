@@ -11,19 +11,28 @@ import {
   Text,
   Button,
   Checkbox,
+  OrderedList,
+  ListItem,
 } from "@chakra-ui/react";
 import { adminAction, selectCurrentEditAccount } from "@store/admin";
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { TextField } from ".";
 
 export function EditAccount() {
+  const [roles, setRoles] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   const handleOnClickEditAccount = (value) => {
-    value.roles = value.roles.split(",");
-    dispatch(adminAction.editRoleAccount({ editRoleAccountPayload: value }));
+    console.log(roles);
+    console.log(value);
+    // value.roles = value.roles.split(",");
+    dispatch(
+      adminAction.editRoleAccount({
+        editRoleAccountPayload: { ...value, roles },
+      })
+    );
   };
-  const validate = () => {};
+
   const currentEditAccountSelector = useAppSelector(selectCurrentEditAccount);
   return (
     <Formik
@@ -43,7 +52,88 @@ export function EditAccount() {
               type="text"
               value={currentEditAccountSelector.username}
             />
-            <TextField
+            <VStack spacing={5} direction="row" w="100%" alignItems="start">
+              <Text fontWeight="semibold" fontSize="16px">
+                Vai trò
+              </Text>
+              <Checkbox
+                colorScheme="green"
+                value="admin"
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setRoles([...roles, e.target.value]);
+                  } else {
+                    const newList = roles.filter((c) => c !== e.target.value);
+                    setRoles(newList);
+                  }
+                  // setFieldValue("category", category);
+                }}
+              >
+                Quản trị viên
+              </Checkbox>
+              <Checkbox
+                colorScheme="green"
+                value="staff"
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setRoles([...roles, e.target.value]);
+                  } else {
+                    const newList = roles.filter((c) => c !== e.target.value);
+                    setRoles(newList);
+                  }
+                  // setFieldValue("category", category);
+                }}
+              >
+                Nhân viên
+              </Checkbox>
+              <Checkbox
+                colorScheme="green"
+                value="user"
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setRoles([...roles, e.target.value]);
+                  } else {
+                    const newList = roles.filter((c) => c !== e.target.value);
+                    setRoles(newList);
+                  }
+                  // setFieldValue("category", category);
+                }}
+              >
+                Người dùng
+              </Checkbox>
+            </VStack>
+            {/* <OrderedList key={index}>
+              <ListItem
+                display="inline-block"
+                width="45%"
+                margin="0"
+                padding="0"
+                verticalAlign="top"
+              >
+                <Checkbox
+                  name="roles"
+                  value={
+                    currentEditAccountSelector
+                      ? currentEditAccountSelector.roles
+                      : ""
+                  }
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setCategory([...category, e.target.value]);
+                    } else {
+                      const newList = category.filter(
+                        (c) => c !== e.target.value
+                      );
+                      setCategory(newList);
+                    }
+                    // setFieldValue("category", category);
+                  }}
+                >
+                  {categoryTwo.category_name}
+                </Checkbox>{" "}
+              </ListItem>
+            </OrderedList> */}
+            {/* <TextField
               label="Vai trò"
               name="roles"
               type="text"
@@ -63,7 +153,7 @@ export function EditAccount() {
                 );
                 setFieldValue("roles", e.target.value);
               }}
-            />
+            /> */}
             {/* <Checkbox defaultChecked>Quản trị viên</Checkbox>
             <Checkbox defaultChecked>Nhân viên</Checkbox>
             <Checkbox defaultChecked>Người dùng</Checkbox> */}

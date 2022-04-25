@@ -38,7 +38,6 @@ export function ViewOrders() {
   const dispatch = useAppDispatch();
   //   dispatch(adminAction.preSetCurrentViewOrder({}));
   const currentOrderSelector = useAppSelector(selectCurrentViewOrder);
-  
 
   // console.log(currentOrderSelector);
   useEffect(() => {
@@ -112,13 +111,18 @@ export function ViewOrders() {
             <Text fontWeight="semibold">Địa chỉ:</Text>
           </HStack>
           {currentAddressSelector ? (
-            <Text fontSize="15px">
-              {" "}
-              {currentAddressSelector.street}, phường{" "}
-              {currentAddressSelector.subDistrict}, quận{" "}
-              {currentAddressSelector.district}, {currentAddressSelector.city} ,
-              {currentAddressSelector.province}
-            </Text>
+            <VStack w="100%" alignItems="start">
+              <Text fontSize="15px">
+                {" "}
+                {currentAddressSelector.street}, phường{" "}
+                {currentAddressSelector.subDistrict}, quận{" "}
+                {currentAddressSelector.district}, {currentAddressSelector.city}{" "}
+                ,{currentAddressSelector.province}.
+              </Text>
+              <Text fontSize="15px">
+                Số điện thoại: {currentAddressSelector.phoneNumber}
+              </Text>
+            </VStack>
           ) : (
             ""
           )}

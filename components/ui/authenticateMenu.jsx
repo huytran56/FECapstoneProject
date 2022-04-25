@@ -92,7 +92,7 @@ export function AuthenticationMenu() {
       ) : (
         <Link href="/signin">
           <Text ml="auto" mr={5} fontWeight="bold" fontSize="17" color="white">
-            Sign In
+            Đăng nhập
           </Text>
         </Link>
       )}

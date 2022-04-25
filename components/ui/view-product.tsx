@@ -21,7 +21,9 @@ import {
   selectCurrentProduct,
   selectIsAddNewState,
   selectProductDetailFull,
+  selectProductSKUList,
 } from "@store/admin";
+import { selectUserRole } from "@store/user";
 import React, { useEffect, useState } from "react";
 import { AiOutlineFileAdd, AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
 import { AddProductSKU, EditProductSKU, ModalGeneralTwo } from ".";
@@ -31,6 +33,7 @@ export function ViewProduct() {
   const currentProductSelector = useAppSelector(selectCurrentProduct);
   const productDetailFullSelector = useAppSelector(selectProductDetailFull);
   const isAddNewStateSelector = useAppSelector(selectIsAddNewState);
+  const userRoleSelector = useAppSelector(selectUserRole);
 
   useEffect(() => {
     dispatch(
@@ -139,15 +142,21 @@ export function ViewProduct() {
             : null}
         </HStack>
       </Stack>
-      <Button
-        colorScheme="linkedin"
-        w="50px"
-        onClick={() =>
-          handleOnClickAddButton(productDetailFullSelector.product_id)
+      {userRoleSelector.map((role) => {
+        if (role === "ROLE_ADMIN") {
+          return (
+            <Button
+              colorScheme="linkedin"
+              w="50px"
+              onClick={() =>
+                handleOnClickAddButton(productDetailFullSelector.product_id)
+              }
+            >
+              <AiFillPlusCircle size="25px" />
+            </Button>
+          );
         }
-      >
-        <AiFillPlusCircle size="25px" />
-      </Button>
+      })}
       <Table variant="striped">
         <Thead>
           <Tr>
@@ -155,7 +164,11 @@ export function ViewProduct() {
             <Th>Hàng Trong Kho</Th>
             <Th>Size</Th>
             <Th>Sale tối đa</Th>
-            <Th>Thao tác</Th>
+            {userRoleSelector.map((role) => {
+              if (role === "ROLE_ADMIN") {
+                return <Th>Thao tác</Th>;
+              }
+            })}
           </Tr>
         </Thead>
         <Tbody>
@@ -166,14 +179,22 @@ export function ViewProduct() {
                   <Td>{productSKU.stock}</Td>
                   <Td>{productSKU.size}</Td>
                   <Td>{productSKU.sale_limit}</Td>
-                  <Td>
-                    <Button
-                      colorScheme="twitter"
-                      onClick={() => handleOnClickUpdateButton(productSKU)}
-                    >
-                      <AiFillEdit fontSize={25} />
-                    </Button>
-                  </Td>
+                  {userRoleSelector.map((role) => {
+                    if (role === "ROLE_ADMIN") {
+                      return (
+                        <Td>
+                          <Button
+                            colorScheme="twitter"
+                            onClick={() =>
+                              handleOnClickUpdateButton(productSKU)
+                            }
+                          >
+                            <AiFillEdit fontSize={25} />
+                          </Button>
+                        </Td>
+                      );
+                    }
+                  })}
                 </Tr>
               ))
             : null}
