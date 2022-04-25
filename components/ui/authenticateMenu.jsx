@@ -34,6 +34,7 @@ export function AuthenticationMenu() {
   const handleOnClickSignOut = () => {
     dispatch(adminAction.preSignout({}));
     router.push("/signin");
+    window.localStorage.clear();
   };
 
   // console.log(userInforSelector);
@@ -90,7 +91,7 @@ export function AuthenticationMenu() {
         </HStack>
       ) : (
         <Link href="/signin">
-          <Text ml="auto" mr={5} fontWeight="bold" fontSize="17">
+          <Text ml="auto" mr={5} fontWeight="bold" fontSize="17" color="white">
             Sign In
           </Text>
         </Link>

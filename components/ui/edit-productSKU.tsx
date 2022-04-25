@@ -20,14 +20,20 @@ import {
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { TextField } from ".";
+import * as Yup from "yup";
 
 export function EditProductSKU() {
+  const validate = Yup.object({
+    stock: Yup.string().required("Không được bỏ trống"),
+    size: Yup.string().required("Không được bỏ trống"),
+    sale_limit: Yup.string().required("Không được bỏ trống"),
+  });
   const dispatch = useAppDispatch();
   const handleOnClickEditProductSKU = (value) => {
     console.log(value);
     dispatch(adminAction.preEditProductSKU({ editProductSKUPayLoad: value }));
   };
-  const validate = () => {};
+
   const currentEditProductSKUSelector = useAppSelector(selectCurrentProductSKU);
   //   console.log(currentEditProductSKUSelector.id);
   return (
@@ -46,7 +52,7 @@ export function EditProductSKU() {
           ? currentEditProductSKUSelector.sale_limit
           : "",
       }}
-      //   validationSchema={validate}
+      validationSchema={validate}
       onSubmit={handleOnClickEditProductSKU}
     >
       {({ setFieldValue }) => (
@@ -69,7 +75,7 @@ export function EditProductSKU() {
               }
             />
             <TextField
-              label="Stock"
+              label="Số lượng hàng"
               name="stock"
               type="text"
               value={currentEditProductSKUSelector?.stock}
@@ -86,7 +92,7 @@ export function EditProductSKU() {
               }}
             />
             <TextField
-              label="Size"
+              label="Kích cỡ"
               name="size"
               type="text"
               value={currentEditProductSKUSelector?.size}
@@ -103,7 +109,7 @@ export function EditProductSKU() {
               }}
             />
             <TextField
-              label="Sale Limit"
+              label="Giảm giá tối đa"
               name="sale_limit"
               type="text"
               value={currentEditProductSKUSelector?.sale_limit}

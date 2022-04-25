@@ -62,7 +62,15 @@ export const SignIn = () => {
     if (!res.success) {
       console.log("Fail");
     } else {
-      router.push("/dashboard");
+      if (
+        roles.includes("ROLE_USER") &&
+        !roles.includes("ROLE_ADMIN") &&
+        !roles.includes("ROLE_STAFF")
+      ) {
+        router.push("/");
+      } else {
+        router.push("/dashboard");
+      }
     }
   };
   const handleTestClick = async (value) => {

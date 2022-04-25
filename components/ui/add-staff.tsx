@@ -72,7 +72,7 @@ export function AddStaff() {
               <br />
             </VStack>
             <HStack w="100%" justifyContent="space-around">
-              <TextField label="Username" name="username" type="text" />
+              <TextField label="Tên Đăng nhập" name="username" type="text" />
               <TextField label="Email" name="email" type="text" />
             </HStack>
             <TextField label="Mật Khẩu" name="password" type="password" />

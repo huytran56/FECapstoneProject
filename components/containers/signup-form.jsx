@@ -32,9 +32,17 @@ export const SignUp = () => {
       .email("Email is invalid")
       .required("Không được để trống"),
     password: Yup.string()
-      .min(6, "Must be at least 6 characters")
-      .required("Không được để trống"),
-    phone_number: Yup.string().required("Không được để trống"),
+      .required("Không được bỏ trống")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+        "Tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số"
+      ),
+    phone_number: Yup.string()
+      .required("Không được bỏ trống")
+      .matches(
+        /((09|03|07|08|05)+([0-9]{8})\b)/g,
+        "Đủ 10 số và bắt đầu bằng 0"
+      ),
     username: Yup.string().required("Không được để trống"),
     birthday: Yup.string().required("Không được để trống"),
   });

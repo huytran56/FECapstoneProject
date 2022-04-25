@@ -21,8 +21,14 @@ import {
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { TextField } from ".";
+import * as Yup from "yup";
 
 export function AddProductSKU() {
+  const validate = Yup.object({
+    stock: Yup.string().required("Không được bỏ trống"),
+    size: Yup.string().required("Không được bỏ trống"),
+    sale_limit: Yup.string().required("Không được bỏ trống"),
+  });
   const dispatch = useAppDispatch();
   const currentProductIdSelector = useAppSelector(selectCurrentProductId);
   console.log(currentProductIdSelector);
@@ -37,7 +43,6 @@ export function AddProductSKU() {
     );
     console.log(value);
   };
-  const validate = () => {};
 
   //   console.log(currentEditProductSKUSelector.id);
   return (
@@ -50,20 +55,21 @@ export function AddProductSKU() {
       }}
       //   validationSchema={validate}
       onSubmit={handleOnClickAddProductSKU}
+      validationSchema={validate}
     >
       {({ setFieldValue }) => (
         <Form>
           <Stack>
-          <VStack w="100%">
+            <VStack w="100%">
               <Text fontWeight="bold" fontSize="30px">
                 Tạo chi tiết sản phẩm
               </Text>
               <br />
             </VStack>
             {/* <TextField label="ID" name="id" type="text" /> */}
-            <TextField label="Stock" name="stock" type="text" />
-            <TextField label="Size" name="size" type="text" />
-            <TextField label="Sale Limit" name="sale_limit" type="text" />
+            <TextField label="Số lượng hàng" name="stock" type="text" />
+            <TextField label="Kích Cỡ" name="size" type="text" />
+            <TextField label="Giảm giá tối đa" name="sale_limit" type="text" />
             <Button type="submit">Xác nhận</Button>
           </Stack>
         </Form>
