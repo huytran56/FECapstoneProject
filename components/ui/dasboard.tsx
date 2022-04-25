@@ -74,32 +74,34 @@ export default function BasicStatistics() {
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
           title={"Đơn hàng"}
-          stat={dashboardSelector.numOfOrders}
+          stat={dashboardSelector ? dashboardSelector.numOfOrders : 0}
           icon={<AiOutlineFileProtect size={"3em"} />}
         />
         <StatsCard
           title={"Số đơn thành công"}
-          stat={dashboardSelector.numOfSuccessfulOrder}
+          stat={dashboardSelector ? dashboardSelector.numOfSuccessfulOrder : 0}
           icon={<FiServer size={"3em"} />}
         />
         <StatsCard
           title={"Số đơn đã xác nhận"}
-          stat={dashboardSelector.numOfConfirmedOrder}
+          stat={dashboardSelector ? dashboardSelector.numOfConfirmedOrder : 0}
           icon={<AiOutlineDollarCircle size={"3em"} />}
         />
         <StatsCard
           title={"Đơn đang chờ xử lý"}
-          stat={dashboardSelector.numOfPendingOrder}
+          stat={dashboardSelector ? dashboardSelector.numOfPendingOrder : 0}
           icon={<AiOutlineFileProtect size={"3em"} />}
         />
         <StatsCard
           title={"Số đơn bị huỷ"}
-          stat={dashboardSelector.numOfUnsuccessfulOrder}
+          stat={
+            dashboardSelector ? dashboardSelector.numOfUnsuccessfulOrder : 0
+          }
           icon={<FiServer size={"3em"} />}
         />
         <StatsCard
           title={"Doanh thu"}
-          stat={dashboardSelector.totalSale}
+          stat={dashboardSelector ? dashboardSelector.totalSale : 0}
           icon={<AiOutlineDollarCircle size={"3em"} />}
         />
       </SimpleGrid>
