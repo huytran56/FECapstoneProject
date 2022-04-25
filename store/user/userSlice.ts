@@ -2,6 +2,7 @@ import { IdProvider } from "@chakra-ui/hooks";
 import {
   IOrder,
   IOrderItemDetail,
+  IProductFull,
   IProductRecommend,
   IProductSKU,
 } from "@models/admin";
